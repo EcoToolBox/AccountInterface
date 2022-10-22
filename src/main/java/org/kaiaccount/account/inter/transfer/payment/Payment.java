@@ -23,5 +23,5 @@ public interface Payment {
 	Optional<String> getReason();
 
 	@NotNull
-	Optional<Account> getFrom();
+	Optional<Account<?>> getFrom();
 }

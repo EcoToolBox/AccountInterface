@@ -14,17 +14,17 @@ public class PaymentBuilder {
 	private BigDecimal amount;
 	private Currency currency;
 	private String resource;
-	private Account from;
+	private Account<?> from;
 
 	public Payment build(Plugin plugin) {
 		return new KaiPayment(this, plugin);
 	}
 
-	public Account getFrom() {
+	public Account<?> getFrom() {
 		return this.from;
 	}
 
-	public PaymentBuilder setFrom(@Nullable Account from) {
+	public PaymentBuilder setFrom(@Nullable Account<?> from) {
 		this.from = from;
 		return this;
 	}
@@ -57,11 +57,11 @@ public class PaymentBuilder {
 		return this;
 	}
 
-	public String getResource() {
+	public String getReason() {
 		return resource;
 	}
 
-	public PaymentBuilder setResource(@Nullable String resource) {
+	public PaymentBuilder setReason(@Nullable String resource) {
 		this.resource = resource;
 		return this;
 	}
