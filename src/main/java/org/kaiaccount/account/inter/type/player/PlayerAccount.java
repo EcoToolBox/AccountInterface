@@ -68,29 +68,39 @@ public class PlayerAccount implements Account<PlayerAccount> {
 		return Collections.unmodifiableMap(this.currencies);
 	}
 
+        public @NotNull Transaction withdrawSynced(@NotNull Payment payment) throws Exception {
+                Transaction transaction = new TransactionBuilder().setAccount(this)
+					.setPayment(payment)
+					.setType(TransactionType.WITHDRAW)
+					.build();
+                TransactionEvent event = new TransactionEvent(transaction);
+		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled()) {
+			throw new Exception(event.getCancelledReason);
+		}
+
+		BigDecimal current = this.getBalance(payment.getCurrency());
+		BigDecimal newValue = current.subtract(transaction.getNewPaymentAmount());
+		if (this.currencies.containsKey(payment.getCurrency())) {
+			this.currencies.replace(payment.getCurrency(), newValue);
+			return transaction;
+		}
+		this.currencies.put(payment.getCurrency(), newValue);
+                return transaction;
+        }
+
+        //This should be TransactionResult
 	@NotNull
 	@Override
 	public CompletableFuture<Transaction> withdraw(@NotNull Payment payment) {
 		CompletableFuture<Transaction> result = new CompletableFuture<>();
 		new Thread(() -> {
-
-			Transaction transaction = new TransactionBuilder().setAccount(this)
-					.setPayment(payment)
-					.setType(TransactionType.WITHDRAW)
-					.build();
-			TransactionEvent event = new TransactionEvent(transaction);
-			Bukkit.getPluginManager().callEvent(event);
-			if (event.isCancelled()) {
-				return;
-			}
-
-			BigDecimal current = this.getBalance(payment.getCurrency());
-			BigDecimal newValue = current.subtract(transaction.getNewPaymentAmount());
-			if (this.currencies.containsKey(payment.getCurrency())) {
-				this.currencies.replace(payment.getCurrency(), newValue);
-				return;
-			}
-			this.currencies.put(payment.getCurrency(), newValue);
+                        try{
+                            result.accept(this.withdrawSynced(payment));
+                        }catch(Exception e){
+                            result.accept(null);
+                        }
+		
 		}).start();
 		return result;
 	}
