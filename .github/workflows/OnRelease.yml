@@ -26,8 +26,7 @@ jobs:
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       - name: Publish to GitHub Packages Apache Maven
-        run: mvn --batch-mode --settings settings.xml deploy
+        run: mvn --settings settings.xml deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: ${{ github.actor }}
+          USENAME: ${{ github.actor }}
           PASSWORD: ${{ secrets.GITHUB_TOKEN }}
