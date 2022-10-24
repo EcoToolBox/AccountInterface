@@ -28,5 +28,5 @@ jobs:
       - name: Publish to GitHub Packages Apache Maven
         run: mvn --settings settings.xml deploy
         env:
-          USENAME: ${{ github.actor }}
+          USERNAME: ${{ github.actor }}
           PASSWORD: ${{ secrets.GITHUB_TOKEN }}
