@@ -27,7 +27,7 @@ public class PlayerAccountSerializer implements Serializer<PlayerAccount> {
 	@Override
 	public PlayerAccount deserialize(@NotNull YamlConfiguration configuration) throws IOException {
 		Map<Currency, BigDecimal> amount =
-				AccountInterface.getPlugin()
+				AccountInterface.getGlobal()
 						.getCurrencies()
 						.parallelStream()
 						.map(currency -> {

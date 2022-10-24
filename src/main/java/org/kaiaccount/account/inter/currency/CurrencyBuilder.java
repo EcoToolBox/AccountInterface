@@ -3,6 +3,7 @@ package org.kaiaccount.account.inter.currency;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.kaiaccount.AccountInterface;
 
 public class CurrencyBuilder {
 
@@ -15,7 +16,7 @@ public class CurrencyBuilder {
 	private String multiDisplay;
 
 	public Currency build() {
-		return new KaiCurrency(this);
+		return AccountInterface.getGlobal().toCurrency(this);
 	}
 
 	public String getDisplayNameSingle() {

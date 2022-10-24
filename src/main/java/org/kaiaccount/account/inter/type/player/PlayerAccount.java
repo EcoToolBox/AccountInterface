@@ -16,7 +16,8 @@ import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.result.FailedTransactionResult;
 import org.kaiaccount.account.inter.transfer.result.SuccessfulTransactionResult;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
-import org.kaiaccount.account.inter.type.bank.PlayerBankAccount;
+import org.kaiaccount.account.inter.type.bank.player.PlayerBankAccount;
+import org.kaiaccount.account.inter.type.bank.player.PlayerBankAccountBuilder;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -50,7 +51,10 @@ public class PlayerAccount implements Account<PlayerAccount> {
 	}
 
 	public @NotNull PlayerBankAccount createBankAccount(@NotNull String name) {
-		PlayerBankAccount account = new PlayerBankAccount(this, name, Collections.emptyMap());
+		new PlayerBankAccountBuilder().setName(name);
+
+
+		PlayerBankAccount account = new PlayerBankAccountBuilder().setName(name).setAccount(this).build();
 		this.banks.add(account);
 		return account;
 	}

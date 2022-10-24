@@ -95,7 +95,7 @@ public class KaiEco implements Economy {
 
 	@Override
 	public double getBalance(OfflinePlayer offlinePlayer) {
-		return AccountInterface.getPlugin()
+		return AccountInterface.getGlobal()
 				.getPlayerAccount(offlinePlayer)
 				.getBalance(this.currency.get())
 				.doubleValue();
@@ -121,7 +121,7 @@ public class KaiEco implements Economy {
 
 	@Override
 	public boolean has(OfflinePlayer offlinePlayer, double v) {
-		return AccountInterface.getPlugin()
+		return AccountInterface.getGlobal()
 				.getPlayerAccount(offlinePlayer)
 				.getBalance(this.currency.get())
 				.compareTo(BigDecimal.valueOf(v)) > 0;
@@ -147,8 +147,10 @@ public class KaiEco implements Economy {
 	@Override
 	public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, double v) {
 		Payment payment =
-				new PaymentBuilder().setAmount(v).setCurrency(this.currency.get()).build(AccountInterface.getPlugin());
-		PlayerAccount account = AccountInterface.getPlugin().getPlayerAccount(offlinePlayer);
+				new PaymentBuilder().setAmount(v)
+						.setCurrency(this.currency.get())
+						.build(AccountInterface.getGlobal().getVaultPlugin());
+		PlayerAccount account = AccountInterface.getGlobal().getPlayerAccount(offlinePlayer);
 		TransactionResult transaction = account.withdrawSynced(payment);
 		return createResponse(transaction);
 	}
@@ -173,8 +175,10 @@ public class KaiEco implements Economy {
 	@Override
 	public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, double v) {
 		Payment payment =
-				new PaymentBuilder().setAmount(v).setCurrency(this.currency.get()).build(AccountInterface.getPlugin());
-		PlayerAccount account = AccountInterface.getPlugin().getPlayerAccount(offlinePlayer);
+				new PaymentBuilder().setAmount(v)
+						.setCurrency(this.currency.get())
+						.build(AccountInterface.getGlobal().getVaultPlugin());
+		PlayerAccount account = AccountInterface.getGlobal().getPlayerAccount(offlinePlayer);
 		TransactionResult transaction = account.depositSynced(payment);
 		return createResponse(transaction);
 	}

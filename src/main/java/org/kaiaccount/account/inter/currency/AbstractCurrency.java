@@ -4,7 +4,7 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class KaiCurrency implements Currency {
+public abstract class AbstractCurrency implements Currency {
 
 	private final @Nullable String singleDisplay;
 	private final @Nullable String multiDisplay;
@@ -14,7 +14,7 @@ public class KaiCurrency implements Currency {
 	private final boolean isDefault;
 	private final @NotNull Plugin plugin;
 
-	public KaiCurrency(@NotNull CurrencyBuilder builder) {
+	public AbstractCurrency(@NotNull CurrencyBuilder builder) {
 		this.plugin = builder.getPlugin();
 		this.isDefault = builder.isDefault();
 		this.name = builder.getName();
