@@ -5,7 +5,7 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.AccountInterface;
-import org.kaiaccount.account.inter.Currency;
+import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.transfer.Transaction;
 import org.kaiaccount.account.inter.transfer.TransactionType;
 import org.kaiaccount.account.inter.transfer.payment.Payment;

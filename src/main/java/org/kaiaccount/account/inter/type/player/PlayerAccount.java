@@ -4,7 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.account.inter.Account;
-import org.kaiaccount.account.inter.Currency;
+import org.kaiaccount.account.inter.currency.Currency;
+import org.kaiaccount.account.inter.event.TransactionCompletedEvent;
 import org.kaiaccount.account.inter.event.TransactionEvent;
 import org.kaiaccount.account.inter.io.Serializer;
 import org.kaiaccount.account.inter.io.Serializers;
@@ -78,23 +79,31 @@ public class PlayerAccount implements Account<PlayerAccount> {
 		TransactionEvent event = new TransactionEvent(transaction);
 		Bukkit.getPluginManager().callEvent(event);
 		if (event.isCancelled()) {
-			return new FailedTransactionResult(transaction,
+			FailedTransactionResult result = new FailedTransactionResult(transaction,
 					event.getCancelledReason().orElseThrow(() -> new RuntimeException("No reason specified")));
+			Bukkit.getPluginManager().callEvent(new TransactionCompletedEvent(result));
+			return result;
 		}
 
 		BigDecimal current = this.getBalance(payment.getCurrency());
 		BigDecimal newValue = current.subtract(transaction.getNewPaymentAmount());
 		if (newValue.compareTo(BigDecimal.ZERO) < 0) {
-			return new FailedTransactionResult(transaction,
+			FailedTransactionResult result = new FailedTransactionResult(transaction,
 					"Account does not have " + transaction.getNewPaymentAmount());
+			Bukkit.getPluginManager().callEvent(new TransactionCompletedEvent(result));
+			return result;
 		}
 
 		if (this.currencies.containsKey(payment.getCurrency())) {
 			this.currencies.replace(payment.getCurrency(), newValue);
-			return new SuccessfulTransactionResult(transaction);
+			SuccessfulTransactionResult result = new SuccessfulTransactionResult(transaction);
+			Bukkit.getPluginManager().callEvent(new TransactionCompletedEvent(result));
+			return result;
 		}
 		this.currencies.put(payment.getCurrency(), newValue);
-		return new SuccessfulTransactionResult(transaction);
+		SuccessfulTransactionResult result = new SuccessfulTransactionResult(transaction);
+		Bukkit.getPluginManager().callEvent(new TransactionCompletedEvent(result));
+		return result;
 	}
 
 	@NotNull
@@ -113,18 +122,24 @@ public class PlayerAccount implements Account<PlayerAccount> {
 		TransactionEvent event = new TransactionEvent(transaction);
 		Bukkit.getPluginManager().callEvent(event);
 		if (event.isCancelled()) {
-			return new FailedTransactionResult(transaction,
+			FailedTransactionResult result = new FailedTransactionResult(transaction,
 					event.getCancelledReason().orElseThrow(() -> new RuntimeException("No reason specified")));
+			Bukkit.getPluginManager().callEvent(new TransactionCompletedEvent(result));
+			return result;
 		}
 
 		BigDecimal current = this.getBalance(payment.getCurrency());
 		BigDecimal newValue = current.add(transaction.getNewPaymentAmount());
 		if (this.currencies.containsKey(payment.getCurrency())) {
 			this.currencies.replace(payment.getCurrency(), newValue);
-			return new SuccessfulTransactionResult(transaction);
+			SuccessfulTransactionResult result = new SuccessfulTransactionResult(transaction);
+			Bukkit.getPluginManager().callEvent(new TransactionCompletedEvent(result));
+			return result;
 		}
 		this.currencies.put(payment.getCurrency(), newValue);
-		return new SuccessfulTransactionResult(transaction);
+		SuccessfulTransactionResult result = new SuccessfulTransactionResult(transaction);
+		Bukkit.getPluginManager().callEvent(new TransactionCompletedEvent(result));
+		return result;
 	}
 
 	@NotNull

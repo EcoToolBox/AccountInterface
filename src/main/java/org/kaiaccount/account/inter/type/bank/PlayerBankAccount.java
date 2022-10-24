@@ -2,7 +2,7 @@ package org.kaiaccount.account.inter.type.bank;
 
 import org.bukkit.entity.AnimalTamer;
 import org.jetbrains.annotations.NotNull;
-import org.kaiaccount.account.inter.Currency;
+import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.io.Serializer;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 

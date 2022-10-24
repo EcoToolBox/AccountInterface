@@ -2,7 +2,7 @@ package org.kaiaccount.account.inter.type.bank;
 
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
-import org.kaiaccount.account.inter.Currency;
+import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.event.TransactionEvent;
 import org.kaiaccount.account.inter.transfer.Transaction;
 import org.kaiaccount.account.inter.transfer.TransactionBuilder;

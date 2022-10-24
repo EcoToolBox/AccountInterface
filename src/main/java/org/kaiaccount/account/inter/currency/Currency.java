@@ -1,4 +1,4 @@
-package org.kaiaccount.account.inter;
+package org.kaiaccount.account.inter.currency;
 
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -9,14 +9,22 @@ import java.math.RoundingMode;
 
 public interface Currency {
 
+	@NotNull
 	String getDisplayNameSingle();
 
+	@NotNull
 	String getDisplayNameMultiple();
 
+	@NotNull
+	String getDisplayNameShort();
+
+	@NotNull
 	String getSymbol();
 
+	@NotNull
 	String getKeyName();
 
+	@NotNull
 	Plugin getPlugin();
 
 	boolean isDefault();

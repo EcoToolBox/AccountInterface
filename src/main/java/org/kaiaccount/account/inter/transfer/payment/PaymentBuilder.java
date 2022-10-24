@@ -4,7 +4,7 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kaiaccount.account.inter.Account;
-import org.kaiaccount.account.inter.Currency;
+import org.kaiaccount.account.inter.currency.Currency;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

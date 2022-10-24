@@ -4,7 +4,7 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kaiaccount.account.inter.Account;
-import org.kaiaccount.account.inter.Currency;
+import org.kaiaccount.account.inter.currency.Currency;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -23,6 +23,18 @@ public class KaiPayment implements Payment {
 		this.plugin = plugin;
 		this.reason = builder.getReason();
 		this.from = builder.getFrom();
+		if (this.currency == null) {
+			throw new IllegalArgumentException("No currency specified");
+		}
+		if (this.bigDecimal == null) {
+			throw new IllegalArgumentException("No amount specified");
+		}
+		if (this.bigDecimal.compareTo(BigDecimal.ZERO) < 0) {
+			throw new IllegalArgumentException("Negative number can not be used in payments");
+		}
+		if (this.plugin == null) {
+			throw new IllegalArgumentException("No plugin specified");
+		}
 	}
 
 

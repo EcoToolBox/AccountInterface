@@ -1,6 +1,7 @@
 package org.kaiaccount.account.inter;
 
 import org.jetbrains.annotations.NotNull;
+import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.io.Serializable;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;

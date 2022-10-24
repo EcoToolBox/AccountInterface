@@ -4,7 +4,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.kaiaccount.account.inter.Currency;
+import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.io.Serializers;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 
