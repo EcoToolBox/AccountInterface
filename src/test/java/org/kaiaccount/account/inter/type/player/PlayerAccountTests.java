@@ -8,12 +8,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.kaiaccount.AccountInterface;
+import org.kaiaccount.AccountInterfaceManager;
 import org.kaiaccount.account.inter.Account;
 import org.kaiaccount.account.inter.MockHelpers;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.currency.CurrencyBuilder;
 import org.kaiaccount.account.inter.event.TransactionCompletedEvent;
 import org.kaiaccount.account.inter.event.TransactionEvent;
+import org.kaiaccount.account.inter.impl.FakeGlobalManager;
 import org.kaiaccount.account.inter.transfer.TransactionType;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.payment.PaymentBuilder;
@@ -36,6 +39,12 @@ public class PlayerAccountTests {
 
 	@BeforeEach
 	public void setup() {
+		if (!AccountInterface.isReady()) {
+			AccountInterfaceManager manager = new FakeGlobalManager();
+			AccountInterface.setGlobal(manager);
+		}
+
+
 		bukkitMock = Mockito.mockStatic(Bukkit.class);
 		testPlugin = Mockito.mock(Plugin.class);
 		testPlayer = Mockito.mock(OfflinePlayer.class);

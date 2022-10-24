@@ -10,14 +10,14 @@ public final class AccountInterface {
 		throw new RuntimeException("Should not run");
 	}
 
-	public static void setGlobal(@NotNull AccountInterfaceManager aiGlobal) {
-		if (!isReady()) {
+	public static synchronized void setGlobal(@NotNull AccountInterfaceManager aiGlobal) {
+		if (isReady()) {
 			throw new RuntimeException("Currency plugin already registered");
 		}
 		global = aiGlobal;
 	}
 
-	public static boolean isReady() {
+	public static synchronized boolean isReady() {
 		return global != null;
 	}
 
