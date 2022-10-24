@@ -2,8 +2,8 @@ package org.kaiaccount.account.inter;
 
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.account.inter.io.Serializable;
-import org.kaiaccount.account.inter.transfer.Transaction;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
+import org.kaiaccount.account.inter.transfer.result.TransactionResult;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -18,8 +18,8 @@ public interface Account<Self> extends Serializable<Self> {
 	Map<Currency, BigDecimal> getBalances();
 
 	@NotNull
-	CompletableFuture<Transaction> withdraw(@NotNull Payment payment);
+	CompletableFuture<TransactionResult> withdraw(@NotNull Payment payment);
 
 	@NotNull
-	CompletableFuture<Transaction> deposit(@NotNull Payment payment);
+	CompletableFuture<TransactionResult> deposit(@NotNull Payment payment);
 }

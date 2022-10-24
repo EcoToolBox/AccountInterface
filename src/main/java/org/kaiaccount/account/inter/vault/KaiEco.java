@@ -5,19 +5,18 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.AccountInterface;
-import org.kaiaccount.account.inter.Account;
 import org.kaiaccount.account.inter.Currency;
 import org.kaiaccount.account.inter.transfer.Transaction;
 import org.kaiaccount.account.inter.transfer.TransactionType;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.payment.PaymentBuilder;
+import org.kaiaccount.account.inter.transfer.result.FailedTransactionResult;
+import org.kaiaccount.account.inter.transfer.result.SuccessfulTransactionResult;
+import org.kaiaccount.account.inter.transfer.result.TransactionResult;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
 public class KaiEco implements Economy {
@@ -67,6 +66,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public boolean hasAccount(String s) {
 		return false;
 	}
@@ -88,6 +88,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public double getBalance(String s) {
 		throw new RuntimeException("Old vault method -> Not implemented yet");
 	}
@@ -113,6 +114,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public boolean has(String s, double v) {
 		throw new RuntimeException("Old vault method -> Not implemented yet");
 	}
@@ -126,6 +128,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public boolean has(String s, String s1, double v) {
 		throw new RuntimeException("Old vault method -> Not implemented yet");
 	}
@@ -136,6 +139,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public EconomyResponse withdrawPlayer(String s, double v) {
 		throw new RuntimeException("Old vault method -> Not implemented yet");
 	}
@@ -145,15 +149,12 @@ public class KaiEco implements Economy {
 		Payment payment =
 				new PaymentBuilder().setAmount(v).setCurrency(this.currency.get()).build(AccountInterface.getPlugin());
 		PlayerAccount account = AccountInterface.getPlugin().getPlayerAccount(offlinePlayer);
-		try {
-			Transaction transaction = account.withdraw(payment).get(1, TimeUnit.MILLISECONDS);
-			return createResponse(transaction);
-		} catch (InterruptedException | ExecutionException | TimeoutException e) {
-			return createCancelled(account, "Cancelled event");
-		}
+		TransactionResult transaction = account.withdrawSynced(payment);
+		return createResponse(transaction);
 	}
 
 	@Override
+	@Deprecated
 	public EconomyResponse withdrawPlayer(String s, String s1, double v) {
 		throw new RuntimeException("Old vault method -> Not implemented yet");
 	}
@@ -164,6 +165,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public EconomyResponse depositPlayer(String s, double v) {
 		throw new RuntimeException("Old vault method -> Not implemented yet");
 	}
@@ -173,15 +175,12 @@ public class KaiEco implements Economy {
 		Payment payment =
 				new PaymentBuilder().setAmount(v).setCurrency(this.currency.get()).build(AccountInterface.getPlugin());
 		PlayerAccount account = AccountInterface.getPlugin().getPlayerAccount(offlinePlayer);
-		try {
-			Transaction transaction = account.deposit(payment).get(1, TimeUnit.MILLISECONDS);
-			return createResponse(transaction);
-		} catch (InterruptedException | ExecutionException | TimeoutException e) {
-			return createCancelled(account, "Cancelled event");
-		}
+		TransactionResult transaction = account.depositSynced(payment);
+		return createResponse(transaction);
 	}
 
 	@Override
+	@Deprecated
 	public EconomyResponse depositPlayer(String s, String s1, double v) {
 		throw new RuntimeException("Old vault method -> Not implemented yet");
 	}
@@ -192,6 +191,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public EconomyResponse createBank(String s, String s1) {
 		throw new RuntimeException("Old vault method -> Not implemented yet");
 	}
@@ -227,6 +227,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public EconomyResponse isBankOwner(String s, String s1) {
 		throw new RuntimeException("Not looked at yet -> Not implemented");
 	}
@@ -237,6 +238,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public EconomyResponse isBankMember(String s, String s1) {
 		throw new RuntimeException("Not looked at yet -> Not implemented");
 	}
@@ -252,6 +254,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public boolean createPlayerAccount(String s) {
 		throw new RuntimeException("Old vault method -> Not implemented yet");
 	}
@@ -262,6 +265,7 @@ public class KaiEco implements Economy {
 	}
 
 	@Override
+	@Deprecated
 	public boolean createPlayerAccount(String s, String s1) {
 		throw new RuntimeException("Old vault method -> Not implemented yet");
 	}
@@ -271,20 +275,25 @@ public class KaiEco implements Economy {
 		throw new RuntimeException("Not looked at yet -> Not implemented");
 	}
 
-	private EconomyResponse createCancelled(@NotNull Account<?> account, @NotNull String issue) {
-		return new EconomyResponse(0, account.getBalance(this.currency.get()).doubleValue(),
-				EconomyResponse.ResponseType.FAILURE, issue);
-	}
-
-	private EconomyResponse createResponse(Transaction result) {
-		BigDecimal currentBalance = result.getTarget().getBalance(result.getCurrency());
-		double takeAmount = result.getNewPaymentAmount().doubleValue();
+	private EconomyResponse createResponse(@NotNull TransactionResult result) {
+		Transaction transaction = result.getTransaction();
+		BigDecimal currentBalance = transaction.getTarget().getBalance(transaction.getCurrency());
+		double takeAmount = transaction.getNewPaymentAmount().doubleValue();
 		BigDecimal newBalance;
-		if (result.getType() == TransactionType.DEPOSIT) {
-			newBalance = currentBalance.add(result.getNewPaymentAmount());
+		if (transaction.getType() == TransactionType.DEPOSIT) {
+			newBalance = currentBalance.add(transaction.getNewPaymentAmount());
 		} else {
-			newBalance = currentBalance.subtract(result.getNewPaymentAmount());
+			newBalance = currentBalance.subtract(transaction.getNewPaymentAmount());
 		}
-		return new EconomyResponse(takeAmount, newBalance.doubleValue(), EconomyResponse.ResponseType.SUCCESS, null);
+		if (result instanceof SuccessfulTransactionResult) {
+			return new EconomyResponse(takeAmount, newBalance.doubleValue(), EconomyResponse.ResponseType.SUCCESS,
+					null);
+		}
+		if (result instanceof FailedTransactionResult) {
+			FailedTransactionResult failed = (FailedTransactionResult) result;
+			return new EconomyResponse(takeAmount, newBalance.doubleValue(), EconomyResponse.ResponseType.FAILURE,
+					failed.getFailReason());
+		}
+		throw new RuntimeException("Unknown result type of " + result.getClass().getName());
 	}
 }

@@ -12,6 +12,9 @@ import org.kaiaccount.account.inter.transfer.Transaction;
 import org.kaiaccount.account.inter.transfer.TransactionBuilder;
 import org.kaiaccount.account.inter.transfer.TransactionType;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
+import org.kaiaccount.account.inter.transfer.result.FailedTransactionResult;
+import org.kaiaccount.account.inter.transfer.result.SuccessfulTransactionResult;
+import org.kaiaccount.account.inter.transfer.result.TransactionResult;
 import org.kaiaccount.account.inter.type.bank.PlayerBankAccount;
 
 import java.io.File;
@@ -42,12 +45,11 @@ public class PlayerAccount implements Account<PlayerAccount> {
 
 	public @NotNull Collection<PlayerBankAccount> getBanks() {
 		//load others
-
 		return Collections.unmodifiableCollection(this.banks);
 	}
 
-	public @NotNull PlayerBankAccount createBankAccount() {
-		PlayerBankAccount account = new PlayerBankAccount(this, Collections.emptyMap());
+	public @NotNull PlayerBankAccount createBankAccount(@NotNull String name) {
+		PlayerBankAccount account = new PlayerBankAccount(this, name, Collections.emptyMap());
 		this.banks.add(account);
 		return account;
 	}
@@ -68,67 +70,68 @@ public class PlayerAccount implements Account<PlayerAccount> {
 		return Collections.unmodifiableMap(this.currencies);
 	}
 
-        public @NotNull Transaction withdrawSynced(@NotNull Payment payment) throws Exception {
-                Transaction transaction = new TransactionBuilder().setAccount(this)
-					.setPayment(payment)
-					.setType(TransactionType.WITHDRAW)
-					.build();
-                TransactionEvent event = new TransactionEvent(transaction);
+	public @NotNull TransactionResult withdrawSynced(@NotNull Payment payment) {
+		Transaction transaction = new TransactionBuilder().setAccount(this)
+				.setPayment(payment)
+				.setType(TransactionType.WITHDRAW)
+				.build();
+		TransactionEvent event = new TransactionEvent(transaction);
 		Bukkit.getPluginManager().callEvent(event);
 		if (event.isCancelled()) {
-			throw new Exception(event.getCancelledReason);
+			return new FailedTransactionResult(transaction,
+					event.getCancelledReason().orElseThrow(() -> new RuntimeException("No reason specified")));
 		}
 
 		BigDecimal current = this.getBalance(payment.getCurrency());
 		BigDecimal newValue = current.subtract(transaction.getNewPaymentAmount());
+		if (newValue.compareTo(BigDecimal.ZERO) < 0) {
+			return new FailedTransactionResult(transaction,
+					"Account does not have " + transaction.getNewPaymentAmount());
+		}
+
 		if (this.currencies.containsKey(payment.getCurrency())) {
 			this.currencies.replace(payment.getCurrency(), newValue);
-			return transaction;
+			return new SuccessfulTransactionResult(transaction);
 		}
 		this.currencies.put(payment.getCurrency(), newValue);
-                return transaction;
-        }
-
-        //This should be TransactionResult
-	@NotNull
-	@Override
-	public CompletableFuture<Transaction> withdraw(@NotNull Payment payment) {
-		CompletableFuture<Transaction> result = new CompletableFuture<>();
-		new Thread(() -> {
-                        try{
-                            result.accept(this.withdrawSynced(payment));
-                        }catch(Exception e){
-                            result.accept(null);
-                        }
-		
-		}).start();
-		return result;
+		return new SuccessfulTransactionResult(transaction);
 	}
 
 	@NotNull
 	@Override
-	public CompletableFuture<Transaction> deposit(@NotNull Payment payment) {
-		CompletableFuture<Transaction> result = new CompletableFuture<>();
-		new Thread(() -> {
+	public CompletableFuture<TransactionResult> withdraw(@NotNull Payment payment) {
+		CompletableFuture<TransactionResult> result = new CompletableFuture<>();
+		new Thread(() -> result.complete(this.withdrawSynced(payment))).start();
+		return result;
+	}
 
-			Transaction transaction = new TransactionBuilder().setAccount(this)
-					.setPayment(payment)
-					.setType(TransactionType.DEPOSIT)
-					.build();
-			TransactionEvent event = new TransactionEvent(transaction);
-			Bukkit.getPluginManager().callEvent(event);
-			if (event.isCancelled()) {
-				return;
-			}
+	public TransactionResult depositSynced(@NotNull Payment payment) {
+		Transaction transaction = new TransactionBuilder().setAccount(this)
+				.setPayment(payment)
+				.setType(TransactionType.DEPOSIT)
+				.build();
+		TransactionEvent event = new TransactionEvent(transaction);
+		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled()) {
+			return new FailedTransactionResult(transaction,
+					event.getCancelledReason().orElseThrow(() -> new RuntimeException("No reason specified")));
+		}
 
-			BigDecimal current = this.getBalance(payment.getCurrency());
-			BigDecimal newValue = current.add(transaction.getNewPaymentAmount());
-			if (this.currencies.containsKey(payment.getCurrency())) {
-				this.currencies.replace(payment.getCurrency(), newValue);
-				return;
-			}
-			this.currencies.put(payment.getCurrency(), newValue);
-		}).start();
+		BigDecimal current = this.getBalance(payment.getCurrency());
+		BigDecimal newValue = current.add(transaction.getNewPaymentAmount());
+		if (this.currencies.containsKey(payment.getCurrency())) {
+			this.currencies.replace(payment.getCurrency(), newValue);
+			return new SuccessfulTransactionResult(transaction);
+		}
+		this.currencies.put(payment.getCurrency(), newValue);
+		return new SuccessfulTransactionResult(transaction);
+	}
+
+	@NotNull
+	@Override
+	public CompletableFuture<TransactionResult> deposit(@NotNull Payment payment) {
+		CompletableFuture<TransactionResult> result = new CompletableFuture<>();
+		new Thread(() -> result.complete(this.depositSynced(payment))).start();
 		return result;
 	}
 
