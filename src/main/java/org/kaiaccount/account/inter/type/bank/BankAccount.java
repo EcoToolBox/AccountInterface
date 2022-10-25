@@ -2,7 +2,7 @@ package org.kaiaccount.account.inter.type.bank;
 
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
-import org.kaiaccount.account.inter.Account;
+import org.kaiaccount.account.inter.type.Account;
 
 import java.util.Collection;
 import java.util.Collections;

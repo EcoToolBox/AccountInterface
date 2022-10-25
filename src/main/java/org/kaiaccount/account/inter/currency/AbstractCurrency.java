@@ -4,14 +4,18 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 public abstract class AbstractCurrency implements Currency {
 
 	private final @Nullable String singleDisplay;
 	private final @Nullable String multiDisplay;
+	private @Nullable BigDecimal worth;
 	private final @NotNull String shortDisplay;
 	private final @NotNull String symbol;
 	private final @NotNull String name;
-	private final boolean isDefault;
+	private boolean isDefault;
 	private final @NotNull Plugin plugin;
 
 	public AbstractCurrency(@NotNull CurrencyBuilder builder) {
@@ -22,6 +26,7 @@ public abstract class AbstractCurrency implements Currency {
 		this.singleDisplay = builder.getDisplayNameSingle();
 		this.shortDisplay = builder.getDisplayNameShort();
 		this.symbol = builder.getSymbol();
+		this.worth = builder.getWorth();
 		if (this.plugin == null) {
 			throw new RuntimeException("No plugin found");
 		}
@@ -33,6 +38,15 @@ public abstract class AbstractCurrency implements Currency {
 		}
 	}
 
+	@Override
+	public Optional<BigDecimal> getWorth() {
+		return Optional.ofNullable(this.worth);
+	}
+
+	@Override
+	public void setWorth(@NotNull BigDecimal worth) {
+		this.worth = worth;
+	}
 
 	@Override
 	public @NotNull String getDisplayNameSingle() {
@@ -74,5 +88,10 @@ public abstract class AbstractCurrency implements Currency {
 	@Override
 	public boolean isDefault() {
 		return this.isDefault;
+	}
+
+	@Override
+	public void setDefault(boolean check) {
+		this.isDefault = check;
 	}
 }

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kaiaccount.AccountInterface;
 import org.kaiaccount.AccountInterfaceManager;
-import org.kaiaccount.account.inter.Account;
+import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.MockHelpers;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.currency.CurrencyBuilder;

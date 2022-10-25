@@ -1,6 +1,6 @@
 package org.kaiaccount.account.inter.transfer;
 
-import org.kaiaccount.account.inter.Account;
+import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 
 import java.math.BigDecimal;

@@ -5,18 +5,49 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kaiaccount.AccountInterface;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public class CurrencyBuilder {
 
 	private String singleDisplay;
 	private String shortDisplay;
 	private String symbol;
 	private String name;
+	private BigDecimal worth;
 	private boolean isDefault;
 	private Plugin plugin;
 	private String multiDisplay;
 
 	public Currency build() {
 		return AccountInterface.getGlobal().toCurrency(this);
+	}
+
+	public BigDecimal getWorth() {
+		return worth;
+	}
+
+	public CurrencyBuilder setWorth(@Nullable BigDecimal worth) {
+		this.worth = worth;
+		return this;
+	}
+
+	public CurrencyBuilder setWorth(@Nullable BigInteger worth) {
+		if (worth == null) {
+			this.worth = null;
+			return this;
+		}
+		this.worth = new BigDecimal(worth);
+		return this;
+	}
+
+	public CurrencyBuilder setWorth(@Nullable Double worth) {
+		if (worth == null) {
+			this.worth = null;
+			return this;
+		}
+		this.worth = BigDecimal.valueOf(worth);
+		return this;
 	}
 
 	public String getDisplayNameSingle() {

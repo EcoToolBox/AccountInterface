@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 public interface Currency {
 
@@ -29,6 +30,12 @@ public interface Currency {
 
 	boolean isDefault();
 
+	void setDefault(boolean check);
+
+	Optional<BigDecimal> getWorth();
+
+	void setWorth(@NotNull BigDecimal worth);
+
 	default String formatName(@NotNull BigDecimal amount) {
 		return this.formatName(amount, null);
 	}
@@ -39,9 +46,9 @@ public interface Currency {
 			display = amount.setScale(toPoint, RoundingMode.HALF_UP);
 		}
 		if (amount.compareTo(BigDecimal.ONE) >= 1) {
-			return this.getDisplayNameMultiple() + display;
+			return display + " " + this.getDisplayNameMultiple();
 		}
-		return this.getDisplayNameSingle() + display;
+		return display + " " + this.getDisplayNameSingle();
 	}
 
 	default String formatSymbol(@NotNull BigDecimal amount) {

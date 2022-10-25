@@ -40,7 +40,7 @@ public interface AccountInterfaceManager {
 
 	void deregisterCurrency(@NotNull Currency currency);
 
-	default PlayerBankAccount toBankAccount(@NotNull PlayerBankAccountBuilder builder) {
+	default PlayerBankAccount<?> toBankAccount(@NotNull PlayerBankAccountBuilder builder) {
 		Exception e = null;
 		for (ToBankAccount function : this.getToBankAccount()) {
 			try {
@@ -75,6 +75,18 @@ public interface AccountInterfaceManager {
 				.filter(Currency::isDefault)
 				.findAny()
 				.orElseThrow(() -> new RuntimeException("No default currency"));
+	}
+
+	default @NotNull Optional<Currency> getCurrency(@NotNull String symbol) {
+		return this.getCurrencies().parallelStream().filter(cur -> cur.getSymbol().equalsIgnoreCase(symbol)).findAny();
+	}
+
+	default @NotNull Optional<Currency> getCurrency(@NotNull Plugin plugin, String name) {
+		return this.getCurrencies()
+				.parallelStream()
+				.filter(cur -> cur.getPlugin().equals(plugin))
+				.filter(cur -> cur.getKeyName().equalsIgnoreCase(name))
+				.findAny();
 	}
 
 	default @NotNull PlayerAccount getPlayerAccount(@NotNull OfflinePlayer player) {

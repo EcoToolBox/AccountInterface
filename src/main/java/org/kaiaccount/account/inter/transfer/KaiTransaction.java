@@ -2,7 +2,7 @@ package org.kaiaccount.account.inter.transfer;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.kaiaccount.account.inter.Account;
+import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 
 import java.math.BigDecimal;

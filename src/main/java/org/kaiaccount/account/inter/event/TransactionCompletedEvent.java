@@ -12,6 +12,7 @@ public class TransactionCompletedEvent extends Event {
 	private final @NotNull TransactionResult transaction;
 
 	public TransactionCompletedEvent(@NotNull TransactionResult transaction) {
+		super(true);
 		this.transaction = transaction;
 	}
 
@@ -25,7 +26,7 @@ public class TransactionCompletedEvent extends Event {
 		return handlers;
 	}
 
-	public HandlerList getHandlerList() {
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 

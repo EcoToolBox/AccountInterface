@@ -17,6 +17,7 @@ public class TransactionEvent extends Event implements Cancellable {
 	private @Nullable String cancelledReason;
 
 	public TransactionEvent(@NotNull Transaction transaction) {
+		super(true);
 		this.transaction = transaction;
 	}
 
@@ -29,7 +30,7 @@ public class TransactionEvent extends Event implements Cancellable {
 		return handlers;
 	}
 
-	public HandlerList getHandlerList() {
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 
