@@ -57,15 +57,15 @@ public class PlayerAccount implements AccountType<PlayerAccount> {
 	}
 
 	public @NotNull TransactionResult withdrawSynced(@NotNull Payment payment) {
-		return this.account.withdrawSynced(payment);
+		return this.account.withdrawSynced(payment, this);
 	}
 
 	public @NotNull TransactionResult depositSynced(@NotNull Payment payment) {
-		return this.account.depositSynced(payment);
+		return this.account.depositSynced(payment, this);
 	}
 
 	public @NotNull TransactionResult setSynced(@NotNull Payment payment) {
-		return this.account.setSynced(payment);
+		return this.account.setSynced(payment, this);
 	}
 
 	@Override

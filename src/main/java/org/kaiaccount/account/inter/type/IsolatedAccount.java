@@ -64,8 +64,8 @@ public class IsolatedAccount implements Account<IsolatedAccount> {
 		return Collections.unmodifiableMap(this.money);
 	}
 
-	public @NotNull TransactionResult withdrawSynced(@NotNull Payment payment) {
-		Transaction transaction = new TransactionBuilder().setAccount(this)
+	public @NotNull TransactionResult withdrawSynced(@NotNull Payment payment, @NotNull Account<?> account) {
+		Transaction transaction = new TransactionBuilder().setAccount(account)
 				.setPayment(payment)
 				.setType(TransactionType.WITHDRAW)
 				.build();
@@ -102,16 +102,22 @@ public class IsolatedAccount implements Account<IsolatedAccount> {
 		return result;
 	}
 
+
 	@NotNull
 	@Override
 	public CompletableFuture<TransactionResult> withdraw(@NotNull Payment payment) {
+		return this.withdraw(payment, this);
+	}
+
+	@NotNull
+	public CompletableFuture<TransactionResult> withdraw(@NotNull Payment payment, @NotNull Account<?> account) {
 		CompletableFuture<TransactionResult> result = new CompletableFuture<>();
-		new Thread(() -> result.complete(this.withdrawSynced(payment))).start();
+		new Thread(() -> result.complete(this.withdrawSynced(payment, account))).start();
 		return result;
 	}
 
-	public TransactionResult depositSynced(@NotNull Payment payment) {
-		Transaction transaction = new TransactionBuilder().setAccount(this)
+	public @NotNull TransactionResult depositSynced(@NotNull Payment payment, @NotNull Account<?> account) {
+		Transaction transaction = new TransactionBuilder().setAccount(account)
 				.setPayment(payment)
 				.setType(TransactionType.DEPOSIT)
 				.build();
@@ -144,13 +150,18 @@ public class IsolatedAccount implements Account<IsolatedAccount> {
 	@NotNull
 	@Override
 	public CompletableFuture<TransactionResult> deposit(@NotNull Payment payment) {
+		return this.deposit(payment, this);
+	}
+
+	@NotNull
+	public CompletableFuture<TransactionResult> deposit(@NotNull Payment payment, Account<?> account) {
 		CompletableFuture<TransactionResult> result = new CompletableFuture<>();
-		new Thread(() -> result.complete(this.depositSynced(payment))).start();
+		new Thread(() -> result.complete(this.depositSynced(payment, account))).start();
 		return result;
 	}
 
-	public TransactionResult setSynced(@NotNull Payment payment) {
-		Transaction transaction = new TransactionBuilder().setAccount(this)
+	public TransactionResult setSynced(@NotNull Payment payment, @NotNull Account<?> account) {
+		Transaction transaction = new TransactionBuilder().setAccount(account)
 				.setPayment(payment)
 				.setType(TransactionType.SET)
 				.build();
@@ -182,8 +193,13 @@ public class IsolatedAccount implements Account<IsolatedAccount> {
 	@NotNull
 	@Override
 	public CompletableFuture<TransactionResult> set(@NotNull Payment payment) {
+		return this.set(payment, this);
+	}
+
+	@NotNull
+	public CompletableFuture<TransactionResult> set(@NotNull Payment payment, @NotNull Account<?> account) {
 		CompletableFuture<TransactionResult> result = new CompletableFuture<>();
-		new Thread(() -> result.complete(this.setSynced(payment))).start();
+		new Thread(() -> result.complete(this.setSynced(payment, account))).start();
 		return result;
 	}
 

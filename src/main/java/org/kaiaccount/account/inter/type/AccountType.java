@@ -6,9 +6,11 @@ import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 
 public interface AccountType<Self> extends Account<Self> {
 
@@ -47,7 +49,17 @@ public interface AccountType<Self> extends Account<Self> {
 	@NotNull
 	@Override
 	default CompletableFuture<String> multipleTransaction(
-			@NotNull Function<IsolatedAccount, CompletableFuture<TransactionResult>>... transactions) {
-		return this.getIsolated().multipleTransaction(transactions);
+			@NotNull Function<Self, CompletableFuture<TransactionResult>>... transactions) {
+		return this.getIsolated()
+				.multipleTransaction(Arrays.stream(transactions)
+						.map(function -> new Function<IsolatedAccount, CompletableFuture<TransactionResult>>() {
+
+							@Override
+							public CompletableFuture<TransactionResult> apply(IsolatedAccount isolatedAccount) {
+								return function.apply((Self) this);
+							}
+						})
+						.toArray(
+								(IntFunction<Function<IsolatedAccount, CompletableFuture<TransactionResult>>[]>) Function[]::new));
 	}
 }

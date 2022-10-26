@@ -5,7 +5,6 @@ import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.io.Serializable;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
-import org.kaiaccount.account.inter.type.IsolatedAccount;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -31,5 +30,5 @@ public interface Account<Self> extends Serializable<Self> {
 
 	@NotNull
 	CompletableFuture<String> multipleTransaction(@NotNull
-	Function<IsolatedAccount, CompletableFuture<TransactionResult>>... transactions);
+	Function<Self, CompletableFuture<TransactionResult>>... transactions);
 }
