@@ -3,12 +3,13 @@ package org.kaiaccount.account.inter.currency;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.kaiaccount.account.inter.io.Serializable;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
 
-public interface Currency {
+public interface Currency<Self extends Currency<Self>> extends Serializable<Self> {
 
 	@NotNull
 	String getDisplayNameSingle();

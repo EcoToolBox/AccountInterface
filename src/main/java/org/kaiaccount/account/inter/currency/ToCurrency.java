@@ -4,5 +4,5 @@ import org.jetbrains.annotations.NotNull;
 
 public interface ToCurrency {
 
-	Currency toCurrency(@NotNull CurrencyBuilder builder) throws Exception;
+	Currency<?> toCurrency(@NotNull CurrencyBuilder builder) throws Exception;
 }

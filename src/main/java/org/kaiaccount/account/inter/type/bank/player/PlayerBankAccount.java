@@ -10,10 +10,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.UUID;
 
-public interface PlayerBankAccount<Self> extends BankAccount<Self> {
+public interface PlayerBankAccount<Self extends PlayerBankAccount<Self>> extends BankAccount<Self> {
 
 	@NotNull
-	PlayerAccount getAccountHolder();
+	PlayerAccount<?> getAccountHolder();
 
 	@Deprecated
 	default void addAccount(@NotNull AnimalTamer ignored) {

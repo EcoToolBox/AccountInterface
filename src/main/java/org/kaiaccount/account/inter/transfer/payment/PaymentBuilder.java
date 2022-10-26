@@ -12,7 +12,7 @@ import java.math.BigInteger;
 public class PaymentBuilder {
 
 	private BigDecimal amount;
-	private Currency currency;
+	private Currency<?> currency;
 	private String resource;
 	private Account<?> from;
 
@@ -48,11 +48,11 @@ public class PaymentBuilder {
 		return this;
 	}
 
-	public Currency getCurrency() {
+	public Currency<?> getCurrency() {
 		return currency;
 	}
 
-	public PaymentBuilder setCurrency(@NotNull Currency currency) {
+	public PaymentBuilder setCurrency(@NotNull Currency<?> currency) {
 		this.currency = currency;
 		return this;
 	}

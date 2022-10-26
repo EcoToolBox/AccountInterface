@@ -7,12 +7,12 @@ import org.jetbrains.annotations.Nullable;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-public abstract class AbstractCurrency implements Currency {
+public abstract class AbstractCurrency<Self extends AbstractCurrency<Self>> implements Currency<Self> {
 
-	private final @Nullable String singleDisplay;
-	private final @Nullable String multiDisplay;
-	private @Nullable BigDecimal worth;
-	private final @NotNull String shortDisplay;
+	protected final @Nullable String singleDisplay;
+	protected final @Nullable String multiDisplay;
+	protected @Nullable BigDecimal worth;
+	protected final @NotNull String shortDisplay;
 	private final @NotNull String symbol;
 	private final @NotNull String name;
 	private boolean isDefault;

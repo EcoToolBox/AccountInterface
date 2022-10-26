@@ -10,19 +10,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kaiaccount.AccountInterface;
 import org.kaiaccount.AccountInterfaceManager;
-import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.MockHelpers;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.currency.CurrencyBuilder;
 import org.kaiaccount.account.inter.event.TransactionCompletedEvent;
 import org.kaiaccount.account.inter.event.TransactionEvent;
 import org.kaiaccount.account.inter.impl.FakeGlobalManager;
+import org.kaiaccount.account.inter.impl.player.FakePlayerAccount;
 import org.kaiaccount.account.inter.transfer.TransactionType;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.payment.PaymentBuilder;
 import org.kaiaccount.account.inter.transfer.result.FailedTransactionResult;
 import org.kaiaccount.account.inter.transfer.result.SuccessfulTransactionResult;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
+import org.kaiaccount.account.inter.type.Account;
+import org.kaiaccount.account.inter.type.AccountSynced;
+import org.kaiaccount.account.inter.type.AccountType;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -33,7 +36,7 @@ public class PlayerAccountTests {
 
 	private OfflinePlayer testPlayer;
 	private Plugin testPlugin;
-	private Currency testCurrency;
+	private Currency<?> testCurrency;
 
 	private MockedStatic<Bukkit> bukkitMock;
 
@@ -62,9 +65,9 @@ public class PlayerAccountTests {
 	@Test
 	public void testGetBalanceWithValidCurrency() {
 		//setup
-		Map<Currency, BigDecimal> currencies = new HashMap<>();
+		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.ONE);
-		Account<PlayerAccount> account = new PlayerAccount(testPlayer, currencies);
+		Account<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
 
 		//run
 		BigDecimal result = account.getBalance(testCurrency);
@@ -77,7 +80,7 @@ public class PlayerAccountTests {
 	@Test
 	public void testGetBalanceWithoutValidCurrency() {
 		//setup
-		Account<PlayerAccount> account = new PlayerAccount(testPlayer);
+		Account<FakePlayerAccount> account = new FakePlayerAccount(testPlayer);
 
 		//run
 		BigDecimal result = account.getBalance(testCurrency);
@@ -94,9 +97,9 @@ public class PlayerAccountTests {
 		MockHelpers.mockCallEvent(pluginManager, TransactionEvent.class);
 		bukkitMock.when(Bukkit::getPluginManager).thenReturn(pluginManager);
 
-		Map<Currency, BigDecimal> currencies = new HashMap<>();
+		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		PlayerAccount account = new PlayerAccount(testPlayer, currencies);
+		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -121,9 +124,9 @@ public class PlayerAccountTests {
 		MockHelpers.mockCallEvent(pluginManager, TransactionEvent.class);
 		bukkitMock.when(Bukkit::getPluginManager).thenReturn(pluginManager);
 
-		Map<Currency, BigDecimal> currencies = new HashMap<>();
+		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		PlayerAccount account = new PlayerAccount(testPlayer, currencies);
+		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(101).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -150,9 +153,9 @@ public class PlayerAccountTests {
 				+ "Test"));
 		bukkitMock.when(Bukkit::getPluginManager).thenReturn(pluginManager);
 
-		Map<Currency, BigDecimal> currencies = new HashMap<>();
+		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		PlayerAccount account = new PlayerAccount(testPlayer, currencies);
+		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -179,9 +182,9 @@ public class PlayerAccountTests {
 				event -> event.getTransaction().setNewPaymentAmount(BigDecimal.ONE));
 		bukkitMock.when(Bukkit::getPluginManager).thenReturn(pluginManager);
 
-		Map<Currency, BigDecimal> currencies = new HashMap<>();
+		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		PlayerAccount account = new PlayerAccount(testPlayer, currencies);
+		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -210,9 +213,9 @@ public class PlayerAccountTests {
 				event -> result.add("Test 1121"));
 		bukkitMock.when(Bukkit::getPluginManager).thenReturn(pluginManager);
 
-		Map<Currency, BigDecimal> currencies = new HashMap<>();
+		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		PlayerAccount account = new PlayerAccount(testPlayer, currencies);
+		AccountSynced<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -231,9 +234,9 @@ public class PlayerAccountTests {
 		MockHelpers.mockCallEvent(pluginManager, TransactionEvent.class);
 		bukkitMock.when(Bukkit::getPluginManager).thenReturn(pluginManager);
 
-		Map<Currency, BigDecimal> currencies = new HashMap<>();
+		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		PlayerAccount account = new PlayerAccount(testPlayer, currencies);
+		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -259,9 +262,9 @@ public class PlayerAccountTests {
 				+ "Test"));
 		bukkitMock.when(Bukkit::getPluginManager).thenReturn(pluginManager);
 
-		Map<Currency, BigDecimal> currencies = new HashMap<>();
+		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		PlayerAccount account = new PlayerAccount(testPlayer, currencies);
+		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -288,9 +291,9 @@ public class PlayerAccountTests {
 				event -> event.getTransaction().setNewPaymentAmount(BigDecimal.ONE));
 		bukkitMock.when(Bukkit::getPluginManager).thenReturn(pluginManager);
 
-		Map<Currency, BigDecimal> currencies = new HashMap<>();
+		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		PlayerAccount account = new PlayerAccount(testPlayer, currencies);
+		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -319,9 +322,9 @@ public class PlayerAccountTests {
 				event -> result.add("Test 1121"));
 		bukkitMock.when(Bukkit::getPluginManager).thenReturn(pluginManager);
 
-		Map<Currency, BigDecimal> currencies = new HashMap<>();
+		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		PlayerAccount account = new PlayerAccount(testPlayer, currencies);
+		AccountSynced<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run

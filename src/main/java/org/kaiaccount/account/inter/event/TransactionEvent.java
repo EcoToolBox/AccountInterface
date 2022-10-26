@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class TransactionEvent extends Event implements Cancellable {
 
-	private static final HandlerList handlers = new HandlerList();
+	private static final @NotNull HandlerList handlers = new HandlerList();
 
 	private final @NotNull Transaction transaction;
 	private @Nullable String cancelledReason;
@@ -26,7 +26,7 @@ public class TransactionEvent extends Event implements Cancellable {
 	}
 
 	@Override
-	public HandlerList getHandlers() {
+	public @NotNull HandlerList getHandlers() {
 		return handlers;
 	}
 

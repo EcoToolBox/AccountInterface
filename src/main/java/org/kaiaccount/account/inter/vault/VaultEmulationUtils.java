@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Collection;
 
-public class VaultEmulationUtils {
+public final class VaultEmulationUtils {
 
-	public static VaultPluginWrapper loadVault() throws IOException, NoSuchFieldException, IllegalAccessException {
+	public static @NotNull VaultPluginWrapper loadVault() throws IOException, NoSuchFieldException, IllegalAccessException {
 		PluginManager manager = Bukkit.getPluginManager();
 		if (!(manager instanceof SimplePluginManager simpleManager)) {
 			throw new IOException("Unknown plugin manager. Cannot load Vault emulation");
@@ -29,7 +29,7 @@ public class VaultEmulationUtils {
 		return plugin;
 	}
 
-	public static KaiEco loadService(@NotNull Plugin plugin) {
+	public static @NotNull KaiEco loadService(@NotNull Plugin plugin) {
 		KaiEco eco = new KaiEco(() -> AccountInterface.getGlobal().getDefaultCurrency(), 3);
 		loadService(plugin, eco);
 		return eco;
@@ -37,5 +37,9 @@ public class VaultEmulationUtils {
 
 	public static void loadService(@NotNull Plugin plugin, @NotNull Economy eco) {
 		Bukkit.getServicesManager().register(Economy.class, eco, plugin, ServicePriority.Normal);
+	}
+
+	private VaultEmulationUtils(){
+		throw new RuntimeException("Dont do that");
 	}
 }

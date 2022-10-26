@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
-public interface BankAccount<Self> extends Account<Self> {
+public interface BankAccount<Self extends BankAccount<Self>> extends Account<Self> {
 
 	@NotNull
 	String getBankAccountName();

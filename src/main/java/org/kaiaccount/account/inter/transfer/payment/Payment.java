@@ -14,7 +14,7 @@ public interface Payment {
 	BigDecimal getAmount();
 
 	@NotNull
-	Currency getCurrency();
+	Currency<?> getCurrency();
 
 	@NotNull
 	Plugin getPlugin();

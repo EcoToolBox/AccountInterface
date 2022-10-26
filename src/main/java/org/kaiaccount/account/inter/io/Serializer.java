@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public interface Serializer<T> {
+public interface Serializer<T extends Serializable<T>> {
 
 	void serialize(@NotNull YamlConfiguration configuration, @NotNull T value);
 

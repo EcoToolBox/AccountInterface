@@ -22,13 +22,13 @@ public interface Transaction {
 	void setNewPaymentAmount(@Nullable BigDecimal decimal);
 
 	@NotNull
-	Account getTarget();
+	Account<?> getTarget();
 
 	default void setDefaultAmount() {
 		this.setNewPaymentAmount(null);
 	}
 
-	default @NotNull Currency getCurrency() {
+	default @NotNull Currency<?> getCurrency() {
 		return this.getPayment().getCurrency();
 	}
 }

@@ -2,7 +2,6 @@ package org.kaiaccount.account.inter.type;
 
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.account.inter.currency.Currency;
-import org.kaiaccount.account.inter.io.Serializable;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
 
@@ -11,13 +10,13 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
-public interface Account<Self> extends Serializable<Self> {
+public interface Account<Self extends Account<Self>> {
 
 	@NotNull
-	BigDecimal getBalance(@NotNull Currency currency);
+	BigDecimal getBalance(@NotNull Currency<?> currency);
 
 	@NotNull
-	Map<Currency, BigDecimal> getBalances();
+	Map<Currency<?>, BigDecimal> getBalances();
 
 	@NotNull
 	CompletableFuture<TransactionResult> withdraw(@NotNull Payment payment);

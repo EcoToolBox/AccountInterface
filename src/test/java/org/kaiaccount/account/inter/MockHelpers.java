@@ -6,7 +6,7 @@ import org.mockito.Mockito;
 
 import java.util.function.Consumer;
 
-public class MockHelpers {
+public final class MockHelpers {
 
 	public static <T extends Event> PluginManager mockCallEvent(PluginManager manager, Class<T> clazz,
 			Consumer<T>... consumers) {
@@ -19,5 +19,9 @@ public class MockHelpers {
 			return null;
 		}).when(manager).callEvent(Mockito.any(clazz));
 		return manager;
+	}
+
+	private MockHelpers(){
+		throw new RuntimeException("Dont do that");
 	}
 }

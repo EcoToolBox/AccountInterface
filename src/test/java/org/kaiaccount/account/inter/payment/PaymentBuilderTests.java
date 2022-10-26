@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class PaymentBuilderTests {
 
 	private Plugin testPlugin;
-	private Currency testCurrency;
+	private Currency<?> testCurrency;
 
 	@BeforeEach
 	public void setup() {
@@ -27,7 +27,7 @@ public class PaymentBuilderTests {
 	public void testBuildValidPaymentFull() {
 		//setup
 		BigDecimal amount = BigDecimal.ONE;
-		PlayerAccount from = Mockito.mock(PlayerAccount.class);
+		PlayerAccount<?> from = Mockito.mock(PlayerAccount.class);
 
 		//run
 		Payment payment = new PaymentBuilder().setCurrency(testCurrency)

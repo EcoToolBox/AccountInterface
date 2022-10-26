@@ -12,38 +12,56 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 
-public interface AccountType<Self> extends Account<Self> {
+public interface AccountType<Self extends AccountType<Self>> extends AccountSynced<Self> {
 
 	IsolatedAccount getIsolated();
 
 	@NotNull
 	@Override
-	default BigDecimal getBalance(@NotNull Currency currency) {
+	default BigDecimal getBalance(@NotNull Currency<?> currency) {
 		return this.getIsolated().getBalance(currency);
 	}
 
 	@NotNull
 	@Override
-	default Map<Currency, BigDecimal> getBalances() {
+	default Map<Currency<?>, BigDecimal> getBalances() {
 		return this.getIsolated().getBalances();
 	}
 
 	@NotNull
 	@Override
 	default CompletableFuture<TransactionResult> withdraw(@NotNull Payment payment) {
-		return this.getIsolated().withdraw(payment);
+		return this.getIsolated().withdraw(payment, this);
+	}
+
+	@NotNull
+	@Override
+	default TransactionResult withdrawSynced(@NotNull Payment payment) {
+		return this.getIsolated().withdrawSynced(payment, this);
 	}
 
 	@NotNull
 	@Override
 	default CompletableFuture<TransactionResult> deposit(@NotNull Payment payment) {
-		return this.getIsolated().deposit(payment);
+		return this.getIsolated().deposit(payment, this);
+	}
+
+	@NotNull
+	@Override
+	default TransactionResult depositSynced(@NotNull Payment payment) {
+		return this.getIsolated().depositSynced(payment, this);
 	}
 
 	@NotNull
 	@Override
 	default CompletableFuture<TransactionResult> set(@NotNull Payment payment) {
-		return this.getIsolated().set(payment);
+		return this.getIsolated().set(payment, this);
+	}
+
+	@NotNull
+	@Override
+	default TransactionResult setSynced(@NotNull Payment payment) {
+		return this.getIsolated().setSynced(payment, this);
 	}
 
 	@NotNull
@@ -56,7 +74,8 @@ public interface AccountType<Self> extends Account<Self> {
 
 							@Override
 							public CompletableFuture<TransactionResult> apply(IsolatedAccount isolatedAccount) {
-								return function.apply((Self) this);
+								//noinspection DataFlowIssue
+								return function.apply((Self) (Object) this);
 							}
 						})
 						.toArray(

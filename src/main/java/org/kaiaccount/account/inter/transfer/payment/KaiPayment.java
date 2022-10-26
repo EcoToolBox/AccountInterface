@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class KaiPayment implements Payment {
 
-	private final @NotNull Currency currency;
+	private final @NotNull Currency<?> currency;
 	private final @NotNull BigDecimal bigDecimal;
 	private final @NotNull Plugin plugin;
 	private final @Nullable String reason;
@@ -32,6 +32,7 @@ public class KaiPayment implements Payment {
 		if (this.bigDecimal.compareTo(BigDecimal.ZERO) < 0) {
 			throw new IllegalArgumentException("Negative number can not be used in payments");
 		}
+		//noinspection ConstantValue
 		if (this.plugin == null) {
 			throw new IllegalArgumentException("No plugin specified");
 		}
@@ -46,7 +47,7 @@ public class KaiPayment implements Payment {
 
 	@NotNull
 	@Override
-	public Currency getCurrency() {
+	public Currency<?> getCurrency() {
 		return this.currency;
 	}
 

@@ -1,87 +1,88 @@
 package org.kaiaccount;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.currency.CurrencyBuilder;
 import org.kaiaccount.account.inter.currency.ToCurrency;
-import org.kaiaccount.account.inter.io.Serializers;
 import org.kaiaccount.account.inter.type.bank.player.PlayerBankAccount;
 import org.kaiaccount.account.inter.type.bank.player.PlayerBankAccountBuilder;
 import org.kaiaccount.account.inter.type.bank.player.ToBankAccount;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
+import org.kaiaccount.account.inter.type.player.PlayerAccountBuilder;
+import org.kaiaccount.account.inter.type.player.ToPlayerAccount;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface AccountInterfaceManager {
 
 	Plugin getVaultPlugin();
 
-	Collection<ToCurrency> getToCurrencies();
+	ToCurrency getToCurrencies();
 
-	Collection<ToBankAccount> getToBankAccount();
-
-	@NotNull
-	Collection<Currency> getCurrencies();
+	ToBankAccount getToBankAccount();
 
 	@NotNull
-	Collection<PlayerAccount> getPlayerAccounts();
+	Collection<Currency<?>> getCurrencies();
 
-	void registerPlayerAccount(@NotNull PlayerAccount account);
+	@NotNull
+	Collection<PlayerAccount<?>> getPlayerAccounts();
 
-	void deregisterPlayerAccount(@NotNull PlayerAccount account);
+	ToPlayerAccount getToPlayerAccount();
 
-	void registerCurrency(@NotNull Currency currency);
+	void registerPlayerAccount(@NotNull PlayerAccount<?> account);
 
-	void deregisterCurrency(@NotNull Currency currency);
+	PlayerAccount<?> loadPlayerAccount(@NotNull OfflinePlayer player);
+
+	void deregisterPlayerAccount(@NotNull PlayerAccount<?> account);
+
+	void registerCurrency(@NotNull Currency<?> currency);
+
+	void deregisterCurrency(@NotNull Currency<?> currency);
 
 	default PlayerBankAccount<?> toBankAccount(@NotNull PlayerBankAccountBuilder builder) {
-		Exception e = null;
-		for (ToBankAccount function : this.getToBankAccount()) {
-			try {
-				return function.toBankAccount(builder);
-			} catch (Exception e1) {
-				e = e1;
-			}
+		try {
+			return this.getToBankAccount()
+					.toBankAccount(builder);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-		if (e == null) {
-			throw new RuntimeException("No 'ToCurrency' registered");
-		}
-		throw new RuntimeException(e);
 	}
 
-	default Currency toCurrency(@NotNull CurrencyBuilder builder) {
-		Exception e = null;
-		for (ToCurrency function : this.getToCurrencies()) {
-			try {
-				return function.toCurrency(builder);
-			} catch (Exception e1) {
-				e = e1;
-			}
+	default Currency<?> toCurrency(@NotNull CurrencyBuilder builder) {
+		try {
+			return this.getToCurrencies()
+					.toCurrency(builder);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-		if (e == null) {
-			throw new RuntimeException("No 'ToCurrency' registered");
-		}
-		throw new RuntimeException(e);
 	}
 
-	default @NotNull Currency getDefaultCurrency() {
+	default PlayerAccount<?> toPlayerAccount(@NotNull PlayerAccountBuilder builder) {
+		try {
+			return this.getToPlayerAccount()
+					.toPlayerAccount(builder);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	default @NotNull Currency<?> getDefaultCurrency() {
 		return this.getCurrencies().parallelStream()
 				.filter(Currency::isDefault)
 				.findAny()
 				.orElseThrow(() -> new RuntimeException("No default currency"));
 	}
 
-	default @NotNull Optional<Currency> getCurrency(@NotNull String symbol) {
+	default @NotNull Optional<Currency<?>> getCurrency(@NotNull String symbol) {
 		return this.getCurrencies().parallelStream().filter(cur -> cur.getSymbol().equalsIgnoreCase(symbol)).findAny();
 	}
 
-	default @NotNull Optional<Currency> getCurrency(@NotNull Plugin plugin, String name) {
+	default @NotNull Optional<Currency<?>> getCurrency(@NotNull Plugin plugin, String name) {
 		return this.getCurrencies()
 				.parallelStream()
 				.filter(cur -> cur.getPlugin().equals(plugin))
@@ -89,8 +90,12 @@ public interface AccountInterfaceManager {
 				.findAny();
 	}
 
-	default @NotNull PlayerAccount getPlayerAccount(@NotNull OfflinePlayer player) {
-		Optional<PlayerAccount> opAccount =
+	default @NotNull PlayerAccount<?> getPlayerAccount(@NotNull UUID playerId) {
+		return this.getPlayerAccount(Bukkit.getServer().getOfflinePlayer(playerId));
+	}
+
+	default @NotNull PlayerAccount<?> getPlayerAccount(@NotNull OfflinePlayer player) {
+		Optional<PlayerAccount<?>> opAccount =
 				this.getPlayerAccounts()
 						.parallelStream()
 						.filter(account -> account.getPlayer().equals(player))
@@ -98,20 +103,7 @@ public interface AccountInterfaceManager {
 		if (opAccount.isPresent()) {
 			return opAccount.get();
 		}
-		File file = PlayerAccount.getFile(player.getUniqueId());
-		if (!file.exists()) {
-			PlayerAccount playerAccount = new PlayerAccount(player);
-			this.registerPlayerAccount(playerAccount);
-			return playerAccount;
-		}
-		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-		try {
-			PlayerAccount playerAccount = Serializers.PLAYER_ACCOUNT.deserialize(config);
-			this.registerPlayerAccount(playerAccount);
-			return playerAccount;
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		return this.loadPlayerAccount(player);
 	}
 
 

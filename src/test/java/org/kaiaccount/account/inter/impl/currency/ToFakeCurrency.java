@@ -7,7 +7,7 @@ import org.kaiaccount.account.inter.currency.ToCurrency;
 
 public class ToFakeCurrency implements ToCurrency {
 	@Override
-	public Currency toCurrency(@NotNull CurrencyBuilder builder) throws Exception {
+	public Currency<?> toCurrency(@NotNull CurrencyBuilder builder) {
 		return new FakeCurrency(builder);
 	}
 }

@@ -5,5 +5,5 @@ import org.jetbrains.annotations.NotNull;
 public interface ToBankAccount {
 
 	@NotNull
-	PlayerBankAccount toBankAccount(@NotNull PlayerBankAccountBuilder builder);
+	PlayerBankAccount<?> toBankAccount(@NotNull PlayerBankAccountBuilder builder);
 }

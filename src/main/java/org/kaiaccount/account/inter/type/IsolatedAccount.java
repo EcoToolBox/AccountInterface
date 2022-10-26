@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.event.TransactionCompletedEvent;
 import org.kaiaccount.account.inter.event.TransactionEvent;
-import org.kaiaccount.account.inter.io.Serializer;
 import org.kaiaccount.account.inter.transfer.Transaction;
 import org.kaiaccount.account.inter.transfer.TransactionBuilder;
 import org.kaiaccount.account.inter.transfer.TransactionType;
@@ -22,16 +21,16 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 
-public class IsolatedAccount implements Account<IsolatedAccount> {
+public class IsolatedAccount implements AccountSynced<IsolatedAccount> {
 
-	private final Map<Currency, BigDecimal> money = new HashMap<>();
+	private final Map<Currency<?>, BigDecimal> money = new HashMap<>();
 	private final LinkedBlockingDeque<UUID> tickets = new LinkedBlockingDeque<>();
 
 	public IsolatedAccount() {
 		this(Collections.emptyMap());
 	}
 
-	public IsolatedAccount(Map<Currency, BigDecimal> money) {
+	public IsolatedAccount(Map<Currency<?>, BigDecimal> money) {
 		this.money.putAll(money);
 	}
 
@@ -54,14 +53,20 @@ public class IsolatedAccount implements Account<IsolatedAccount> {
 
 	@NotNull
 	@Override
-	public BigDecimal getBalance(@NotNull Currency currency) {
+	public BigDecimal getBalance(@NotNull Currency<?> currency) {
 		return this.money.getOrDefault(currency, BigDecimal.ZERO);
 	}
 
 	@NotNull
 	@Override
-	public Map<Currency, BigDecimal> getBalances() {
+	public Map<Currency<?>, BigDecimal> getBalances() {
 		return Collections.unmodifiableMap(this.money);
+	}
+
+	@NotNull
+	@Override
+	public TransactionResult withdrawSynced(@NotNull Payment payment) {
+		return this.withdrawSynced(payment, this);
 	}
 
 	public @NotNull TransactionResult withdrawSynced(@NotNull Payment payment, @NotNull Account<?> account) {
@@ -116,6 +121,12 @@ public class IsolatedAccount implements Account<IsolatedAccount> {
 		return result;
 	}
 
+	@NotNull
+	@Override
+	public TransactionResult depositSynced(@NotNull Payment payment) {
+		return this.depositSynced(payment, this);
+	}
+
 	public @NotNull TransactionResult depositSynced(@NotNull Payment payment, @NotNull Account<?> account) {
 		Transaction transaction = new TransactionBuilder().setAccount(account)
 				.setPayment(payment)
@@ -154,10 +165,16 @@ public class IsolatedAccount implements Account<IsolatedAccount> {
 	}
 
 	@NotNull
-	public CompletableFuture<TransactionResult> deposit(@NotNull Payment payment, Account<?> account) {
+	public CompletableFuture<TransactionResult> deposit(@NotNull Payment payment, @NotNull Account<?> account) {
 		CompletableFuture<TransactionResult> result = new CompletableFuture<>();
 		new Thread(() -> result.complete(this.depositSynced(payment, account))).start();
 		return result;
+	}
+
+	@NotNull
+	@Override
+	public TransactionResult setSynced(@NotNull Payment payment) {
+		return this.setSynced(payment, this);
 	}
 
 	public TransactionResult setSynced(@NotNull Payment payment, @NotNull Account<?> account) {
@@ -238,11 +255,6 @@ public class IsolatedAccount implements Account<IsolatedAccount> {
 			completeTask(ticket);
 		});
 		return ret;
-	}
-
-	@Override
-	public Serializer<IsolatedAccount> getSerializer() {
-		throw new RuntimeException("Cannot save");
 	}
 
 	public IsolatedAccount copy() {

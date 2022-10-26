@@ -13,6 +13,7 @@ import org.kaiaccount.account.inter.transfer.payment.PaymentBuilder;
 import org.kaiaccount.account.inter.transfer.result.FailedTransactionResult;
 import org.kaiaccount.account.inter.transfer.result.SuccessfulTransactionResult;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
+import org.kaiaccount.account.inter.type.AccountSynced;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 
 import java.math.BigDecimal;
@@ -21,10 +22,10 @@ import java.util.function.Supplier;
 
 public class KaiEco implements Economy {
 
-	private final Supplier<Currency> currency;
+	private final Supplier<Currency<?>> currency;
 	private final int toDecimal;
 
-	public KaiEco(Supplier<Currency> currency, int toDecimal) {
+	public KaiEco(Supplier<Currency<?>> currency, int toDecimal) {
 		this.currency = currency;
 		this.toDecimal = toDecimal;
 	}
@@ -150,8 +151,13 @@ public class KaiEco implements Economy {
 				new PaymentBuilder().setAmount(v)
 						.setCurrency(this.currency.get())
 						.build(AccountInterface.getGlobal().getVaultPlugin());
-		PlayerAccount account = AccountInterface.getGlobal().getPlayerAccount(offlinePlayer);
-		TransactionResult transaction = account.withdrawSynced(payment);
+		PlayerAccount<?> account = AccountInterface.getGlobal().getPlayerAccount(offlinePlayer);
+		if (!(account instanceof AccountSynced<?> syncedAccount)) {
+			throw new RuntimeException("Currency plugin does not have support for vault. -> "
+					+ account.getClass().getSimpleName()
+					+ " does not implement AccountSynced");
+		}
+		TransactionResult transaction = syncedAccount.withdrawSynced(payment);
 		return createResponse(transaction);
 	}
 
@@ -178,8 +184,13 @@ public class KaiEco implements Economy {
 				new PaymentBuilder().setAmount(v)
 						.setCurrency(this.currency.get())
 						.build(AccountInterface.getGlobal().getVaultPlugin());
-		PlayerAccount account = AccountInterface.getGlobal().getPlayerAccount(offlinePlayer);
-		TransactionResult transaction = account.depositSynced(payment);
+		PlayerAccount<?> account = AccountInterface.getGlobal().getPlayerAccount(offlinePlayer);
+		if (!(account instanceof AccountSynced<?> syncedAccount)) {
+			throw new RuntimeException("Currency plugin does not have support for vault. -> "
+					+ account.getClass().getSimpleName()
+					+ " does not implement AccountSynced");
+		}
+		TransactionResult transaction = syncedAccount.depositSynced(payment);
 		return createResponse(transaction);
 	}
 
@@ -293,8 +304,7 @@ public class KaiEco implements Economy {
 			return new EconomyResponse(takeAmount, newBalance.doubleValue(), EconomyResponse.ResponseType.SUCCESS,
 					null);
 		}
-		if (result instanceof FailedTransactionResult) {
-			FailedTransactionResult failed = (FailedTransactionResult) result;
+		if (result instanceof FailedTransactionResult failed) {
 			return new EconomyResponse(takeAmount, newBalance.doubleValue(), EconomyResponse.ResponseType.FAILURE,
 					failed.getFailReason());
 		}

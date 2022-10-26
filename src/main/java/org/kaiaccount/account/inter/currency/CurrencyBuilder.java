@@ -19,7 +19,7 @@ public class CurrencyBuilder {
 	private Plugin plugin;
 	private String multiDisplay;
 
-	public Currency build() {
+	public Currency<?> build() {
 		return AccountInterface.getGlobal().toCurrency(this);
 	}
 

@@ -13,13 +13,13 @@ import java.util.regex.Pattern;
 public class VaultPluginLoaderWrapper implements PluginLoader {
 	@NotNull
 	@Override
-	public Plugin loadPlugin(@NotNull File file) throws InvalidPluginException, UnknownDependencyException {
+	public Plugin loadPlugin(@NotNull File file) throws UnknownDependencyException {
 		throw new RuntimeException("Should not run -> use VaultEmulationUtils.loadVault()");
 	}
 
 	@NotNull
 	@Override
-	public PluginDescriptionFile getPluginDescription(@NotNull File file) throws InvalidDescriptionException {
+	public PluginDescriptionFile getPluginDescription(@NotNull File file) {
 		throw new RuntimeException("Should not run");
 	}
 

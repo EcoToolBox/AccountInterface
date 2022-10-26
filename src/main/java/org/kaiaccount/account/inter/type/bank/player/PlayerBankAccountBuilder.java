@@ -2,9 +2,11 @@ package org.kaiaccount.account.inter.type.bank.player;
 
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.AccountInterface;
+import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.type.bank.BankPermission;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
@@ -12,19 +14,30 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerBankAccountBuilder {
 
-	private PlayerAccount account;
+	private PlayerAccount<?> account;
 	private String name;
-	private Map<UUID, Collection<BankPermission>> bankPermissions = new ConcurrentHashMap<>();
+	private final Map<UUID, Collection<BankPermission>> bankPermissions = new ConcurrentHashMap<>();
+	private final Map<Currency<?>, BigDecimal> initialBalance = new ConcurrentHashMap<>();
 
-	public PlayerBankAccount build() {
+	public PlayerBankAccount<?> build() {
 		return AccountInterface.getGlobal().toBankAccount(this);
 	}
 
-	public PlayerAccount getAccount() {
+	public Map<Currency<?>, BigDecimal> getInitialBalance() {
+		return this.initialBalance;
+	}
+
+	public PlayerBankAccountBuilder setInitialBalance(Map<Currency<?>, BigDecimal> map) {
+		this.initialBalance.clear();
+		this.initialBalance.putAll(map);
+		return this;
+	}
+
+	public PlayerAccount<?> getAccount() {
 		return this.account;
 	}
 
-	public PlayerBankAccountBuilder setAccount(PlayerAccount account) {
+	public PlayerBankAccountBuilder setAccount(PlayerAccount<?> account) {
 		this.account = account;
 		return this;
 	}
@@ -43,7 +56,8 @@ public class PlayerBankAccountBuilder {
 	}
 
 	public PlayerBankAccountBuilder setAccountHolders(Map<UUID, Collection<BankPermission>> map) {
-		this.bankPermissions = map;
+		this.bankPermissions.clear();
+		this.bankPermissions.putAll(map);
 		return this;
 	}
 

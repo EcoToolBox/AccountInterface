@@ -1,29 +1,27 @@
 package org.kaiaccount.account.inter.type.bank.player;
 
 import org.jetbrains.annotations.NotNull;
-import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.type.bank.AbstractBankAccount;
 import org.kaiaccount.account.inter.type.bank.BankPermission;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class AbstractPlayerBankAccount<Self> extends AbstractBankAccount<Self>
+public abstract class AbstractPlayerBankAccount<Self extends AbstractPlayerBankAccount<Self>>
+		extends AbstractBankAccount<Self>
 		implements PlayerBankAccount<Self> {
 
-	private final @NotNull PlayerAccount account;
+	private final @NotNull PlayerAccount<?> account;
 	private final @NotNull Map<UUID, Collection<BankPermission>> bankPermissions = new ConcurrentHashMap<>();
 
-	public AbstractPlayerBankAccount(@NotNull PlayerAccount account, @NotNull String name,
-			@NotNull Map<Currency, BigDecimal> values) {
-		super(name, values);
-		this.account = account;
+	public AbstractPlayerBankAccount(@NotNull PlayerBankAccountBuilder builder) {
+		super(builder.getName(), builder.getInitialBalance());
+		this.account = builder.getAccount();
 	}
 
 	@Override
-	public @NotNull PlayerAccount getAccountHolder() {
+	public @NotNull PlayerAccount<?> getAccountHolder() {
 		return this.account;
 	}
 
