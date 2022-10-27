@@ -14,7 +14,7 @@ public class PlayerAccountBuilder {
 	private final Map<Currency<?>, BigDecimal> initialBalance = new ConcurrentHashMap<>();
 
 	public PlayerAccount<?> build() {
-		return AccountInterface.getGlobal().toPlayerAccount(this);
+		return AccountInterface.getManager().toPlayerAccount(this);
 	}
 
 	public OfflinePlayer getPlayer() {

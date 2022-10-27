@@ -37,17 +37,16 @@ public class PlayerAccountTests {
 	private OfflinePlayer testPlayer;
 	private Plugin testPlugin;
 	private Currency<?> testCurrency;
+	private AccountInterfaceManager fakeManager;
 
 	private MockedStatic<Bukkit> bukkitMock;
+	private MockedStatic<AccountInterface> accountMock;
 
 	@BeforeEach
 	public void setup() {
-		if (!AccountInterface.isReady()) {
-			AccountInterfaceManager manager = new FakeGlobalManager();
-			AccountInterface.setGlobal(manager);
-		}
-
-
+		fakeManager = new FakeGlobalManager();
+		accountMock = Mockito.mockStatic(AccountInterface.class);
+		accountMock.when(AccountInterface::getManager).thenReturn(fakeManager);
 		bukkitMock = Mockito.mockStatic(Bukkit.class);
 		testPlugin = Mockito.mock(Plugin.class);
 		testPlayer = Mockito.mock(OfflinePlayer.class);
@@ -59,6 +58,7 @@ public class PlayerAccountTests {
 	@AfterEach
 	public void remove() {
 		bukkitMock.close();
+		accountMock.close();
 		Mockito.clearAllCaches();
 	}
 

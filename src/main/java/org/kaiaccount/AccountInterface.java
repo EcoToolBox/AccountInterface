@@ -1,31 +1,52 @@
 package org.kaiaccount;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public final class AccountInterface {
+import java.util.Optional;
 
-	private static AccountInterfaceManager global;
+public class AccountInterface extends JavaPlugin {
 
-	private AccountInterface() {
-		throw new RuntimeException("Should not run");
+	private AccountInterfaceManager manager;
+
+	private static AccountInterface plugin;
+
+	public AccountInterface() {
+		plugin = this;
 	}
 
-	public static synchronized void setGlobal(@NotNull AccountInterfaceManager aiGlobal) {
-		if (isReady()) {
-			throw new RuntimeException("Currency plugin already registered");
+	private Optional<AccountInterfaceManager> getFromService() {
+		RegisteredServiceProvider<AccountInterfaceManager> reg =
+				Bukkit.getServicesManager().getRegistration(AccountInterfaceManager.class);
+		if (reg == null) {
+			return Optional.empty();
 		}
-		global = aiGlobal;
+		return Optional.of(reg.getProvider());
 	}
 
 	public static synchronized boolean isReady() {
-		return global != null;
+		if (getPlugin().manager != null) {
+			return true;
+		}
+		Optional<AccountInterfaceManager> opManager = getPlugin().getFromService();
+		if (opManager.isEmpty()) {
+			return false;
+		}
+		getPlugin().manager = opManager.get();
+		return true;
 	}
 
-	public static @NotNull AccountInterfaceManager getGlobal() {
-		if (global == null) {
+	public static @NotNull AccountInterfaceManager getManager() {
+		if (!isReady()) {
 			throw new RuntimeException("Currency plugin has not registered itself yet");
 		}
-		return global;
+		return getPlugin().manager;
+	}
+
+	public static AccountInterface getPlugin() {
+		return plugin;
 	}
 
 

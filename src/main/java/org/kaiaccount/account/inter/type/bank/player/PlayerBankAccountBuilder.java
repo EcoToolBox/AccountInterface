@@ -20,7 +20,7 @@ public class PlayerBankAccountBuilder {
 	private final Map<Currency<?>, BigDecimal> initialBalance = new ConcurrentHashMap<>();
 
 	public PlayerBankAccount<?> build() {
-		return AccountInterface.getGlobal().toBankAccount(this);
+		return AccountInterface.getManager().toBankAccount(this);
 	}
 
 	public Map<Currency<?>, BigDecimal> getInitialBalance() {

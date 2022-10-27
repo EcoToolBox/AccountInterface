@@ -20,7 +20,7 @@ public class CurrencyBuilder {
 	private String multiDisplay;
 
 	public Currency<?> build() {
-		return AccountInterface.getGlobal().toCurrency(this);
+		return AccountInterface.getManager().toCurrency(this);
 	}
 
 	public BigDecimal getWorth() {
