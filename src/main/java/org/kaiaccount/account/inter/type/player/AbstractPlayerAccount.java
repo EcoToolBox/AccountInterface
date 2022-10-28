@@ -2,17 +2,25 @@ package org.kaiaccount.account.inter.type.player;
 
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
+import org.kaiaccount.account.inter.transfer.IsolatedTransaction;
+import org.kaiaccount.account.inter.transfer.payment.Payment;
+import org.kaiaccount.account.inter.transfer.payment.PaymentBuilder;
+import org.kaiaccount.account.inter.transfer.result.SingleTransactionResult;
+import org.kaiaccount.account.inter.transfer.result.TransactionResult;
 import org.kaiaccount.account.inter.type.AccountType;
 import org.kaiaccount.account.inter.type.IsolatedAccount;
 import org.kaiaccount.account.inter.type.bank.player.PlayerBankAccount;
 import org.kaiaccount.account.inter.type.bank.player.PlayerBankAccountBuilder;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedTransferQueue;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<Self>>
-		implements PlayerAccount<Self>, AccountType<Self> {
+		implements PlayerAccount<Self>, AccountType {
 
 	private final @NotNull OfflinePlayer player;
 
@@ -25,6 +33,86 @@ public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<S
 		if (this.player == null) {
 			throw new IllegalArgumentException("Player is missing from builder");
 		}
+	}
+
+	private CompletableFuture<? extends TransactionResult> withdrawWithBanksMostlySynced(@NotNull Payment payment) {
+		BigDecimal playerBalance = this.getBalance(payment.getCurrency());
+		if (playerBalance.compareTo(payment.getAmount()) > 0) {
+			return withdraw(payment);
+		}
+		List<AccountType> includedBanks = new LinkedList<>();
+		BigDecimal calculated = BigDecimal.ZERO;
+		for (PlayerBankAccount<?> account : this.getBanks()) {
+			if (!(account instanceof AccountType)) {
+				continue;
+			}
+			calculated = calculated.add(account.getBalance(payment.getCurrency()));
+			includedBanks.add((AccountType) account);
+			if (calculated.compareTo(payment.getAmount()) >= 0) {
+				break;
+			}
+		}
+
+		List<AccountType> accounts = new LinkedList<>(includedBanks);
+		accounts.add(this);
+
+		CompletableFuture<TransactionResult> retur = new CompletableFuture<>();
+
+		new IsolatedTransaction(map -> {
+			BigDecimal processed = payment.getAmount();
+			Collection<CompletableFuture<? extends TransactionResult>> ret = new LinkedList<>();
+			if (playerBalance.compareTo(BigDecimal.ZERO) > 0) {
+				processed = processed.subtract(playerBalance);
+				IsolatedAccount account = map.get(this);
+				CompletableFuture<SingleTransactionResult> withdraw = account
+						.withdraw(new PaymentBuilder().setAmount(playerBalance)
+								.setCurrency(payment.getCurrency())
+								.setReason(payment.getReason().orElse(null))
+								.setFrom(payment.getFrom().orElse(null))
+								.build(payment.getPlugin()));
+				ret.add(withdraw.thenApply(single -> single));
+			}
+
+			for (AccountType bank : includedBanks) {
+				BigDecimal balance = bank.getBalance(payment.getCurrency());
+				if (balance.compareTo(processed) > 0) {
+					balance = processed;
+				}
+				processed = processed.subtract(balance);
+				IsolatedAccount bankAccount = map.get(bank);
+				CompletableFuture<SingleTransactionResult> withdraw = bankAccount
+						.withdraw(new PaymentBuilder().setAmount(balance)
+								.setFrom(payment.getFrom().orElse(null))
+								.setReason(payment.getReason().orElse(null))
+								.setCurrency(payment.getCurrency())
+								.build(payment.getPlugin()));
+				ret.add(withdraw.thenApply(single -> single));
+			}
+			return ret;
+		}, accounts).start().thenAccept(retur::complete);
+
+		return retur;
+	}
+
+	@NotNull
+	@Override
+	public CompletableFuture<TransactionResult> multipleTransaction(
+			@NotNull Function<IsolatedAccount, CompletableFuture<? extends TransactionResult>>... transactions) {
+		CompletableFuture<TransactionResult> ret = new CompletableFuture<>();
+		new IsolatedTransaction(map -> {
+			IsolatedAccount isolated = map.get(this);
+			Stream<CompletableFuture<? extends TransactionResult>> stream =
+					Arrays.stream(transactions).parallel().map(f -> f.apply(isolated));
+			return stream.toList();
+		}, this).start().thenAccept(ret::complete);
+		return ret;
+	}
+
+	@Override
+	public @NotNull CompletableFuture<TransactionResult> withdrawWithBanks(@NotNull Payment payment) {
+		CompletableFuture<TransactionResult> result = new CompletableFuture<>();
+		new Thread(() -> this.withdrawWithBanksMostlySynced(payment).thenAccept(result::complete)).start();
+		return result;
 	}
 
 	@Override

@@ -98,7 +98,7 @@ public interface AccountInterfaceManager {
 		Optional<PlayerAccount<?>> opAccount =
 				this.getPlayerAccounts()
 						.parallelStream()
-						.filter(account -> account.getPlayer().equals(player))
+						.filter(account -> account.getPlayer().getUniqueId().equals(player.getUniqueId()))
 						.findAny();
 		if (opAccount.isPresent()) {
 			return opAccount.get();

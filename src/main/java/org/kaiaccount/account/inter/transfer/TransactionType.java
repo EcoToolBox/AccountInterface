@@ -4,6 +4,5 @@ public enum TransactionType {
 
 	WITHDRAW,
 	SET,
-	MULTIPLE,
 	DEPOSIT
 }

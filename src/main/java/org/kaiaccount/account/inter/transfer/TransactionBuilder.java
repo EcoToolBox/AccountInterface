@@ -1,7 +1,7 @@
 package org.kaiaccount.account.inter.transfer;
 
-import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
+import org.kaiaccount.account.inter.type.Account;
 
 import java.math.BigDecimal;
 
@@ -9,7 +9,7 @@ public class TransactionBuilder {
 
 	private Payment payment;
 	private TransactionType type;
-	private Account<?> account;
+	private Account account;
 	private BigDecimal amount;
 
 	public Transaction build() {
@@ -34,11 +34,11 @@ public class TransactionBuilder {
 		return this;
 	}
 
-	public Account<?> getAccount() {
+	public Account getAccount() {
 		return account;
 	}
 
-	public TransactionBuilder setAccount(Account<?> account) {
+	public TransactionBuilder setAccount(Account account) {
 		this.account = account;
 		return this;
 	}

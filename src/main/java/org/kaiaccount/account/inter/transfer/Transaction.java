@@ -2,9 +2,9 @@ package org.kaiaccount.account.inter.transfer;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
+import org.kaiaccount.account.inter.type.Account;
 
 import java.math.BigDecimal;
 
@@ -22,7 +22,7 @@ public interface Transaction {
 	void setNewPaymentAmount(@Nullable BigDecimal decimal);
 
 	@NotNull
-	Account<?> getTarget();
+	Account getTarget();
 
 	default void setDefaultAmount() {
 		this.setNewPaymentAmount(null);

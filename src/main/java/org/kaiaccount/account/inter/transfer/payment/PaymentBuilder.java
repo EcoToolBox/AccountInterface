@@ -3,8 +3,8 @@ package org.kaiaccount.account.inter.transfer.payment;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.currency.Currency;
+import org.kaiaccount.account.inter.type.Account;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -14,17 +14,17 @@ public class PaymentBuilder {
 	private BigDecimal amount;
 	private Currency<?> currency;
 	private String resource;
-	private Account<?> from;
+	private Account from;
 
 	public Payment build(Plugin plugin) {
 		return new KaiPayment(this, plugin);
 	}
 
-	public Account<?> getFrom() {
+	public Account getFrom() {
 		return this.from;
 	}
 
-	public PaymentBuilder setFrom(@Nullable Account<?> from) {
+	public PaymentBuilder setFrom(@Nullable Account from) {
 		this.from = from;
 		return this;
 	}

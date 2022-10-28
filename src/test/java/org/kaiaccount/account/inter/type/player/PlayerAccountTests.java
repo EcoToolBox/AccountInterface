@@ -17,12 +17,14 @@ import org.kaiaccount.account.inter.event.TransactionCompletedEvent;
 import org.kaiaccount.account.inter.event.TransactionEvent;
 import org.kaiaccount.account.inter.impl.FakeGlobalManager;
 import org.kaiaccount.account.inter.impl.player.FakePlayerAccount;
+import org.kaiaccount.account.inter.transfer.Transaction;
 import org.kaiaccount.account.inter.transfer.TransactionType;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.payment.PaymentBuilder;
-import org.kaiaccount.account.inter.transfer.result.FailedTransactionResult;
-import org.kaiaccount.account.inter.transfer.result.SuccessfulTransactionResult;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
+import org.kaiaccount.account.inter.transfer.result.failed.FailedTransactionResult;
+import org.kaiaccount.account.inter.transfer.result.successful.MultipleSuccessfulTransactionResult;
+import org.kaiaccount.account.inter.transfer.result.successful.SuccessfulTransactionResult;
 import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.type.AccountSynced;
 import org.kaiaccount.account.inter.type.AccountType;
@@ -67,7 +69,7 @@ public class PlayerAccountTests {
 		//setup
 		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.ONE);
-		Account<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
+		Account account = new FakePlayerAccount(testPlayer, currencies);
 
 		//run
 		BigDecimal result = account.getBalance(testCurrency);
@@ -80,7 +82,7 @@ public class PlayerAccountTests {
 	@Test
 	public void testGetBalanceWithoutValidCurrency() {
 		//setup
-		Account<FakePlayerAccount> account = new FakePlayerAccount(testPlayer);
+		Account account = new FakePlayerAccount(testPlayer);
 
 		//run
 		BigDecimal result = account.getBalance(testCurrency);
@@ -99,7 +101,7 @@ public class PlayerAccountTests {
 
 		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
+		AccountType account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -108,11 +110,13 @@ public class PlayerAccountTests {
 
 		//test
 		Assertions.assertTrue(result instanceof SuccessfulTransactionResult, "Result was not successful");
-		Assertions.assertEquals(payment, result.getTransaction().getPayment());
-		Assertions.assertEquals(TransactionType.WITHDRAW, result.getTransaction().getType());
-		Assertions.assertEquals(testCurrency, result.getTransaction().getCurrency());
-		Assertions.assertEquals(10.0, result.getTransaction().getNewPaymentAmount().doubleValue());
-		Assertions.assertEquals(account, result.getTransaction().getTarget());
+		Assertions.assertEquals(1, result.getTransactions().size(), "Too many transactions occurred");
+		Transaction transaction = result.getTransactions().iterator().next();
+		Assertions.assertEquals(payment, transaction.getPayment());
+		Assertions.assertEquals(TransactionType.WITHDRAW, transaction.getType());
+		Assertions.assertEquals(testCurrency, transaction.getCurrency());
+		Assertions.assertEquals(10.0, transaction.getNewPaymentAmount().doubleValue());
+		Assertions.assertEquals(account, transaction.getTarget());
 		Assertions.assertEquals(90.0, newAmount.doubleValue());
 	}
 
@@ -126,7 +130,7 @@ public class PlayerAccountTests {
 
 		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
+		AccountType account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(101).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -135,12 +139,14 @@ public class PlayerAccountTests {
 
 		//test
 		Assertions.assertTrue(result instanceof FailedTransactionResult, "Result was successful");
-		Assertions.assertEquals("Account does not have 101.0", ((FailedTransactionResult) result).getFailReason());
-		Assertions.assertEquals(payment, result.getTransaction().getPayment());
-		Assertions.assertEquals(TransactionType.WITHDRAW, result.getTransaction().getType());
-		Assertions.assertEquals(testCurrency, result.getTransaction().getCurrency());
-		Assertions.assertEquals(101.0, result.getTransaction().getNewPaymentAmount().doubleValue());
-		Assertions.assertEquals(account, result.getTransaction().getTarget());
+		Assertions.assertEquals("Account does not have 101.0", ((FailedTransactionResult) result).getReason());
+		Assertions.assertEquals(1, result.getTransactions().size(), "Too many transactions occurred");
+		Transaction transaction = result.getTransactions().iterator().next();
+		Assertions.assertEquals(payment, transaction.getPayment());
+		Assertions.assertEquals(TransactionType.WITHDRAW, transaction.getType());
+		Assertions.assertEquals(testCurrency, transaction.getCurrency());
+		Assertions.assertEquals(101.0, transaction.getNewPaymentAmount().doubleValue());
+		Assertions.assertEquals(account, transaction.getTarget());
 		Assertions.assertEquals(100.0, newAmount.doubleValue());
 	}
 
@@ -155,7 +161,7 @@ public class PlayerAccountTests {
 
 		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
+		AccountType account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -164,12 +170,14 @@ public class PlayerAccountTests {
 
 		//test
 		Assertions.assertTrue(result instanceof FailedTransactionResult, "Result was successful");
-		Assertions.assertEquals("For Test", ((FailedTransactionResult) result).getFailReason());
-		Assertions.assertEquals(payment, result.getTransaction().getPayment());
-		Assertions.assertEquals(TransactionType.WITHDRAW, result.getTransaction().getType());
-		Assertions.assertEquals(testCurrency, result.getTransaction().getCurrency());
-		Assertions.assertEquals(10.0, result.getTransaction().getNewPaymentAmount().doubleValue());
-		Assertions.assertEquals(account, result.getTransaction().getTarget());
+		Assertions.assertEquals("For Test", ((FailedTransactionResult) result).getReason());
+		Assertions.assertEquals(1, result.getTransactions().size(), "Too many transactions occurred");
+		Transaction transaction = result.getTransactions().iterator().next();
+		Assertions.assertEquals(payment, transaction.getPayment());
+		Assertions.assertEquals(TransactionType.WITHDRAW, transaction.getType());
+		Assertions.assertEquals(testCurrency, transaction.getCurrency());
+		Assertions.assertEquals(10.0, transaction.getNewPaymentAmount().doubleValue());
+		Assertions.assertEquals(account, transaction.getTarget());
 		Assertions.assertEquals(100.0, newAmount.doubleValue());
 	}
 
@@ -184,7 +192,7 @@ public class PlayerAccountTests {
 
 		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
+		AccountType account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -193,12 +201,14 @@ public class PlayerAccountTests {
 
 		//test
 		Assertions.assertTrue(result instanceof SuccessfulTransactionResult, "Result was not successful");
-		Assertions.assertEquals(payment, result.getTransaction().getPayment());
-		Assertions.assertEquals(TransactionType.WITHDRAW, result.getTransaction().getType());
-		Assertions.assertEquals(testCurrency, result.getTransaction().getCurrency());
-		Assertions.assertEquals(10.0, result.getTransaction().getPayment().getAmount().doubleValue());
-		Assertions.assertEquals(BigDecimal.ONE, result.getTransaction().getNewPaymentAmount());
-		Assertions.assertEquals(account, result.getTransaction().getTarget());
+		Assertions.assertEquals(1, result.getTransactions().size(), "Too many transactions occurred");
+		Transaction transaction = result.getTransactions().iterator().next();
+		Assertions.assertEquals(payment, transaction.getPayment());
+		Assertions.assertEquals(TransactionType.WITHDRAW, transaction.getType());
+		Assertions.assertEquals(testCurrency, transaction.getCurrency());
+		Assertions.assertEquals(10.0, transaction.getPayment().getAmount().doubleValue());
+		Assertions.assertEquals(BigDecimal.ONE, transaction.getNewPaymentAmount());
+		Assertions.assertEquals(account, transaction.getTarget());
 		Assertions.assertEquals(99.0, newAmount.doubleValue());
 	}
 
@@ -215,7 +225,7 @@ public class PlayerAccountTests {
 
 		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		AccountSynced<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
+		AccountSynced account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -236,7 +246,7 @@ public class PlayerAccountTests {
 
 		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
+		AccountType account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -245,11 +255,13 @@ public class PlayerAccountTests {
 
 		//test
 		Assertions.assertTrue(result instanceof SuccessfulTransactionResult, "Result was not successful");
-		Assertions.assertEquals(payment, result.getTransaction().getPayment());
-		Assertions.assertEquals(TransactionType.DEPOSIT, result.getTransaction().getType());
-		Assertions.assertEquals(testCurrency, result.getTransaction().getCurrency());
-		Assertions.assertEquals(10.0, result.getTransaction().getNewPaymentAmount().doubleValue());
-		Assertions.assertEquals(account, result.getTransaction().getTarget());
+		Assertions.assertEquals(1, result.getTransactions().size(), "Too many transactions occurred");
+		Transaction transaction = result.getTransactions().iterator().next();
+		Assertions.assertEquals(payment, transaction.getPayment());
+		Assertions.assertEquals(TransactionType.DEPOSIT, transaction.getType());
+		Assertions.assertEquals(testCurrency, transaction.getCurrency());
+		Assertions.assertEquals(10.0, transaction.getNewPaymentAmount().doubleValue());
+		Assertions.assertEquals(account, transaction.getTarget());
 		Assertions.assertEquals(110.0, newAmount.doubleValue());
 	}
 
@@ -264,7 +276,7 @@ public class PlayerAccountTests {
 
 		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
+		AccountType account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -273,12 +285,14 @@ public class PlayerAccountTests {
 
 		//test
 		Assertions.assertTrue(result instanceof FailedTransactionResult, "Result was successful");
-		Assertions.assertEquals("For Test", ((FailedTransactionResult) result).getFailReason());
-		Assertions.assertEquals(payment, result.getTransaction().getPayment());
-		Assertions.assertEquals(TransactionType.DEPOSIT, result.getTransaction().getType());
-		Assertions.assertEquals(testCurrency, result.getTransaction().getCurrency());
-		Assertions.assertEquals(10.0, result.getTransaction().getNewPaymentAmount().doubleValue());
-		Assertions.assertEquals(account, result.getTransaction().getTarget());
+		Assertions.assertEquals("For Test", ((FailedTransactionResult) result).getReason());
+		Assertions.assertEquals(1, result.getTransactions().size(), "Too many transactions occurred");
+		Transaction transaction = result.getTransactions().iterator().next();
+		Assertions.assertEquals(payment, transaction.getPayment());
+		Assertions.assertEquals(TransactionType.DEPOSIT, transaction.getType());
+		Assertions.assertEquals(testCurrency, transaction.getCurrency());
+		Assertions.assertEquals(10.0, transaction.getNewPaymentAmount().doubleValue());
+		Assertions.assertEquals(account, transaction.getTarget());
 		Assertions.assertEquals(100.0, newAmount.doubleValue());
 	}
 
@@ -293,7 +307,7 @@ public class PlayerAccountTests {
 
 		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		AccountType<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
+		AccountType account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run
@@ -302,12 +316,14 @@ public class PlayerAccountTests {
 
 		//test
 		Assertions.assertTrue(result instanceof SuccessfulTransactionResult, "Result was not successful");
-		Assertions.assertEquals(payment, result.getTransaction().getPayment());
-		Assertions.assertEquals(TransactionType.DEPOSIT, result.getTransaction().getType());
-		Assertions.assertEquals(testCurrency, result.getTransaction().getCurrency());
-		Assertions.assertEquals(10.0, result.getTransaction().getPayment().getAmount().doubleValue());
-		Assertions.assertEquals(BigDecimal.ONE, result.getTransaction().getNewPaymentAmount());
-		Assertions.assertEquals(account, result.getTransaction().getTarget());
+		Assertions.assertEquals(1, result.getTransactions().size(), "Too many transactions occurred");
+		Transaction transaction = result.getTransactions().iterator().next();
+		Assertions.assertEquals(payment, transaction.getPayment());
+		Assertions.assertEquals(TransactionType.DEPOSIT, transaction.getType());
+		Assertions.assertEquals(testCurrency, transaction.getCurrency());
+		Assertions.assertEquals(10.0, transaction.getPayment().getAmount().doubleValue());
+		Assertions.assertEquals(BigDecimal.ONE, transaction.getNewPaymentAmount());
+		Assertions.assertEquals(account, transaction.getTarget());
 		Assertions.assertEquals(101.0, newAmount.doubleValue());
 	}
 
@@ -324,7 +340,7 @@ public class PlayerAccountTests {
 
 		Map<Currency<?>, BigDecimal> currencies = new HashMap<>();
 		currencies.put(testCurrency, BigDecimal.valueOf(100));
-		AccountSynced<FakePlayerAccount> account = new FakePlayerAccount(testPlayer, currencies);
+		AccountSynced account = new FakePlayerAccount(testPlayer, currencies);
 		Payment payment = new PaymentBuilder().setAmount(10).setCurrency(testCurrency).build(testPlugin);
 
 		//run

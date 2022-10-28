@@ -35,7 +35,11 @@ public interface Currency<Self extends Currency<Self>> extends Serializable<Self
 
 	Optional<BigDecimal> getWorth();
 
-	void setWorth(@NotNull BigDecimal worth);
+	void setWorth(@Nullable BigDecimal worth);
+
+	default void removeWorth() {
+		this.setWorth(null);
+	}
 
 	default String formatName(@NotNull BigDecimal amount) {
 		return this.formatName(amount, null);

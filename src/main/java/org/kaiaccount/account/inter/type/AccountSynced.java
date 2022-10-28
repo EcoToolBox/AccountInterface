@@ -1,17 +1,23 @@
 package org.kaiaccount.account.inter.type;
 
 import org.jetbrains.annotations.NotNull;
+import org.kaiaccount.account.inter.transfer.Transaction;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
-import org.kaiaccount.account.inter.transfer.result.TransactionResult;
+import org.kaiaccount.account.inter.transfer.result.SingleTransactionResult;
 
-public interface AccountSynced<Self extends AccountSynced<Self>> extends Account<Self> {
-
-	@NotNull
-	TransactionResult withdrawSynced(@NotNull Payment payment);
+public interface AccountSynced extends Account {
 
 	@NotNull
-	TransactionResult depositSynced(@NotNull Payment payment);
+	SingleTransactionResult withdrawSynced(@NotNull Payment payment);
 
 	@NotNull
-	TransactionResult setSynced(@NotNull Payment payment);
+	SingleTransactionResult depositSynced(@NotNull Payment payment);
+
+	@NotNull
+	SingleTransactionResult setSynced(@NotNull Payment payment);
+
+	@NotNull
+	SingleTransactionResult refundSynced(@NotNull Transaction payment);
+
+	void forceSetSynced(@NotNull Payment payment);
 }

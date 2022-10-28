@@ -7,16 +7,17 @@ import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.AccountInterface;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.transfer.Transaction;
-import org.kaiaccount.account.inter.transfer.TransactionType;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.payment.PaymentBuilder;
-import org.kaiaccount.account.inter.transfer.result.FailedTransactionResult;
-import org.kaiaccount.account.inter.transfer.result.SuccessfulTransactionResult;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
+import org.kaiaccount.account.inter.transfer.result.failed.FailedTransactionResult;
+import org.kaiaccount.account.inter.transfer.result.successful.MultipleSuccessfulTransactionResult;
+import org.kaiaccount.account.inter.transfer.result.successful.SuccessfulTransactionResult;
 import org.kaiaccount.account.inter.type.AccountSynced;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -152,7 +153,7 @@ public class KaiEco implements Economy {
 						.setCurrency(this.currency.get())
 						.build(AccountInterface.getManager().getVaultPlugin());
 		PlayerAccount<?> account = AccountInterface.getManager().getPlayerAccount(offlinePlayer);
-		if (!(account instanceof AccountSynced<?> syncedAccount)) {
+		if (!(account instanceof AccountSynced syncedAccount)) {
 			throw new RuntimeException("Currency plugin does not have support for vault. -> "
 					+ account.getClass().getSimpleName()
 					+ " does not implement AccountSynced");
@@ -185,7 +186,7 @@ public class KaiEco implements Economy {
 						.setCurrency(this.currency.get())
 						.build(AccountInterface.getManager().getVaultPlugin());
 		PlayerAccount<?> account = AccountInterface.getManager().getPlayerAccount(offlinePlayer);
-		if (!(account instanceof AccountSynced<?> syncedAccount)) {
+		if (!(account instanceof AccountSynced syncedAccount)) {
 			throw new RuntimeException("Currency plugin does not have support for vault. -> "
 					+ account.getClass().getSimpleName()
 					+ " does not implement AccountSynced");
@@ -291,14 +292,21 @@ public class KaiEco implements Economy {
 	}
 
 	private EconomyResponse createResponse(@NotNull TransactionResult result) {
-		Transaction transaction = result.getTransaction();
+		Collection<Transaction> transactions = result.getTransactions();
+		if (transactions.isEmpty()) {
+			return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
+					"Unknown transaction occurred");
+		}
+		Transaction transaction = transactions.iterator().next();
+
 		BigDecimal currentBalance = transaction.getTarget().getBalance(transaction.getCurrency());
 		double takeAmount = transaction.getNewPaymentAmount().doubleValue();
 		BigDecimal newBalance;
-		if (transaction.getType() == TransactionType.DEPOSIT) {
-			newBalance = currentBalance.add(transaction.getNewPaymentAmount());
-		} else {
-			newBalance = currentBalance.subtract(transaction.getNewPaymentAmount());
+		switch (transaction.getType()) {
+			case WITHDRAW -> newBalance = currentBalance.subtract(transaction.getNewPaymentAmount());
+			case SET -> newBalance = transaction.getNewPaymentAmount();
+			case DEPOSIT -> newBalance = currentBalance.add(transaction.getNewPaymentAmount());
+			default -> throw new RuntimeException("Unknown transaction type of " + transaction.getType().name());
 		}
 		if (result instanceof SuccessfulTransactionResult) {
 			return new EconomyResponse(takeAmount, newBalance.doubleValue(), EconomyResponse.ResponseType.SUCCESS,
@@ -306,7 +314,7 @@ public class KaiEco implements Economy {
 		}
 		if (result instanceof FailedTransactionResult failed) {
 			return new EconomyResponse(takeAmount, newBalance.doubleValue(), EconomyResponse.ResponseType.FAILURE,
-					failed.getFailReason());
+					failed.getReason());
 		}
 		throw new RuntimeException("Unknown result type of " + result.getClass().getName());
 	}

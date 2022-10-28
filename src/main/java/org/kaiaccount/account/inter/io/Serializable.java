@@ -22,4 +22,8 @@ public interface Serializable<Self extends Serializable<Self>> {
 		save(configuration);
 		configuration.save(file);
 	}
+
+	default boolean delete() {
+		return this.getFile().delete();
+	}
 }

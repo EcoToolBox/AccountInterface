@@ -2,8 +2,8 @@ package org.kaiaccount.account.inter.transfer;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
+import org.kaiaccount.account.inter.type.Account;
 
 import java.math.BigDecimal;
 
@@ -11,7 +11,7 @@ public class KaiTransaction implements Transaction {
 
 	private final @NotNull Payment payment;
 	private final @NotNull TransactionType type;
-	private final @NotNull Account<?> account;
+	private final @NotNull Account account;
 	private @Nullable BigDecimal amount;
 
 	public KaiTransaction(@NotNull TransactionBuilder builder) {
@@ -48,7 +48,7 @@ public class KaiTransaction implements Transaction {
 
 	@NotNull
 	@Override
-	public Account<?> getTarget() {
+	public Account getTarget() {
 		return this.account;
 	}
 }

@@ -2,15 +2,15 @@ package org.kaiaccount.account.inter.type;
 
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.account.inter.currency.Currency;
+import org.kaiaccount.account.inter.transfer.Transaction;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
-import org.kaiaccount.account.inter.transfer.result.TransactionResult;
+import org.kaiaccount.account.inter.transfer.result.SingleTransactionResult;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
 
-public interface Account<Self extends Account<Self>> {
+public interface Account {
 
 	@NotNull
 	BigDecimal getBalance(@NotNull Currency<?> currency);
@@ -19,15 +19,17 @@ public interface Account<Self extends Account<Self>> {
 	Map<Currency<?>, BigDecimal> getBalances();
 
 	@NotNull
-	CompletableFuture<TransactionResult> withdraw(@NotNull Payment payment);
+	CompletableFuture<SingleTransactionResult> withdraw(@NotNull Payment payment);
 
 	@NotNull
-	CompletableFuture<TransactionResult> deposit(@NotNull Payment payment);
+	CompletableFuture<SingleTransactionResult> deposit(@NotNull Payment payment);
 
 	@NotNull
-	CompletableFuture<TransactionResult> set(@NotNull Payment payment);
+	CompletableFuture<SingleTransactionResult> set(@NotNull Payment payment);
 
 	@NotNull
-	CompletableFuture<String> multipleTransaction(@NotNull
-	Function<Self, CompletableFuture<TransactionResult>>... transactions);
+	CompletableFuture<SingleTransactionResult> refund(@NotNull Transaction payment);
+
+	@NotNull
+	CompletableFuture<Void> forceSet(Payment payment);
 }
