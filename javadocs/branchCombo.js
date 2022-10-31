@@ -2,7 +2,7 @@ function onSubmit() {
     console.log("run");
     const nameCombo = document.getElementById('name');
     const typeCombo = document.getElementById('target');
-    window.location.href = `${typeCombo.value}/${nameCombo.value}`;
+    window.location.href = `${typeCombo.value}/refs/heads/${nameCombo.value}/apidocs/index.html`;
 }
 
 async function onTypeChange() {
@@ -14,10 +14,24 @@ async function onTypeChange() {
 
     for (const resultIndex in results) {
         const result = results[resultIndex];
-        const option = document.createElement('option');
-        option.value = result;
-        option.innerText = result;
-        nameCombo.appendChild(option);
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (request.readyState != request.DONE) {
+                return;
+            }
+            if (request.status != 200) {
+                return;
+            }
+            const option = document.createElement('option');
+            option.value = result;
+            option.innerText = result;
+            nameCombo.appendChild(option);
+        }
+        request.onerror = function () {
+            console.log(`Do not have javadocs for " + ${typeCombo.value} + "/" + ${result}`);
+        }
+        request.open('GET', `https://econtoolbox.github.io/AccountInterface/javadocs/${typeCombo.value}/refs/heads/${result}/apidocs/index.html`);
+        request.send(null);
     }
 }
 
