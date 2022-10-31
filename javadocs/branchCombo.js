@@ -9,6 +9,8 @@ async function onTypeChange() {
     const nameCombo = document.getElementById('name');
     const typeCombo = document.getElementById('target');
 
+    document.getElementById("name-label").innerHTML = `${typeCombo.value} name`
+
     nameCombo.textContent = "";
     const results = typeCombo.value == 'Branch' ? await getBranches() : await getReleases();
 
