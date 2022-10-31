@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build Javadocs
-        run: mvn javadocs
+        run: mvn javadoc:javadoc
   build:
     name: build
     runs-on: ubuntu-latest
