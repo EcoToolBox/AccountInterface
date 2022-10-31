@@ -9,10 +9,7 @@ import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.type.bank.player.PlayerBankAccount;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -31,6 +28,14 @@ public interface PlayerAccount<Self extends PlayerAccount<Self>> extends Account
 
 	@NotNull
 	CompletableFuture<TransactionResult> withdrawWithBanks(@NotNull Payment payment);
+
+	@NotNull
+	default Optional<PlayerBankAccount<?>> getBank(@NotNull String keyName) {
+		return this.getBanks()
+				.parallelStream()
+				.filter(account -> account.getBankAccountName().equals(keyName))
+				.findAny();
+	}
 
 	@NotNull
 	default Map<Currency<?>, BigDecimal> getBalancesWithBanks() {

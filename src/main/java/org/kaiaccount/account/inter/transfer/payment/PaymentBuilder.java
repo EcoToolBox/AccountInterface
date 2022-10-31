@@ -15,9 +15,19 @@ public class PaymentBuilder {
 	private Currency<?> currency;
 	private String resource;
 	private Account from;
+	private boolean priority;
 
 	public Payment build(Plugin plugin) {
 		return new KaiPayment(this, plugin);
+	}
+
+	public boolean isPriority() {
+		return this.priority;
+	}
+
+	public PaymentBuilder setPriority(boolean priority) {
+		this.priority = priority;
+		return this;
 	}
 
 	public Account getFrom() {

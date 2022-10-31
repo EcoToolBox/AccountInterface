@@ -16,6 +16,7 @@ public class KaiPayment implements Payment {
 	private final @NotNull Plugin plugin;
 	private final @Nullable String reason;
 	private final @Nullable Account from;
+	private final boolean priority;
 
 	public KaiPayment(@NotNull PaymentBuilder builder, @NotNull Plugin plugin) {
 		this.currency = builder.getCurrency();
@@ -23,6 +24,7 @@ public class KaiPayment implements Payment {
 		this.plugin = plugin;
 		this.reason = builder.getReason();
 		this.from = builder.getFrom();
+		this.priority = builder.isPriority();
 		if (this.currency == null) {
 			throw new IllegalArgumentException("No currency specified");
 		}
@@ -38,6 +40,10 @@ public class KaiPayment implements Payment {
 		}
 	}
 
+	@Override
+	public boolean isPriority() {
+		return this.priority;
+	}
 
 	@NotNull
 	@Override

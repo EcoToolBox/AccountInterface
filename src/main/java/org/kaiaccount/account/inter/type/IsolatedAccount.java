@@ -39,17 +39,25 @@ public class IsolatedAccount implements AccountSynced {
 		this.money.putAll(money);
 	}
 
+	public UUID awaitTask() {
+		return awaitTask(false);
+	}
+
 	@SuppressWarnings({"LoopConditionNotUpdatedInsideLoop", "StatementWithEmptyBody"})
-	private UUID awaitTask() {
+	public UUID awaitTask(boolean priority) {
 		UUID uuid = UUID.randomUUID();
-		tickets.offerFirst(uuid);
+		if (priority) {
+			tickets.offerLast(uuid);
+		} else {
+			tickets.offerFirst(uuid);
+		}
 		while (tickets.peekLast() != null && !tickets.peekLast().equals(uuid)) {
 		}
 		return uuid;
 	}
 
 	@SuppressWarnings("ResultOfMethodCallIgnored")
-	private void completeTask(UUID uuid) {
+	public void completeTask(UUID uuid) {
 		if (tickets.isEmpty()) {
 			return;
 		}
@@ -98,7 +106,7 @@ public class IsolatedAccount implements AccountSynced {
 			return result;
 		}
 
-		UUID ticket = awaitTask();
+		UUID ticket = awaitTask(payment.isPriority());
 		if (this.money.containsKey(payment.getCurrency())) {
 			this.money.replace(payment.getCurrency(), newValue);
 			completeTask(ticket);
@@ -150,7 +158,7 @@ public class IsolatedAccount implements AccountSynced {
 
 		BigDecimal current = this.getBalance(payment.getCurrency());
 		BigDecimal newValue = current.add(transaction.getNewPaymentAmount());
-		UUID ticket = awaitTask();
+		UUID ticket = awaitTask(payment.isPriority());
 		if (this.money.containsKey(payment.getCurrency())) {
 			this.money.replace(payment.getCurrency(), newValue);
 			completeTask(ticket);
@@ -230,7 +238,7 @@ public class IsolatedAccount implements AccountSynced {
 	public SingleSuccessfulTransactionResult forceSetSynced(@NotNull Payment payment, @NotNull Account account) {
 		Transaction transaction =
 				new TransactionBuilder().setAccount(account).setPayment(payment).setType(TransactionType.SET).build();
-		UUID ticket = awaitTask();
+		UUID ticket = awaitTask(payment.isPriority());
 		if (this.money.containsKey(payment.getCurrency())) {
 			this.money.replace(payment.getCurrency(), payment.getAmount());
 		} else {
@@ -276,7 +284,7 @@ public class IsolatedAccount implements AccountSynced {
 		}
 
 		BigDecimal newValue = transaction.getNewPaymentAmount();
-		UUID ticket = awaitTask();
+		UUID ticket = awaitTask(payment.isPriority());
 		if (this.money.containsKey(payment.getCurrency())) {
 			this.money.replace(payment.getCurrency(), newValue);
 			completeTask(ticket);

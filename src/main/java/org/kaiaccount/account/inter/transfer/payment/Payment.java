@@ -24,4 +24,6 @@ public interface Payment {
 
 	@NotNull
 	Optional<Account> getFrom();
+
+	boolean isPriority();
 }

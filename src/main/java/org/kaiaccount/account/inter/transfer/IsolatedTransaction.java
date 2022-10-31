@@ -10,6 +10,7 @@ import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.type.AccountType;
 import org.kaiaccount.account.inter.type.IsolatedAccount;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -49,6 +50,9 @@ public class IsolatedTransaction {
 	public CompletableFuture<TransactionResult> start() {
 		CompletableFuture<TransactionResult> ret = new CompletableFuture<>();
 
+		Map<AccountType, UUID> tickets = this.accounts.entrySet()
+				.parallelStream()
+				.collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getKey().getIsolated().awaitTask(true)));
 		Collection<CompletableFuture<? extends TransactionResult>> toProcess = this.function.apply(this.accounts);
 		CompletableFuture<Void> await = CompletableFuture.allOf(toProcess.toArray(CompletableFuture[]::new));
 		await.thenAccept(v -> {
@@ -66,9 +70,11 @@ public class IsolatedTransaction {
 
 				transactions.parallelStream().forEach(transaction -> {
 					AccountType realAccount = getTypeFrom(transaction.getTarget());
+					BigDecimal amount = transaction.getTarget().getBalance(transaction.getCurrency());
 					Payment payment = new PaymentBuilder()
-							.setAmount(transaction.getNewPaymentAmount())
+							.setAmount(amount)
 							.setCurrency(transaction.getCurrency())
+							.setPriority(true)
 							.build(transaction.getPayment()
 									.getPlugin());
 					realAccount.forceSet(payment);
