@@ -43,7 +43,7 @@ jobs:
         working-directory: ./newPages
       - name: commit pages branch
         if: ${{failure() && steps.remove.conclusion == 'failure'}}
-        run: git commit -m "updated ${{github.base_ref}}"
+        run: git commit -m "updated ${{github.ref}}"
         working-directory: ./newPages
       - name: push new branch
         if: ${{failure() && steps.remove.conclusion == 'failure'}}
