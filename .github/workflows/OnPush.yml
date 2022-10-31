@@ -4,7 +4,6 @@
 name: Java CI with Maven
 on:
   push:
-    branches: [ "main" ]
 jobs:
   pages:
     name: Build Github pages
@@ -35,18 +34,18 @@ jobs:
         run: rm -r ./newPages/javadocs/Branch/${{github.base_ref}}
         id: remove
       - name: Copy new to location
-        if: ${{failure() && steps.remove.conclusion == 'failure'}}
-        run: mv ./target/site/apidocs/ ./newPages/javadocs/Branch/${{github.base_ref}}/
+        if: ${{always()}
+        run: mv ./target/site/apidocs/ ./newPages/javadocs/Branch/${{github.ref}}/
       - name: Add to git
         run: git add .
-        if: ${{failure() && steps.remove.conclusion == 'failure'}}
+        if: ${{always()}}
         working-directory: ./newPages
       - name: commit pages branch
-        if: ${{failure() && steps.remove.conclusion == 'failure'}}
+        if: ${{always()}}
         run: git commit -m "updated ${{github.ref}}"
         working-directory: ./newPages
       - name: push new branch
-        if: ${{failure() && steps.remove.conclusion == 'failure'}}
+        if: ${{always()}}
         run: git push
         working-directory: ./newPages
   build:
