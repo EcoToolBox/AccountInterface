@@ -26,7 +26,7 @@ jobs:
         working-directory: ./newPages
         run: git config --global user.email "Githubactions@AccountInterface.bot"
       - name: Set token
-        working-directory: ./newPage
+        working-directory: ./newPages
         run: git remote set-url origin https://${{github.GITHUB_TOKEN}}@github.com/EconToolBox/AccountInterface.git
       - name: Setup user
         working-directory: ./newPages
