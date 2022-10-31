@@ -35,6 +35,7 @@ jobs:
         id: remove
       - name: Create docs folder
         run: mkdir ./newPages/javadocs/Branch/${{github.ref}}
+        if: always();
       - name: Copy new to location
         if: always()
         run: mv ./target/site/apidocs/ ./newPages/javadocs/Branch/${{github.ref}}/
