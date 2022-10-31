@@ -21,17 +21,25 @@ jobs:
       - name: Build Javadocs
         run: mvn javadoc:javadoc
       - name: Clone project
-        run: git clone https://github.com/EconToolBox/AccountInterface.git ./newPages
-      - name: switch to pages branch
-        run: git checkout gh_page ./newPages
+        run: git clone -b gh_page https://github.com/EconToolBox/AccountInterface.git ./newPages
       - name: Remove current pages
-        run: rm -r ./newPages/javadocs/Branch/${{github.base_ref}}/
+        run: rm -r ./newPages/javadocs/Branch/${{github.base_ref}}
+        id: remove
       - name: Copy new to location
+        if: ${{failure() && steps.remove.conclusion == 'failure'}}
         run: mv ./target/site/apidocs/ ./newPages/javadocs/Branch/${{github.base_ref}}/
+      - name: Add to git
+        run: git add .
+        if: ${{failure() && steps.remove.conclusion == 'failure'}}
+        working-directory: ./newPages
       - name: commit pages branch
-        run: git commit ./newPages -m "updated ${{github.base_ref}}"
+        if: ${{failure() && steps.remove.conclusion == 'failure'}}
+        run: git commit -m "updated ${{github.base_ref}}"
+        working-directory: ./newPages
       - name: push new branch
-        run: git push ./newPages
+        if: ${{failure() && steps.remove.conclusion == 'failure'}}
+        run: git push
+        working-directory: ./newPages
   build:
     name: Build and Test
     runs-on: ubuntu-latest
