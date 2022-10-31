@@ -34,7 +34,7 @@ jobs:
         run: rm -r ./newPages/javadocs/Branch/${{github.ref}}
         id: remove
       - name: Create docs folder
-        run: mkdir ./newPages/javadocs/Branch/${{github.ref}}
+        run: mkdir -p ./newPages/javadocs/Branch/${{github.ref}}
         if: always()
       - name: Copy new to location
         if: always()
