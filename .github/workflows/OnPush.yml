@@ -24,10 +24,10 @@ jobs:
         run: git clone -b gh_page https://github.com/EconToolBox/AccountInterface.git ./newPages
       - name: Setup email
         working-directory: ./newPages
-        run: git --global user.email "Githubactions@AccountInterface.bot"
+        run: git config --global user.email "Githubactions@AccountInterface.bot"
       - name: Setup user
         working-directory: ./newPages
-        run: git --global user.name "Github Action Bot"
+        run: git config --global user.name "Github Action Bot"
       - name: Remove current pages
         run: rm -r ./newPages/javadocs/Branch/${{github.base_ref}}
         id: remove
