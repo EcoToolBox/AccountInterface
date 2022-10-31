@@ -34,18 +34,18 @@ jobs:
         run: rm -r ./newPages/javadocs/Branch/${{github.base_ref}}
         id: remove
       - name: Copy new to location
-        if: ${{always()}
+        if: always()
         run: mv ./target/site/apidocs/ ./newPages/javadocs/Branch/${{github.ref}}/
       - name: Add to git
         run: git add .
-        if: ${{always()}}
+        if: always()
         working-directory: ./newPages
       - name: commit pages branch
-        if: ${{always()}}
+        if: always()
         run: git commit -m "updated ${{github.ref}}"
         working-directory: ./newPages
       - name: push new branch
-        if: ${{always()}}
+        if: always()
         run: git push
         working-directory: ./newPages
   build:
