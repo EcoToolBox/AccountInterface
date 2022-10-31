@@ -5,11 +5,10 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 jobs:
   pages:
     name: Build Github pages
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,8 +20,20 @@ jobs:
           cache: maven
       - name: Build Javadocs
         run: mvn javadoc:javadoc
+      - name: Clone project
+        run: git clone https://github.com/EconToolBox/AccountInterface.git ./newPages
+      - name: switch to pages branch
+        run: git checkout gh_page ./newPages
+      - name: Remove current pages
+        run: rm -r ./newPages/javadocs/Branch/${{github.base_ref}}/
+      - name: Copy new to location
+        run: mv ./target/site/apidocs/ ./newPages/javadocs/Branch/${{github.base_ref}}/
+      - name: commit pages branch
+        run: git commit ./newPages -m "updated ${{github.base_ref}}"
+      - name: push new branch
+        run: git push ./newPages
   build:
-    name: build
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
