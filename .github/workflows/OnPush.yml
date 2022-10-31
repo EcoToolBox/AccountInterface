@@ -31,8 +31,10 @@ jobs:
         working-directory: ./newPages
         run: git config --global user.name "github-actions[bot]"
       - name: Remove current pages
-        run: rm -r ./newPages/javadocs/Branch/${{github.base_ref}}
+        run: rm -r ./newPages/javadocs/Branch/${{github.ref}}
         id: remove
+      - name: Create docs folder
+        run: mkdir ./newPages/javadocs/Branch/${{github.ref}}
       - name: Copy new to location
         if: always()
         run: mv ./target/site/apidocs/ ./newPages/javadocs/Branch/${{github.ref}}/
