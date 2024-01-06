@@ -70,6 +70,6 @@ jobs:
       - name: Execute
         run: chmod +x ./gradlew
       - name: Build with Gradle
-        run: ./gradle build
+        run: ./gradlew build
       - name: Test with Maven
-        run: ./gradle clean test
+        run: ./gradlew clean test
