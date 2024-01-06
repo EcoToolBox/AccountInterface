@@ -16,9 +16,11 @@ jobs:
         with: 
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
+          cache: gradle
+      - name: Execute
+        run: chmod +x ./gradlew
       - name: Build Javadocs
-        run: mvn javadoc:javadoc
+        run: ./gradlew javadoc
       - name: Clone project
         run: git clone -b gh_page https://github.com/EconToolBox/AccountInterface.git ./newPages
       - name: Setup email
@@ -40,7 +42,7 @@ jobs:
         if: always()
       - name: Copy new to location
         if: always()
-        run: mv ./target/site/apidocs/ ./newPages/javadocs/Branch/${{github.ref}}/
+        run: mv ./build/docs/javadoc/ ./newPages/javadocs/Branch/${{github.ref}}/
       - name: Add to git
         run: git add .
         if: always()
