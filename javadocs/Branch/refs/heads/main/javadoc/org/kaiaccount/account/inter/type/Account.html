@@ -100,12 +100,12 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#deposit(org.kaiaccount.account.inter.transfer.payment.Payment)" class="member-name-link">deposit</a><wbr>(@NotNull <a href="../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#forceSet(org.kaiaccount.account.inter.transfer.payment.Payment)" class="member-name-link">forceSet</a><wbr>(<a href="../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#forceSet(org.kaiaccount.account.inter.transfer.payment.Payment)" class="member-name-link">forceSet</a><wbr>(@NotNull <a href="../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBalance(org.kaiaccount.account.inter.currency.Currency)" class="member-name-link">getBalance</a><wbr>(@NotNull <a href="../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;&nbsp;currency)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBalances()" class="member-name-link">getBalances</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../transfer/result/SingleTransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">SingleTransactionResult</a>&gt;</code></div>
@@ -135,6 +135,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getBalance(org.kaiaccount.account.inter.currency.Currency)">
 <h3>getBalance</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></span>&nbsp;<span class="element-name">getBalance</span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;&nbsp;currency)</span></div>
 </section>
@@ -143,13 +144,15 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getBalances()">
 <h3>getBalances</h3>
 <div class="member-signature"><span class="annotations">@NotNull
-</span><span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</span>&nbsp;<span class="element-name">getBalances</span>()</div>
+@CheckReturnValue
+</span><span class="return-type">@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</span>&nbsp;<span class="element-name">getBalances</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="withdraw(org.kaiaccount.account.inter.transfer.payment.Payment)">
 <h3>withdraw</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../transfer/result/SingleTransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">SingleTransactionResult</a>&gt;</span>&nbsp;<span class="element-name">withdraw</span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</span></div>
 </section>
@@ -158,6 +161,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="deposit(org.kaiaccount.account.inter.transfer.payment.Payment)">
 <h3>deposit</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../transfer/result/SingleTransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">SingleTransactionResult</a>&gt;</span>&nbsp;<span class="element-name">deposit</span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</span></div>
 </section>
@@ -166,6 +170,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="set(org.kaiaccount.account.inter.transfer.payment.Payment)">
 <h3>set</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../transfer/result/SingleTransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">SingleTransactionResult</a>&gt;</span>&nbsp;<span class="element-name">set</span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</span></div>
 </section>
@@ -174,6 +179,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="refund(org.kaiaccount.account.inter.transfer.Transaction)">
 <h3>refund</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../transfer/result/SingleTransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">SingleTransactionResult</a>&gt;</span>&nbsp;<span class="element-name">refund</span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="../transfer/Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a>&nbsp;payment)</span></div>
 </section>
@@ -182,7 +188,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="forceSet(org.kaiaccount.account.inter.transfer.payment.Payment)">
 <h3>forceSet</h3>
 <div class="member-signature"><span class="annotations">@NotNull
-</span><span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</span>&nbsp;<span class="element-name">forceSet</span><wbr><span class="parameters">(<a href="../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</span></div>
+</span><span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</span>&nbsp;<span class="element-name">forceSet</span><wbr><span class="parameters">(@NotNull
+ @NotNull <a href="../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</span></div>
 </section>
 </li>
 </ul>

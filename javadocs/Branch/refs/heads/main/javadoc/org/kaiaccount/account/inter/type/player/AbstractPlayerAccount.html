@@ -94,7 +94,7 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.kaiaccount.account.inter.type.player.PlayerAccountBuilder)" class="member-name-link">AbstractPlayerAccount</a><wbr>(<a href="PlayerAccountBuilder.html" title="class in org.kaiaccount.account.inter.type.player">PlayerAccountBuilder</a>&nbsp;builder)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.kaiaccount.account.inter.type.player.PlayerAccountBuilder)" class="member-name-link">AbstractPlayerAccount</a><wbr>(@NotNull <a href="PlayerAccountBuilder.html" title="class in org.kaiaccount.account.inter.type.player">PlayerAccountBuilder</a>&nbsp;builder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -113,10 +113,10 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NotNull <a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createBankAccount(java.lang.String)" class="member-name-link">createBankAccount</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@UnmodifiableView @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBanks()" class="member-name-link">getBanks</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../IsolatedAccount.html" title="class in org.kaiaccount.account.inter.type">IsolatedAccount</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NotNull <a href="../IsolatedAccount.html" title="class in org.kaiaccount.account.inter.type">IsolatedAccount</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIsolated()" class="member-name-link">getIsolated</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NotNull org.bukkit.OfflinePlayer</code></div>
@@ -157,7 +157,8 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 <li>
 <section class="detail" id="&lt;init&gt;(org.kaiaccount.account.inter.type.player.PlayerAccountBuilder)">
 <h3>AbstractPlayerAccount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AbstractPlayerAccount</span><wbr><span class="parameters">(<a href="PlayerAccountBuilder.html" title="class in org.kaiaccount.account.inter.type.player">PlayerAccountBuilder</a>&nbsp;builder)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AbstractPlayerAccount</span><wbr><span class="parameters">(@NotNull
+ @NotNull <a href="PlayerAccountBuilder.html" title="class in org.kaiaccount.account.inter.type.player">PlayerAccountBuilder</a>&nbsp;builder)</span></div>
 </section>
 </li>
 </ul>
@@ -172,6 +173,7 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 <section class="detail" id="multipleTransaction(java.util.function.Function...)">
 <h3>multipleTransaction</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../../transfer/result/TransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">TransactionResult</a>&gt;</span>&nbsp;<span class="element-name">multipleTransaction</span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="../IsolatedAccount.html" title="class in org.kaiaccount.account.inter.type">IsolatedAccount</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;? extends <a href="../../transfer/result/TransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">TransactionResult</a>&gt;&gt;...&nbsp;transactions)</span></div>
 <dl class="notes">
@@ -183,7 +185,8 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 <li>
 <section class="detail" id="withdrawWithBanks(org.kaiaccount.account.inter.transfer.payment.Payment)">
 <h3>withdrawWithBanks</h3>
-<div class="member-signature"><span class="annotations">@NotNull
+<div class="member-signature"><span class="annotations">@CheckReturnValue
+@NotNull
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../../transfer/result/TransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">TransactionResult</a>&gt;</span>&nbsp;<span class="element-name">withdrawWithBanks</span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="../../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</span></div>
 <dl class="notes">
@@ -195,8 +198,9 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 <li>
 <section class="detail" id="getBanks()">
 <h3>getBanks</h3>
-<div class="member-signature"><span class="annotations">@NotNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">getBanks</span>()</div>
+<div class="member-signature"><span class="annotations">@CheckReturnValue
+@NotNull
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@UnmodifiableView @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">getBanks</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="PlayerAccount.html#getBanks()">getBanks</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a> extends <a href="AbstractPlayerAccount.html" title="class in org.kaiaccount.account.inter.type.player">AbstractPlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a>&gt;&gt;</code></dd>
@@ -229,7 +233,8 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 <li>
 <section class="detail" id="getPlayer()">
 <h3>getPlayer</h3>
-<div class="member-signature"><span class="annotations">@NotNull
+<div class="member-signature"><span class="annotations">@CheckReturnValue
+@NotNull
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull org.bukkit.OfflinePlayer</span>&nbsp;<span class="element-name">getPlayer</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -240,7 +245,9 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 <li>
 <section class="detail" id="getIsolated()">
 <h3>getIsolated</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../IsolatedAccount.html" title="class in org.kaiaccount.account.inter.type">IsolatedAccount</a></span>&nbsp;<span class="element-name">getIsolated</span>()</div>
+<div class="member-signature"><span class="annotations">@CheckReturnValue
+@NotNull
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="../IsolatedAccount.html" title="class in org.kaiaccount.account.inter.type">IsolatedAccount</a></span>&nbsp;<span class="element-name">getIsolated</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../AccountType.html#getIsolated()">getIsolated</a></code>&nbsp;in interface&nbsp;<code><a href="../AccountType.html" title="interface in org.kaiaccount.account.inter.type">AccountType</a></code></dd>

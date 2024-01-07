@@ -164,6 +164,7 @@ implements <a href="Transaction.html" title="interface in org.kaiaccount.account
 <section class="detail" id="getPayment()">
 <h3>getPayment</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a></span>&nbsp;<span class="element-name">getPayment</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -175,21 +176,11 @@ implements <a href="Transaction.html" title="interface in org.kaiaccount.account
 <section class="detail" id="getNewPaymentAmount()">
 <h3>getNewPaymentAmount</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></span>&nbsp;<span class="element-name">getNewPaymentAmount</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Transaction.html#getNewPaymentAmount()">getNewPaymentAmount</a></code>&nbsp;in interface&nbsp;<code><a href="Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getType()">
-<h3>getType</h3>
-<div class="member-signature"><span class="annotations">@NotNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="TransactionType.html" title="enum class in org.kaiaccount.account.inter.transfer">TransactionType</a></span>&nbsp;<span class="element-name">getType</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Transaction.html#getType()">getType</a></code>&nbsp;in interface&nbsp;<code><a href="Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a></code></dd>
 </dl>
 </section>
 </li>
@@ -205,9 +196,22 @@ implements <a href="Transaction.html" title="interface in org.kaiaccount.account
 </section>
 </li>
 <li>
+<section class="detail" id="getType()">
+<h3>getType</h3>
+<div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="TransactionType.html" title="enum class in org.kaiaccount.account.inter.transfer">TransactionType</a></span>&nbsp;<span class="element-name">getType</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Transaction.html#getType()">getType</a></code>&nbsp;in interface&nbsp;<code><a href="Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getTarget()">
 <h3>getTarget</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="../type/Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a></span>&nbsp;<span class="element-name">getTarget</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>

@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransactions()" class="member-name-link">getTransactions</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
@@ -117,7 +117,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getTransactions()">
 <h3>getTransactions</h3>
 <div class="member-signature"><span class="annotations">@NotNull
-</span><span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a>&gt;</span>&nbsp;<span class="element-name">getTransactions</span>()</div>
+@CheckReturnValue
+</span><span class="return-type">@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a>&gt;</span>&nbsp;<span class="element-name">getTransactions</span>()</div>
 </section>
 </li>
 </ul>

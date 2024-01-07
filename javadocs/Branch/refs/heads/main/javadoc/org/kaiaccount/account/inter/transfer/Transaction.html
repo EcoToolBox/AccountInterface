@@ -134,6 +134,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getPayment()">
 <h3>getPayment</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="return-type">@NotNull <a href="payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a></span>&nbsp;<span class="element-name">getPayment</span>()</div>
 </section>
 </li>
@@ -141,14 +142,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getNewPaymentAmount()">
 <h3>getNewPaymentAmount</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></span>&nbsp;<span class="element-name">getNewPaymentAmount</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getType()">
-<h3>getType</h3>
-<div class="member-signature"><span class="annotations">@NotNull
-</span><span class="return-type">@NotNull <a href="TransactionType.html" title="enum class in org.kaiaccount.account.inter.transfer">TransactionType</a></span>&nbsp;<span class="element-name">getType</span>()</div>
 </section>
 </li>
 <li>
@@ -159,9 +154,18 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getType()">
+<h3>getType</h3>
+<div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
+</span><span class="return-type">@NotNull <a href="TransactionType.html" title="enum class in org.kaiaccount.account.inter.transfer">TransactionType</a></span>&nbsp;<span class="element-name">getType</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getTarget()">
 <h3>getTarget</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="return-type">@NotNull <a href="../type/Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a></span>&nbsp;<span class="element-name">getTarget</span>()</div>
 </section>
 </li>
@@ -174,14 +178,16 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrency()">
 <h3>getCurrency</h3>
-<div class="member-signature"><span class="annotations">@NotNull
+<div class="member-signature"><span class="annotations">@CheckReturnValue
+@NotNull
 </span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NotNull <a href="../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;</span>&nbsp;<span class="element-name">getCurrency</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAmountAdded()">
 <h3>getAmountAdded</h3>
-<div class="member-signature"><span class="annotations">@NotNull
+<div class="member-signature"><span class="annotations">@CheckReturnValue
+@NotNull
 </span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></span>&nbsp;<span class="element-name">getAmountAdded</span>()</div>
 </section>
 </li>

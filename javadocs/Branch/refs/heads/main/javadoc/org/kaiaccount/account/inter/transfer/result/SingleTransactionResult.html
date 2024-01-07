@@ -100,7 +100,7 @@ extends <a href="TransactionResult.html" title="interface in org.kaiaccount.acco
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="../Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getTransactions()" class="member-name-link">getTransactions</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 </div>
@@ -121,13 +121,16 @@ extends <a href="TransactionResult.html" title="interface in org.kaiaccount.acco
 <section class="detail" id="getTransaction()">
 <h3>getTransaction</h3>
 <div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
 </span><span class="return-type">@NotNull <a href="../Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a></span>&nbsp;<span class="element-name">getTransaction</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTransactions()">
 <h3>getTransactions</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a>&gt;</span>&nbsp;<span class="element-name">getTransactions</span>()</div>
+<div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Transaction.html" title="interface in org.kaiaccount.account.inter.transfer">Transaction</a>&gt;</span>&nbsp;<span class="element-name">getTransactions</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="TransactionResult.html#getTransactions()">getTransactions</a></code>&nbsp;in interface&nbsp;<code><a href="TransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">TransactionResult</a></code></dd>

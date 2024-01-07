@@ -152,7 +152,7 @@ implements <a href="Currency.html" title="interface in org.kaiaccount.account.in
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSymbol()" class="member-name-link">getSymbol</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorth()" class="member-name-link">getWorth</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
@@ -162,7 +162,7 @@ implements <a href="Currency.html" title="interface in org.kaiaccount.account.in
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDefault(boolean)" class="member-name-link">setDefault</a><wbr>(boolean&nbsp;check)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWorth(java.math.BigDecimal)" class="member-name-link">setWorth</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;worth)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWorth(java.math.BigDecimal)" class="member-name-link">setWorth</a><wbr>(@Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;worth)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -202,17 +202,17 @@ implements <a href="Currency.html" title="interface in org.kaiaccount.account.in
 </section>
 </li>
 <li>
-<section class="detail" id="worth">
-<h3>worth</h3>
-<div class="member-signature"><span class="annotations">@Nullable
-</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">@Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></span>&nbsp;<span class="element-name">worth</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="shortDisplay">
 <h3>shortDisplay</h3>
 <div class="member-signature"><span class="annotations">@NotNull
 </span><span class="modifiers">protected final</span>&nbsp;<span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">shortDisplay</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="worth">
+<h3>worth</h3>
+<div class="member-signature"><span class="annotations">@Nullable
+</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">@Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></span>&nbsp;<span class="element-name">worth</span></div>
 </section>
 </li>
 </ul>
@@ -241,7 +241,8 @@ implements <a href="Currency.html" title="interface in org.kaiaccount.account.in
 <li>
 <section class="detail" id="getWorth()">
 <h3>getWorth</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</span>&nbsp;<span class="element-name">getWorth</span>()</div>
+<div class="member-signature"><span class="annotations">@NotNull
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</span>&nbsp;<span class="element-name">getWorth</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Currency.html#getWorth()">getWorth</a></code>&nbsp;in interface&nbsp;<code><a href="Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;<a href="AbstractCurrency.html" title="type parameter in AbstractCurrency">Self</a> extends <a href="AbstractCurrency.html" title="class in org.kaiaccount.account.inter.currency">AbstractCurrency</a>&lt;<a href="AbstractCurrency.html" title="type parameter in AbstractCurrency">Self</a>&gt;&gt;</code></dd>
@@ -251,8 +252,8 @@ implements <a href="Currency.html" title="interface in org.kaiaccount.account.in
 <li>
 <section class="detail" id="setWorth(java.math.BigDecimal)">
 <h3>setWorth</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setWorth</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;worth)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setWorth</span><wbr><span class="parameters">(@Nullable
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;worth)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Currency.html#setWorth(java.math.BigDecimal)">setWorth</a></code>&nbsp;in interface&nbsp;<code><a href="Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;<a href="AbstractCurrency.html" title="type parameter in AbstractCurrency">Self</a> extends <a href="AbstractCurrency.html" title="class in org.kaiaccount.account.inter.currency">AbstractCurrency</a>&lt;<a href="AbstractCurrency.html" title="type parameter in AbstractCurrency">Self</a>&gt;&gt;</code></dd>
