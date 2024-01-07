@@ -1,7 +1,9 @@
 package org.kaiaccount.account.inter.type.player;
 
+import org.jetbrains.annotations.CheckReturnValue;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnmodifiableView;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
@@ -15,36 +17,43 @@ import java.util.stream.Collectors;
 
 public interface PlayerAccount<Self extends PlayerAccount<Self>> extends Account {
 
-	@NotNull
-	Collection<PlayerBankAccount<?>> getBanks();
+    @NotNull
+    @UnmodifiableView
+    @CheckReturnValue
+    Collection<PlayerBankAccount<?>> getBanks();
 
-	@NotNull
-	PlayerBankAccount<?> createBankAccount(@NotNull String name);
+    @NotNull
+    PlayerBankAccount<?> createBankAccount(@NotNull String name);
 
-	void registerBank(@NotNull PlayerBankAccount<?> account);
+    void registerBank(@NotNull PlayerBankAccount<?> account);
 
-	@NotNull
-	OfflinePlayer getPlayer();
+    @NotNull
+    @CheckReturnValue
+    OfflinePlayer getPlayer();
 
-	@NotNull
-	CompletableFuture<TransactionResult> withdrawWithBanks(@NotNull Payment payment);
+    @NotNull
+    @CheckReturnValue
+    CompletableFuture<TransactionResult> withdrawWithBanks(@NotNull Payment payment);
 
-	@NotNull
-	default Optional<PlayerBankAccount<?>> getBank(@NotNull String keyName) {
-		return this.getBanks()
-				.parallelStream()
-				.filter(account -> account.getBankAccountName().equals(keyName))
-				.findAny();
-	}
+    @NotNull
+    @CheckReturnValue
+    default Optional<PlayerBankAccount<?>> getBank(@NotNull String keyName) {
+        return this.getBanks()
+                .parallelStream()
+                .filter(account -> account.getBankAccountName().equals(keyName))
+                .findAny();
+    }
 
-	@NotNull
-	default Map<Currency<?>, BigDecimal> getBalancesWithBanks() {
-		Map<Currency<?>, BigDecimal> playerBalance = new HashMap<>(this.getBalances());
-		Map<Currency<?>, BigDecimal> bankBalance = this.getBanks()
-				.parallelStream()
-				.flatMap(bank -> bank.getBalances().entrySet().parallelStream())
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, BigDecimal::add));
-		playerBalance.putAll(bankBalance);
-		return Collections.unmodifiableMap(playerBalance);
-	}
+    @NotNull
+    @UnmodifiableView
+    @CheckReturnValue
+    default Map<Currency<?>, BigDecimal> getBalancesWithBanks() {
+        Map<Currency<?>, BigDecimal> playerBalance = new HashMap<>(this.getBalances());
+        Map<Currency<?>, BigDecimal> bankBalance = this.getBanks()
+                .parallelStream()
+                .flatMap(bank -> bank.getBalances().entrySet().parallelStream())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, BigDecimal::add));
+        playerBalance.putAll(bankBalance);
+        return Collections.unmodifiableMap(playerBalance);
+    }
 }

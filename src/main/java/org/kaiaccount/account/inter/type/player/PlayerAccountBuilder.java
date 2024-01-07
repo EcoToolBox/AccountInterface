@@ -1,6 +1,8 @@
 package org.kaiaccount.account.inter.type.player;
 
+import org.jetbrains.annotations.CheckReturnValue;
 import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.AccountInterface;
 import org.kaiaccount.account.inter.currency.Currency;
 
@@ -10,29 +12,31 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerAccountBuilder {
 
-	private OfflinePlayer player;
-	private final Map<Currency<?>, BigDecimal> initialBalance = new ConcurrentHashMap<>();
+    private final Map<Currency<?>, BigDecimal> initialBalance = new ConcurrentHashMap<>();
+    private OfflinePlayer player;
 
-	public PlayerAccount<?> build() {
-		return AccountInterface.getManager().toPlayerAccount(this);
-	}
+    @CheckReturnValue
+    @NotNull
+    public PlayerAccount<?> build() {
+        return AccountInterface.getManager().toPlayerAccount(this);
+    }
 
-	public OfflinePlayer getPlayer() {
-		return player;
-	}
+    public OfflinePlayer getPlayer() {
+        return player;
+    }
 
-	public PlayerAccountBuilder setPlayer(OfflinePlayer player) {
-		this.player = player;
-		return this;
-	}
+    public PlayerAccountBuilder setPlayer(OfflinePlayer player) {
+        this.player = player;
+        return this;
+    }
 
-	public Map<Currency<?>, BigDecimal> getInitialBalance() {
-		return initialBalance;
-	}
+    public Map<Currency<?>, BigDecimal> getInitialBalance() {
+        return initialBalance;
+    }
 
-	public PlayerAccountBuilder setInitialBalance(Map<Currency<?>, BigDecimal> map) {
-		this.initialBalance.clear();
-		this.initialBalance.putAll(map);
-		return this;
-	}
+    public PlayerAccountBuilder setInitialBalance(Map<Currency<?>, BigDecimal> map) {
+        this.initialBalance.clear();
+        this.initialBalance.putAll(map);
+        return this;
+    }
 }

@@ -12,38 +12,41 @@ import java.util.UUID;
 
 public interface PlayerBankAccount<Self extends PlayerBankAccount<Self>> extends BankAccount<Self> {
 
-	@NotNull
-	PlayerAccount<?> getAccountHolder();
+    @NotNull
+    PlayerAccount<?> getAccountHolder();
 
-	@Deprecated
-	default void addAccount(@NotNull AnimalTamer ignored) {
-		throw new RuntimeException("Cannot add an account without permissions");
-	}
+    @Deprecated
+    default void addAccount(@NotNull AnimalTamer ignored) {
+        throw new RuntimeException("Cannot add an account without permissions");
+    }
 
-	default void addAccount(@NotNull AnimalTamer uuid, @NotNull BankPermission... permissions) {
-		this.addAccount(uuid.getUniqueId(), permissions);
-	}
+    default void addAccount(@NotNull AnimalTamer uuid, @NotNull BankPermission... permissions) {
+        this.addAccount(uuid.getUniqueId(), permissions);
+    }
 
-	default void addAccount(@NotNull AnimalTamer player, Collection<BankPermission> permissions) {
-		this.addAccount(player.getUniqueId(), permissions);
-	}
+    default void addAccount(@NotNull AnimalTamer player, @NotNull Collection<BankPermission> permissions) {
+        this.addAccount(player.getUniqueId(), permissions);
+    }
 
-	@Deprecated
-	default void addAccount(@NotNull UUID ignored) {
-		throw new RuntimeException("Cannot add an account without permissions");
-	}
+    @Deprecated
+    default void addAccount(@NotNull UUID ignored) {
+        throw new RuntimeException("Cannot add an account without permissions");
+    }
 
-	default void addAccount(@NotNull UUID uuid, @NotNull BankPermission... permissions) {
-		this.addAccount(uuid, Arrays.asList(permissions));
-	}
+    default void addAccount(@NotNull UUID uuid, @NotNull BankPermission... permissions) {
+        if (permissions.length == 0) {
+            throw new IllegalArgumentException("BankPermissions are required");
+        }
+        this.addAccount(uuid, Arrays.asList(permissions));
+    }
 
-	void addAccount(@NotNull UUID uuid, Collection<BankPermission> permissions);
+    void addAccount(@NotNull UUID uuid, Collection<BankPermission> permissions);
 
-	default void removeAccount(@NotNull AnimalTamer player) {
-		this.removeAccount(player.getUniqueId());
-	}
+    default void removeAccount(@NotNull AnimalTamer player) {
+        this.removeAccount(player.getUniqueId());
+    }
 
-	void removeAccount(@NotNull UUID uuid);
+    void removeAccount(@NotNull UUID uuid);
 
 
 }

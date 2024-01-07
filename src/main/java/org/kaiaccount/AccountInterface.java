@@ -6,6 +6,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -51,7 +52,7 @@ public class AccountInterface {
         if (!isReady()) {
             throw new RuntimeException("Currency plugin has not registered itself yet");
         }
-        return getInstance().manager;
+        return Objects.requireNonNull(getInstance().manager);
     }
 
     /**
@@ -59,6 +60,7 @@ public class AccountInterface {
      *
      * @return this plugin
      */
+    @NotNull
     public static AccountInterface getInstance() {
         if (instance == null) {
             instance = new AccountInterface();
@@ -73,15 +75,18 @@ public class AccountInterface {
         return this.host;
     }
 
+    @NotNull
     private Optional<AccountInterfaceManager> getManagerFromService() {
-        return getFromService(reg -> reg.getProvider());
+        return getFromService(RegisteredServiceProvider::getProvider);
     }
 
+    @NotNull
     private Optional<Plugin> getPluginFromService() {
-        return getFromService(reg -> reg.getPlugin());
+        return getFromService(RegisteredServiceProvider::getPlugin);
     }
 
-    private <T> Optional<T> getFromService(Function<RegisteredServiceProvider<AccountInterfaceManager>, T> function) {
+    @NotNull
+    private <T> Optional<T> getFromService(@NotNull Function<RegisteredServiceProvider<AccountInterfaceManager>, T> function) {
         RegisteredServiceProvider<AccountInterfaceManager> reg =
                 Bukkit.getServicesManager().getRegistration(AccountInterfaceManager.class);
         if (reg == null) {
