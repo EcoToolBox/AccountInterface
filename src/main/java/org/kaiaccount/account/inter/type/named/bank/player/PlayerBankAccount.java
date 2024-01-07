@@ -1,16 +1,16 @@
-package org.kaiaccount.account.inter.type.bank.player;
+package org.kaiaccount.account.inter.type.named.bank.player;
 
 import org.bukkit.entity.AnimalTamer;
 import org.jetbrains.annotations.NotNull;
-import org.kaiaccount.account.inter.type.bank.BankAccount;
-import org.kaiaccount.account.inter.type.bank.BankPermission;
+import org.kaiaccount.account.inter.type.named.bank.BankAccount;
+import org.kaiaccount.account.inter.type.named.bank.BankPermission;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.UUID;
 
-public interface PlayerBankAccount<Self extends PlayerBankAccount<Self>> extends BankAccount<Self> {
+public interface PlayerBankAccount extends BankAccount {
 
     @NotNull
     PlayerAccount<?> getAccountHolder();
@@ -24,7 +24,7 @@ public interface PlayerBankAccount<Self extends PlayerBankAccount<Self>> extends
         this.addAccount(uuid.getUniqueId(), permissions);
     }
 
-    default void addAccount(@NotNull AnimalTamer player, @NotNull Collection<BankPermission> permissions) {
+    default void addAccount(@NotNull AnimalTamer player, Collection<BankPermission> permissions) {
         this.addAccount(player.getUniqueId(), permissions);
     }
 
@@ -34,9 +34,6 @@ public interface PlayerBankAccount<Self extends PlayerBankAccount<Self>> extends
     }
 
     default void addAccount(@NotNull UUID uuid, @NotNull BankPermission... permissions) {
-        if (permissions.length == 0) {
-            throw new IllegalArgumentException("BankPermissions are required");
-        }
         this.addAccount(uuid, Arrays.asList(permissions));
     }
 

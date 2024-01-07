@@ -1,17 +1,16 @@
-package org.kaiaccount.account.inter.type.bank.player;
+package org.kaiaccount.account.inter.type.named.bank.player;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.UnmodifiableView;
-import org.kaiaccount.account.inter.type.bank.AbstractBankAccount;
-import org.kaiaccount.account.inter.type.bank.BankPermission;
+import org.kaiaccount.account.inter.type.named.AbstractNamedAccountLike;
+import org.kaiaccount.account.inter.type.named.bank.BankPermission;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class AbstractPlayerBankAccount<Self extends AbstractPlayerBankAccount<Self>>
-        extends AbstractBankAccount<Self>
-        implements PlayerBankAccount<Self> {
+public abstract class AbstractPlayerBankAccount
+        extends AbstractNamedAccountLike
+        implements PlayerBankAccount {
 
     private final @NotNull PlayerAccount<?> account;
     private final @NotNull Map<UUID, Collection<BankPermission>> bankPermissions = new ConcurrentHashMap<>();
@@ -27,7 +26,7 @@ public abstract class AbstractPlayerBankAccount<Self extends AbstractPlayerBankA
     }
 
     @Override
-    public void addAccount(@NotNull UUID uuid, @NotNull Collection<BankPermission> permissions) {
+    public void addAccount(@NotNull UUID uuid, Collection<BankPermission> permissions) {
         if (permissions.isEmpty()) {
             throw new RuntimeException("Cannot add an account without permissions");
         }
@@ -42,7 +41,6 @@ public abstract class AbstractPlayerBankAccount<Self extends AbstractPlayerBankA
 
     @NotNull
     @Override
-    @UnmodifiableView
     public Map<UUID, Collection<BankPermission>> getAccounts() {
         Map<UUID, Collection<BankPermission>> map = new HashMap<>(this.bankPermissions);
         map.put(this.getAccountHolder().getPlayer().getUniqueId(), Arrays.asList(BankPermission.values()));

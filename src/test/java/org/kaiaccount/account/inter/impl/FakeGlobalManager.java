@@ -7,7 +7,7 @@ import org.kaiaccount.AccountInterfaceManager;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.currency.ToCurrency;
 import org.kaiaccount.account.inter.impl.currency.ToFakeCurrency;
-import org.kaiaccount.account.inter.type.bank.player.ToBankAccount;
+import org.kaiaccount.account.inter.type.named.bank.player.ToBankAccount;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 import org.kaiaccount.account.inter.type.player.ToPlayerAccount;
 
