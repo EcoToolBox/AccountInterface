@@ -7,18 +7,20 @@ on:
 jobs:
   pages:
     name: Build Github pages
-    needs: [build]
+    needs: [ build ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Setup JDK 17
         uses: actions/setup-java@v3
-        with: 
+        with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
+          cache: gradle
+      - name: Execute
+        run: chmod +x ./gradlew
       - name: Build Javadocs
-        run: mvn javadoc:javadoc
+        run: ./gradlew javadoc
       - name: Clone project
         run: git clone -b gh_page https://github.com/EconToolBox/AccountInterface.git ./newPages
       - name: Setup email
@@ -40,7 +42,7 @@ jobs:
         if: always()
       - name: Copy new to location
         if: always()
-        run: mv ./target/site/apidocs/ ./newPages/javadocs/Branch/${{github.ref}}/
+        run: mv ./build/docs/javadoc/ ./newPages/javadocs/Branch/${{github.ref}}/
       - name: Add to git
         run: git add .
         if: always()
@@ -64,8 +66,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
-      - name: Build with Maven
-        run: mvn package
+          cache: gradle
+      - name: Execute
+        run: chmod +x ./gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
       - name: Test with Maven
-        run: mvn clean test
+        run: ./gradlew clean test

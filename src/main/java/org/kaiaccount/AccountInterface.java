@@ -1,74 +1,94 @@
 package org.kaiaccount;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 
 /**
  * This is the main class for AccountInterface. This will hold the manager for all your needs, but that is only what
  * you should be accessing this for
  */
-public class AccountInterface extends JavaPlugin {
+public class AccountInterface {
 
-	private AccountInterfaceManager manager;
+    private static AccountInterface instance;
+    private @Nullable AccountInterfaceManager manager;
+    private @Nullable Plugin host;
 
-	private static AccountInterface plugin;
+    public AccountInterface() {
+        instance = this;
+    }
 
-	public AccountInterface() {
-		plugin = this;
-	}
+    /**
+     * Checks if a currency plugin has taken ownership and provided a {@link AccountInterfaceManager} to the Bukkit
+     * services
+     *
+     * @return true if the manager can be found
+     */
+    public static synchronized boolean isReady() {
+        if (getInstance().manager != null) {
+            return true;
+        }
+        Optional<AccountInterfaceManager> opManager = getInstance().getManagerFromService();
+        if (opManager.isEmpty()) {
+            return false;
+        }
+        getInstance().manager = opManager.get();
+        return true;
+    }
 
-	private Optional<AccountInterfaceManager> getFromService() {
-		RegisteredServiceProvider<AccountInterfaceManager> reg =
-				Bukkit.getServicesManager().getRegistration(AccountInterfaceManager.class);
-		if (reg == null) {
-			return Optional.empty();
-		}
-		return Optional.of(reg.getProvider());
-	}
+    /**
+     * Gets the manager (if ready)
+     *
+     * @return The manager for all things AccountInterface
+     */
+    public static @NotNull AccountInterfaceManager getManager() {
+        if (!isReady()) {
+            throw new RuntimeException("Currency plugin has not registered itself yet");
+        }
+        return getInstance().manager;
+    }
 
-	/**
-	 * Checks if a currency plugin has taken ownership and provided a {@link AccountInterfaceManager} to the Bukkit
-	 * services
-	 *
-	 * @return true if the manager can be found
-	 */
-	public static synchronized boolean isReady() {
-		if (getPlugin().manager != null) {
-			return true;
-		}
-		Optional<AccountInterfaceManager> opManager = getPlugin().getFromService();
-		if (opManager.isEmpty()) {
-			return false;
-		}
-		getPlugin().manager = opManager.get();
-		return true;
-	}
+    /**
+     * Gets AccountInterface Bukkit plugin
+     *
+     * @return this plugin
+     */
+    public static AccountInterface getInstance() {
+        if (instance == null) {
+            instance = new AccountInterface();
+        }
+        return instance;
+    }
 
-	/**
-	 * Gets the manager (if ready)
-	 *
-	 * @return The manager for all things AccountInterface
-	 */
-	public static @NotNull AccountInterfaceManager getManager() {
-		if (!isReady()) {
-			throw new RuntimeException("Currency plugin has not registered itself yet");
-		}
-		return getPlugin().manager;
-	}
+    public @NotNull Plugin getHostPlugin() {
+        if (this.host == null) {
+            this.host = this.getPluginFromService().orElseThrow(() -> new RuntimeException("No Economy plugin has been registered yet"));
+        }
+        return this.host;
+    }
 
-	/**
-	 * Gets AccountInterface Bukkit plugin
-	 *
-	 * @return this plugin
-	 */
-	public static AccountInterface getPlugin() {
-		return plugin;
-	}
+    private Optional<AccountInterfaceManager> getManagerFromService() {
+        return getFromService(reg -> reg.getProvider());
+    }
+
+    private Optional<Plugin> getPluginFromService() {
+        return getFromService(reg -> reg.getPlugin());
+    }
+
+    private <T> Optional<T> getFromService(Function<RegisteredServiceProvider<AccountInterfaceManager>, T> function) {
+        RegisteredServiceProvider<AccountInterfaceManager> reg =
+                Bukkit.getServicesManager().getRegistration(AccountInterfaceManager.class);
+        if (reg == null) {
+            return Optional.empty();
+        }
+        return Optional.of(function.apply(reg));
+    }
 
 
 }
