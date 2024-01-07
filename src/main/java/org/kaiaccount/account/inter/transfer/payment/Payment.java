@@ -1,6 +1,7 @@
 package org.kaiaccount.account.inter.transfer.payment;
 
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.type.Account;
@@ -10,20 +11,26 @@ import java.util.Optional;
 
 public interface Payment {
 
-	@NotNull
-	BigDecimal getAmount();
+    @NotNull
+    @CheckReturnValue
+    BigDecimal getAmount();
 
-	@NotNull
-	Currency<?> getCurrency();
+    @NotNull
+    @CheckReturnValue
+    Currency<?> getCurrency();
 
-	@NotNull
-	Plugin getPlugin();
+    @NotNull
+    @CheckReturnValue
+    Plugin getPlugin();
 
-	@NotNull
-	Optional<String> getReason();
+    @NotNull
+    @CheckReturnValue
+    Optional<String> getReason();
 
-	@NotNull
-	Optional<Account> getFrom();
+    @NotNull
+    @CheckReturnValue
+    Optional<Account> getFrom();
 
-	boolean isPriority();
+    @CheckReturnValue
+    boolean isPriority();
 }

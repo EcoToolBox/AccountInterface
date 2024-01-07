@@ -3,7 +3,10 @@ package org.kaiaccount;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnmodifiableView;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.currency.CurrencyBuilder;
 import org.kaiaccount.account.inter.currency.ToCurrency;
@@ -15,6 +18,7 @@ import org.kaiaccount.account.inter.type.player.PlayerAccountBuilder;
 import org.kaiaccount.account.inter.type.player.ToPlayerAccount;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,7 +27,10 @@ public interface AccountInterfaceManager {
     /**
      * @return The vault plugin
      */
-    Plugin getVaultPlugin();
+    @CheckReturnValue
+    default @NotNull Plugin getVaultPlugin() {
+        return Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Vault"));
+    }
 
     /**
      * Gets the mapper to map a {@link CurrencyBuilder} to the currency plugins {@link Currency}
@@ -31,7 +38,8 @@ public interface AccountInterfaceManager {
      *
      * @return The mapper
      */
-    ToCurrency getToCurrencies();
+    @CheckReturnValue
+    @NotNull ToCurrency getToCurrencies();
 
     /**
      * gets the mapper to map a {@link PlayerBankAccountBuilder} to a {@link PlayerBankAccount}
@@ -39,7 +47,8 @@ public interface AccountInterfaceManager {
      *
      * @return The mapper
      */
-    ToBankAccount getToBankAccount();
+    @CheckReturnValue
+    @NotNull ToBankAccount getToBankAccount();
 
     /**
      * Gets all registered currencies
@@ -47,6 +56,8 @@ public interface AccountInterfaceManager {
      * @return A collection of all currencies
      */
     @NotNull
+    @UnmodifiableView
+    @CheckReturnValue
     Collection<Currency<?>> getCurrencies();
 
     /**
@@ -55,6 +66,8 @@ public interface AccountInterfaceManager {
      * @return A collection of all Player Accounts
      */
     @NotNull
+    @UnmodifiableView
+    @CheckReturnValue
     Collection<PlayerAccount<?>> getPlayerAccounts();
 
     /**
@@ -63,7 +76,8 @@ public interface AccountInterfaceManager {
      *
      * @return The mapper
      */
-    ToPlayerAccount getToPlayerAccount();
+    @CheckReturnValue
+    @NotNull ToPlayerAccount getToPlayerAccount();
 
     /**
      * Registers a new Player Account. This is typically used for {@link #getPlayerAccount(UUID)}
@@ -78,6 +92,7 @@ public interface AccountInterfaceManager {
      * @param player The player to load data for
      * @return A PlayerAccount of the provided player
      */
+    @NotNull
     PlayerAccount<?> loadPlayerAccount(@NotNull OfflinePlayer player);
 
     /**
@@ -109,6 +124,8 @@ public interface AccountInterfaceManager {
      * @param builder The builder
      * @return A built edition
      */
+    @NotNull
+    @ApiStatus.Internal
     default PlayerBankAccount<?> toBankAccount(@NotNull PlayerBankAccountBuilder builder) {
         try {
             return this.getToBankAccount()
@@ -124,7 +141,8 @@ public interface AccountInterfaceManager {
      * @param builder The builder
      * @return A built edition
      */
-    default Currency<?> toCurrency(@NotNull CurrencyBuilder builder) {
+    @ApiStatus.Internal
+    default @NotNull Currency<?> toCurrency(@NotNull CurrencyBuilder builder) {
         try {
             return this.getToCurrencies()
                     .toCurrency(builder);
@@ -139,7 +157,8 @@ public interface AccountInterfaceManager {
      * @param builder The builder
      * @return A built edition
      */
-    default PlayerAccount<?> toPlayerAccount(@NotNull PlayerAccountBuilder builder) {
+    @ApiStatus.Internal
+    default @NotNull PlayerAccount<?> toPlayerAccount(@NotNull PlayerAccountBuilder builder) {
         try {
             return this.getToPlayerAccount()
                     .toPlayerAccount(builder);
@@ -177,7 +196,7 @@ public interface AccountInterfaceManager {
      * @param name   The key name of the currency
      * @return A potential of the currency
      */
-    default @NotNull Optional<Currency<?>> getCurrency(@NotNull Plugin plugin, String name) {
+    default @NotNull Optional<Currency<?>> getCurrency(@NotNull Plugin plugin, @NotNull String name) {
         return this.getCurrencies()
                 .parallelStream()
                 .filter(cur -> cur.getPlugin().equals(plugin))

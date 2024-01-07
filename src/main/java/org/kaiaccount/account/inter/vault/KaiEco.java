@@ -149,7 +149,7 @@ public class KaiEco implements Economy {
         Payment payment =
                 new PaymentBuilder().setAmount(v)
                         .setCurrency(this.currency.get())
-                        .build(AccountInterface.getManager().getVaultPlugin());
+                        .build(VaultEmulationUtils.getReason());
         PlayerAccount<?> account = AccountInterface.getManager().getPlayerAccount(offlinePlayer);
         if (!(account instanceof AccountSynced syncedAccount)) {
             throw new RuntimeException("Currency plugin does not have support for vault. -> "
@@ -182,7 +182,7 @@ public class KaiEco implements Economy {
         Payment payment =
                 new PaymentBuilder().setAmount(v)
                         .setCurrency(this.currency.get())
-                        .build(AccountInterface.getManager().getVaultPlugin());
+                        .build(VaultEmulationUtils.getReason());
         PlayerAccount<?> account = AccountInterface.getManager().getPlayerAccount(offlinePlayer);
         if (!(account instanceof AccountSynced syncedAccount)) {
             throw new RuntimeException("Currency plugin does not have support for vault. -> "

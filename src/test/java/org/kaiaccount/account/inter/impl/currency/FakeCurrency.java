@@ -18,7 +18,7 @@ public class FakeCurrency extends AbstractCurrency<FakeCurrency> {
 	}
 
 	@Override
-	public File getFile() {
+	public @NotNull File getFile() {
 		throw new RuntimeException("Not implemented");
 	}
 }

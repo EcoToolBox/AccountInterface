@@ -1,7 +1,9 @@
 package org.kaiaccount.account.inter.type.bank;
 
+import org.jetbrains.annotations.CheckReturnValue;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnmodifiableView;
 import org.kaiaccount.account.inter.type.Account;
 
 import java.util.Collection;
@@ -11,25 +13,34 @@ import java.util.UUID;
 
 public interface BankAccount<Self extends BankAccount<Self>> extends Account {
 
-	@NotNull
-	String getBankAccountName();
+    @NotNull
+    @CheckReturnValue
+    String getBankAccountName();
 
-	@NotNull
-	Map<UUID, Collection<BankPermission>> getAccounts();
+    @NotNull
+    @UnmodifiableView
+    @CheckReturnValue
+    Map<UUID, Collection<BankPermission>> getAccounts();
 
-	default Collection<BankPermission> getAccountPermissions(@NotNull OfflinePlayer player) {
-		return this.getAccountPermissions(player.getUniqueId());
-	}
+    @NotNull
+    @UnmodifiableView
+    @CheckReturnValue
+    default Collection<BankPermission> getAccountPermissions(@NotNull OfflinePlayer player) {
+        return this.getAccountPermissions(player.getUniqueId());
+    }
 
-	default Collection<BankPermission> getAccountPermissions(@NotNull UUID playerId) {
-		return this.getAccounts()
-				.entrySet()
-				.parallelStream()
-				.filter(entry -> entry.getKey().equals(playerId))
-				.findAny()
-				.map(Map.Entry::getValue)
-				.orElse(Collections.emptyList());
-	}
+    @UnmodifiableView
+    @NotNull
+    @CheckReturnValue
+    default Collection<BankPermission> getAccountPermissions(@NotNull UUID playerId) {
+        return this.getAccounts()
+                .entrySet()
+                .parallelStream()
+                .filter(entry -> entry.getKey().equals(playerId))
+                .findAny()
+                .map(Map.Entry::getValue)
+                .orElse(Collections.emptyList());
+    }
 
 
 }
