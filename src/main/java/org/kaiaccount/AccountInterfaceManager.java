@@ -126,6 +126,13 @@ public interface AccountInterfaceManager {
     void registerPlayerAccount(@NotNull PlayerAccount<?> account);
 
     /**
+     * Registers a new Named Account
+     *
+     * @param account The account to be registered
+     */
+    void registerNamedAccount(@NotNull NamedAccount account);
+
+    /**
      * Loads the player account data based upon the players {@link UUID}
      *
      * @param player The player to load data for
@@ -135,11 +142,18 @@ public interface AccountInterfaceManager {
     PlayerAccount<?> loadPlayerAccount(@NotNull OfflinePlayer player);
 
     /**
-     * Saves and deloads the player. This does not delete the player
+     * deloads the player. This does not delete the player
      *
      * @param account The player account to deload
      */
     void deregisterPlayerAccount(@NotNull PlayerAccount<?> account);
+
+    /**
+     * deloads the named account. This does not delete the named account
+     *
+     * @param account The account to deload
+     */
+    void deregisterNamedAccount(@NotNull NamedAccount account);
 
     /**
      * Registers a new currency into the game

@@ -24,8 +24,9 @@ public class NamedAccountBuilder {
         return this.name;
     }
 
-    public void setAccountName(@NotNull @Nls String name) {
+    public NamedAccountBuilder setAccountName(@NotNull @Nls String name) {
         this.name = name;
+        return this;
     }
 
     public Map<Currency<?>, BigDecimal> getInitialBalance() {
