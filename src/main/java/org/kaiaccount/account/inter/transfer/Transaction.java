@@ -8,6 +8,7 @@ import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.type.Account;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public interface Transaction {
 
@@ -28,6 +29,10 @@ public interface Transaction {
     @NotNull
     @CheckReturnValue
     Account getTarget();
+
+    @NotNull
+    @CheckReturnValue
+    LocalDateTime getTime();
 
     default void setDefaultAmount() {
         this.setNewPaymentAmount(null);

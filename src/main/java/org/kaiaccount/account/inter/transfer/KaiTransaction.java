@@ -7,18 +7,23 @@ import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.type.Account;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class KaiTransaction implements Transaction {
 
     private final @NotNull Payment payment;
     private final @NotNull TransactionType type;
     private final @NotNull Account account;
+    private final @NotNull LocalDateTime time;
     private @Nullable BigDecimal amount;
 
+
     public KaiTransaction(@NotNull TransactionBuilder builder) {
-        this.payment = builder.getPayment();
-        this.type = builder.getType();
-        this.account = builder.getAccount();
+        this.payment = Objects.requireNonNull(builder.getPayment(), "Payment is null");
+        this.type = Objects.requireNonNull(builder.getType(), "Type is null");
+        this.account = Objects.requireNonNull(builder.getAccount(), "Account is null");
+        this.time = Objects.requireNonNullElseGet(builder.getTime(), LocalDateTime::now);
     }
 
     @NotNull
@@ -55,5 +60,10 @@ public class KaiTransaction implements Transaction {
     @Override
     public Account getTarget() {
         return this.account;
+    }
+
+    @Override
+    public @NotNull LocalDateTime getTime() {
+        return this.time;
     }
 }

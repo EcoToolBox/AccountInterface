@@ -5,6 +5,7 @@ import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.type.Account;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class TransactionBuilder {
 
@@ -12,6 +13,16 @@ public class TransactionBuilder {
     private TransactionType type;
     private Account account;
     private BigDecimal amount;
+    private LocalDateTime time;
+
+    public LocalDateTime getTime() {
+        return this.time;
+    }
+
+    public TransactionBuilder setTime(LocalDateTime time) {
+        this.time = time;
+        return this;
+    }
 
     @CheckReturnValue
     public Transaction build() {
