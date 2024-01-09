@@ -12,7 +12,6 @@ public interface TransactionResult {
     @NotNull
     @UnmodifiableView
     @CheckReturnValue
-
     Collection<Transaction> getTransactions();
 
 }

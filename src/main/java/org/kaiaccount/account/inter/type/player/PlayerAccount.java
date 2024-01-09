@@ -1,35 +1,43 @@
 package org.kaiaccount.account.inter.type.player;
 
-import org.jetbrains.annotations.CheckReturnValue;
 import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.CheckReturnValue;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnmodifiableView;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
 import org.kaiaccount.account.inter.type.Account;
-import org.kaiaccount.account.inter.type.bank.player.PlayerBankAccount;
+import org.kaiaccount.account.inter.type.named.NamedAccountLike;
+import org.kaiaccount.account.inter.type.named.bank.player.PlayerBankAccount;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-public interface PlayerAccount<Self extends PlayerAccount<Self>> extends Account {
+public interface PlayerAccount<Self extends PlayerAccount<Self>> extends Account, NamedAccountLike {
 
     @NotNull
     @UnmodifiableView
     @CheckReturnValue
-    Collection<PlayerBankAccount<?>> getBanks();
+    Collection<PlayerBankAccount> getBanks();
 
     @NotNull
-    PlayerBankAccount<?> createBankAccount(@NotNull String name);
+    PlayerBankAccount createBankAccount(@NotNull String name);
 
-    void registerBank(@NotNull PlayerBankAccount<?> account);
+    void registerBank(@NotNull PlayerBankAccount account);
 
     @NotNull
     @CheckReturnValue
     OfflinePlayer getPlayer();
+
+    @Nls
+    @Override
+    default @NotNull String getAccountName() {
+        return Objects.requireNonNullElse(getPlayer().getName(), "Unknown Player");
+    }
 
     @NotNull
     @CheckReturnValue
@@ -37,10 +45,10 @@ public interface PlayerAccount<Self extends PlayerAccount<Self>> extends Account
 
     @NotNull
     @CheckReturnValue
-    default Optional<PlayerBankAccount<?>> getBank(@NotNull String keyName) {
+    default Optional<PlayerBankAccount> getBank(@NotNull String keyName) {
         return this.getBanks()
                 .parallelStream()
-                .filter(account -> account.getBankAccountName().equals(keyName))
+                .filter(account -> account.getAccountName().equals(keyName))
                 .findAny();
     }
 

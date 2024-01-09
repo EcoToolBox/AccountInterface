@@ -1,6 +1,5 @@
-package org.kaiaccount.account.inter.type.bank;
+package org.kaiaccount.account.inter.type.named;
 
-import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.transfer.IsolatedTransaction;
@@ -15,32 +14,29 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public abstract class AbstractBankAccount<Self extends AbstractBankAccount<Self>>
-        implements BankAccount<Self>, AccountType {
+public abstract class AbstractNamedAccountLike
+        implements NamedAccountLike, AccountType {
 
-    private final @NotNull String bankAccountName;
+    private final @NotNull String accountName;
     private final @NotNull IsolatedAccount account;
 
-    public AbstractBankAccount(@NotNull String bankAccountName, @NotNull Map<Currency<?>, BigDecimal> currencies) {
+    public AbstractNamedAccountLike(@NotNull String accountName, @NotNull Map<Currency<?>, BigDecimal> currencies) {
         account = new IsolatedAccount(currencies);
-        this.bankAccountName = bankAccountName;
+        this.accountName = accountName;
     }
 
     @NotNull
     @Override
-    @CheckReturnValue
-    public String getBankAccountName() {
-        return this.bankAccountName;
+    public String getAccountName() {
+        return this.accountName;
     }
 
     @Override
-    @CheckReturnValue
-    public @NotNull IsolatedAccount getIsolated() {
+    public IsolatedAccount getIsolated() {
         return this.account;
     }
 
     @NotNull
-    @CheckReturnValue
     @Override
     public CompletableFuture<TransactionResult> multipleTransaction(
             @NotNull Function<IsolatedAccount, CompletableFuture<? extends TransactionResult>>... transactions) {

@@ -1,10 +1,9 @@
-package org.kaiaccount.account.inter.type.bank.player;
+package org.kaiaccount.account.inter.type.named.bank.player;
 
-import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.AccountInterface;
 import org.kaiaccount.account.inter.currency.Currency;
-import org.kaiaccount.account.inter.type.bank.BankPermission;
+import org.kaiaccount.account.inter.type.named.bank.BankPermission;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
 
 import java.math.BigDecimal;
@@ -20,8 +19,7 @@ public class PlayerBankAccountBuilder {
     private PlayerAccount<?> account;
     private String name;
 
-    @CheckReturnValue
-    public PlayerBankAccount<?> build() {
+    public PlayerBankAccount build() {
         return AccountInterface.getManager().toBankAccount(this);
     }
 

@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,14 @@ public class IsolatedTransaction {
     private final Function<Map<AccountType, IsolatedAccount>, Collection<CompletableFuture<?
             extends TransactionResult>>>
             function;
+
+    public IsolatedTransaction(BiFunction<IsolatedAccount, IsolatedAccount, Collection<CompletableFuture<? extends TransactionResult>>> complete, AccountType first, AccountType last) {
+        this((accounts) -> {
+            IsolatedAccount isolatedFirst = accounts.get(first);
+            IsolatedAccount isolatedLast = accounts.get(last);
+            return complete.apply(isolatedFirst, isolatedLast);
+        }, first, last);
+    }
 
     public IsolatedTransaction(
             Function<Map<AccountType, IsolatedAccount>, Collection<CompletableFuture<? extends TransactionResult>>> complete,
@@ -67,7 +76,6 @@ public class IsolatedTransaction {
                     ret.complete(new MultipleFailedTransactionResult(failed.getReason(), transactions));
                     break;
                 }
-
                 transactions.parallelStream().forEach(transaction -> {
                     AccountType realAccount = getTypeFrom(transaction.getTarget());
                     BigDecimal amount = transaction.getTarget().getBalance(transaction.getCurrency());

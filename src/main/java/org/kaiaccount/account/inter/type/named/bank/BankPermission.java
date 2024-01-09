@@ -1,4 +1,4 @@
-package org.kaiaccount.account.inter.type.bank;
+package org.kaiaccount.account.inter.type.named.bank;
 
 public enum BankPermission {
 
