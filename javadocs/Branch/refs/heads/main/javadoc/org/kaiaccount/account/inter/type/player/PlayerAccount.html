@@ -74,7 +74,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a></code></dd>
+<dd><code><a href="../Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a></code>, <code><a href="../named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">PlayerAccount&lt;Self extends PlayerAccount&lt;Self&gt;&gt;</span><span class="extends-implements">
-extends <a href="../Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a></span></div>
+extends <a href="../Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a>, <a href="../named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -97,27 +97,30 @@ extends <a href="../Account.html" title="interface in org.kaiaccount.account.int
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createBankAccount(java.lang.String)" class="member-name-link">createBankAccount</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getBalancesWithBanks()" class="member-name-link">getBalancesWithBanks</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @Nls @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAccountName()" class="member-name-link">getAccountName</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getBank(java.lang.String)" class="member-name-link">getBank</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;keyName)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getBalancesWithBanks()" class="member-name-link">getBalancesWithBanks</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBanks()" class="member-name-link">getBanks</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull org.bukkit.OfflinePlayer</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPlayer()" class="member-name-link">getPlayer</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getBank(java.lang.String)" class="member-name-link">getBank</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;keyName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBanks()" class="member-name-link">getBanks</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#registerBank(org.kaiaccount.account.inter.type.bank.player.PlayerBankAccount)" class="member-name-link">registerBank</a><wbr>(@NotNull <a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;&nbsp;account)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull org.bukkit.OfflinePlayer</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPlayer()" class="member-name-link">getPlayer</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../../transfer/result/TransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">TransactionResult</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#withdrawWithBanks(org.kaiaccount.account.inter.transfer.payment.Payment)" class="member-name-link">withdrawWithBanks</a><wbr>(@NotNull <a href="../../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#registerBank(org.kaiaccount.account.inter.type.named.bank.player.PlayerBankAccount)" class="member-name-link">registerBank</a><wbr>(@NotNull <a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&nbsp;account)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../../transfer/result/TransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">TransactionResult</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#withdrawWithBanks(org.kaiaccount.account.inter.transfer.payment.Payment)" class="member-name-link">withdrawWithBanks</a><wbr>(@NotNull <a href="../../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -140,22 +143,22 @@ extends <a href="../Account.html" title="interface in org.kaiaccount.account.int
 <h3>getBanks</h3>
 <div class="member-signature"><span class="annotations">@NotNull
 @CheckReturnValue
-</span><span class="return-type">@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">getBanks</span>()</div>
+</span><span class="return-type">@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&gt;</span>&nbsp;<span class="element-name">getBanks</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createBankAccount(java.lang.String)">
 <h3>createBankAccount</h3>
 <div class="member-signature"><span class="annotations">@NotNull
-</span><span class="return-type">@NotNull <a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;</span>&nbsp;<span class="element-name">createBankAccount</span><wbr><span class="parameters">(@NotNull
+</span><span class="return-type">@NotNull <a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a></span>&nbsp;<span class="element-name">createBankAccount</span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="registerBank(org.kaiaccount.account.inter.type.bank.player.PlayerBankAccount)">
+<section class="detail" id="registerBank(org.kaiaccount.account.inter.type.named.bank.player.PlayerBankAccount)">
 <h3>registerBank</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">registerBank</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;&nbsp;account)</span></div>
+ @NotNull <a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&nbsp;account)</span></div>
 </section>
 </li>
 <li>
@@ -164,6 +167,18 @@ extends <a href="../Account.html" title="interface in org.kaiaccount.account.int
 <div class="member-signature"><span class="annotations">@NotNull
 @CheckReturnValue
 </span><span class="return-type">@NotNull org.bukkit.OfflinePlayer</span>&nbsp;<span class="element-name">getPlayer</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getAccountName()">
+<h3>getAccountName</h3>
+<div class="member-signature"><span class="annotations">@Nls
+@NotNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@Nls @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getAccountName</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../named/NamedAccountLike.html#getAccountName()">getAccountName</a></code>&nbsp;in interface&nbsp;<code><a href="../named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></code></dd>
+</dl>
 </section>
 </li>
 <li>
@@ -180,7 +195,7 @@ extends <a href="../Account.html" title="interface in org.kaiaccount.account.int
 <h3>getBank</h3>
 <div class="member-signature"><span class="annotations">@NotNull
 @CheckReturnValue
-</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.bank.player">PlayerBankAccount</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">getBank</span><wbr><span class="parameters">(@NotNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&gt;</span>&nbsp;<span class="element-name">getBank</span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;keyName)</span></div>
 </section>
 </li>
