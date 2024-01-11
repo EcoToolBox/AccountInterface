@@ -135,6 +135,7 @@ public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<S
         return account;
     }
 
+    @Override
     public @NotNull boolean deleteBankAccount(@NotNull String name) {
         Optional<PlayerBankAccount> accountOptional = this.getBank(name);
         if (accountOptional.isEmpty()) {
