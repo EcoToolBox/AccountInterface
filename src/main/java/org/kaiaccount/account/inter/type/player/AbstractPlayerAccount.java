@@ -137,11 +137,16 @@ public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<S
     }
 
 	public boolean deleteBankAccount(@NotNull String name) {
-		PlayerBankAccount account = this.getBank(name);
+		Optional<PlayerBankAccount> accountOptional = this.getBank(name);
+		if (accountOptional.isEmpty()) {
+			return false;
+		}
+		PlayerBankAccount account = accountOptional.get();
 		for (UUID accesser : account.getAccounts().keySet()) {
 			account.removeAccount(accesser);
 		}
 		this.banks.remove(account);
+		return true;
 	}
 
     @Override
