@@ -2,7 +2,7 @@ function onSubmit() {
     console.log("run");
     const nameCombo = document.getElementById('name');
     const typeCombo = document.getElementById('target');
-    window.location.href = `${typeCombo.value}/refs/heads/${nameCombo.value}/apidocs/index.html`;
+    window.location.href = `${typeCombo.value}/refs/heads/${nameCombo.value}/javadoc/index.html`;
 }
 
 async function onTypeChange() {
@@ -32,7 +32,7 @@ async function onTypeChange() {
         request.onerror = function () {
             console.log(`Do not have javadocs for " + ${typeCombo.value} + "/" + ${result}`);
         }
-        request.open('GET', `https://econtoolbox.github.io/AccountInterface/javadocs/${typeCombo.value}/refs/heads/${result}/apidocs/index.html`);
+        request.open('GET', `https://econtoolbox.github.io/AccountInterface/javadocs/${typeCombo.value}/refs/heads/${result}/javadoc/index.html`);
         request.send(null);
     }
 }
