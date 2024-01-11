@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.function.Function;
 import java.util.stream.Stream;
+import java.util.UUID;
 
 public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<Self>>
         implements PlayerAccount<Self>, AccountType {
@@ -134,6 +135,14 @@ public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<S
         this.banks.add(account);
         return account;
     }
+
+	public boolean deleteBankAccount(@NotNull String name) {
+		PlayerBankAccount account = this.getBank(name);
+		for (UUID accesser : account.getAccounts().keySet()) {
+			account.removeAccount(accesser);
+		}
+		this.banks.remove(account);
+	}
 
     @Override
     public void registerBank(@NotNull PlayerBankAccount account) {
