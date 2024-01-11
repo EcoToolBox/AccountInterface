@@ -1,7 +1,6 @@
 package org.kaiaccount.account.inter.type;
 
 import org.jetbrains.annotations.CheckReturnValue;
-import org.jetbrains.annotations.Async;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnmodifiableView;
 import org.kaiaccount.account.inter.currency.Currency;
@@ -25,26 +24,21 @@ public interface Account {
     Map<Currency<?>, BigDecimal> getBalances();
 
     @NotNull
-    @Async.Execute
     @CheckReturnValue
     CompletableFuture<SingleTransactionResult> withdraw(@NotNull Payment payment);
 
     @NotNull
-    @Async.Execute
     @CheckReturnValue
     CompletableFuture<SingleTransactionResult> deposit(@NotNull Payment payment);
 
     @NotNull
-    @Async.Execute
     @CheckReturnValue
     CompletableFuture<SingleTransactionResult> set(@NotNull Payment payment);
 
     @NotNull
-    @Async.Execute
     @CheckReturnValue
     CompletableFuture<SingleTransactionResult> refund(@NotNull Transaction payment);
 
     @NotNull
-    @Async.Execute
     CompletableFuture<Void> forceSet(@NotNull Payment payment);
 }

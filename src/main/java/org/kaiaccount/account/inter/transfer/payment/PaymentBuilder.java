@@ -1,11 +1,11 @@
 package org.kaiaccount.account.inter.transfer.payment;
 
-import org.jetbrains.annotations.CheckReturnValue;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kaiaccount.account.inter.currency.Currency;
-import org.kaiaccount.account.inter.type.Account;
+import org.kaiaccount.account.inter.type.named.NamedAccountLike;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -15,7 +15,7 @@ public class PaymentBuilder {
     private BigDecimal amount;
     private Currency<?> currency;
     private String resource;
-    private Account from;
+    private NamedAccountLike from;
     private boolean priority;
 
     @CheckReturnValue
@@ -32,11 +32,11 @@ public class PaymentBuilder {
         return this;
     }
 
-    public Account getFrom() {
+    public NamedAccountLike getFrom() {
         return this.from;
     }
 
-    public PaymentBuilder setFrom(@Nullable Account from) {
+    public PaymentBuilder setFrom(@Nullable NamedAccountLike from) {
         this.from = from;
         return this;
     }
