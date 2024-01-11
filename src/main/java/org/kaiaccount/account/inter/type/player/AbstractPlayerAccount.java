@@ -20,7 +20,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.function.Function;
 import java.util.stream.Stream;
-import java.util.UUID;
 
 public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<Self>>
         implements PlayerAccount<Self>, AccountType {
@@ -106,8 +105,8 @@ public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<S
         CompletableFuture<TransactionResult> ret = new CompletableFuture<>();
         new IsolatedTransaction(map -> {
             IsolatedAccount isolated = map.get(this);
-            Stream<CompletableFuture<? extends TransactionResult>> stream =
-                    Arrays.stream(transactions).parallel().map(f -> f.apply(isolated));
+            Stream<CompletableFuture<? extends TransactionResult>> stream = Arrays.stream(transactions).parallel()
+                    .map(f -> f.apply(isolated));
             return stream.toList();
         }, this).start().thenAccept(ret::complete);
         return ret;
@@ -125,7 +124,7 @@ public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<S
     @UnmodifiableView
     @CheckReturnValue
     public @NotNull Collection<PlayerBankAccount> getBanks() {
-        //load others
+        // load others
         return Collections.unmodifiableCollection(this.banks);
     }
 
@@ -136,18 +135,18 @@ public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<S
         return account;
     }
 
-	public boolean deleteBankAccount(@NotNull String name) {
-		Optional<PlayerBankAccount> accountOptional = this.getBank(name);
-		if (accountOptional.isEmpty()) {
-			return false;
-		}
-		PlayerBankAccount account = accountOptional.get();
-		for (UUID accesser : account.getAccounts().keySet()) {
-			account.removeAccount(accesser);
-		}
-		this.banks.remove(account);
-		return true;
-	}
+    public @NotNull boolean deleteBankAccount(@NotNull String name) {
+        Optional<PlayerBankAccount> accountOptional = this.getBank(name);
+        if (accountOptional.isEmpty()) {
+            return false;
+        }
+        PlayerBankAccount account = accountOptional.get();
+        for (UUID accesser : account.getAccounts().keySet()) {
+            account.removeAccount(accesser);
+        }
+        this.banks.remove(account);
+        return true;
+    }
 
     @Override
     public void registerBank(@NotNull PlayerBankAccount account) {

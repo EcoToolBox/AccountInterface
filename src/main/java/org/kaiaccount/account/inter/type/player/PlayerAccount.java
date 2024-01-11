@@ -27,6 +27,9 @@ public interface PlayerAccount<Self extends PlayerAccount<Self>> extends Account
     @NotNull
     PlayerBankAccount createBankAccount(@NotNull String name);
 
+	@NotNull
+	boolean deleteBankAccount(@NotNull String name);
+
     void registerBank(@NotNull PlayerBankAccount account);
 
     @NotNull
