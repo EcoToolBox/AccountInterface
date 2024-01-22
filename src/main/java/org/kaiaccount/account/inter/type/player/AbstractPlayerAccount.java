@@ -139,12 +139,6 @@ public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<S
 
     @Override
     public @NotNull boolean deleteBankAccount(@NotNull PlayerBankAccount account, @NotNull Plugin plugin) {
-        Payment payment = new PaymentBuilder()
-        .setAmount(account.getBalance(AccountInterface.getManager().getDefaultCurrency()))
-        .setCurrency(AccountInterface.getManager().getDefaultCurrency())
-        .build(plugin);
-
-        this.deposit(payment);
         for (UUID accesser : account.getAccounts().keySet()) {
             account.removeAccount(accesser);
         }
