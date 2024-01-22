@@ -1,6 +1,7 @@
 package org.kaiaccount.account.inter.type.player;
 
 import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.*;
 import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +29,7 @@ public interface PlayerAccount<Self extends PlayerAccount<Self>> extends Account
     PlayerBankAccount createBankAccount(@NotNull String name);
 
 	@NotNull
-	boolean deleteBankAccount(@NotNull String name);
+	boolean deleteBankAccount(@NotNull PlayerBankAccount account, @NotNull Plugin plugin);
 
     void registerBank(@NotNull PlayerBankAccount account);
 
