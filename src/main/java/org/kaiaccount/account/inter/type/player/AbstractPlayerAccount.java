@@ -138,7 +138,7 @@ public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<S
     }
 
     @Override
-    public @NotNull boolean deleteBankAccount(@NotNull PlayerBankAccount account, @NotNull Plugin plugin) {
+    public @NotNull boolean deleteBankAccount(@NotNull PlayerBankAccount account) {
         for (UUID accesser : account.getAccounts().keySet()) {
             account.removeAccount(accesser);
         }

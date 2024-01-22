@@ -29,7 +29,7 @@ public interface PlayerAccount<Self extends PlayerAccount<Self>> extends Account
     PlayerBankAccount createBankAccount(@NotNull String name);
 
 	@NotNull
-	boolean deleteBankAccount(@NotNull PlayerBankAccount account, @NotNull Plugin plugin);
+	boolean deleteBankAccount(@NotNull PlayerBankAccount account);
 
     void registerBank(@NotNull PlayerBankAccount account);
 
