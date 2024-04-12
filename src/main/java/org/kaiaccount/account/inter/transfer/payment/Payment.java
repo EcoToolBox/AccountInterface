@@ -42,6 +42,7 @@ public interface Payment extends Buildable<Payment, PaymentBuilder> {
     @Override
     default PaymentBuilder toBuilder() {
         return new PaymentBuilder()
+                .setPlugin(this.getPlugin())
                 .setAmount(this.getAmount())
                 .setCurrency(this.getCurrency())
                 .setFrom(this.getFrom().orElse(null))
