@@ -55,7 +55,7 @@ public class IsolatedAccountTests {
 
         //run
         CompletableFuture<TransactionResult> future = new IsolatedTransaction(accounts -> {
-            Payment payment = new PaymentBuilder().setAmount(bal).setCurrency(currency).build(plugin);
+            Payment payment = new PaymentBuilder().setAmount(bal).setCurrency(currency).setPlugin(plugin).build();
             CompletableFuture<SingleTransactionResult> withdraw = accounts.get(bank1).withdraw(payment);
             CompletableFuture<SingleTransactionResult> deposit = accounts.get(bank2).deposit(payment);
             return List.of(withdraw, deposit);

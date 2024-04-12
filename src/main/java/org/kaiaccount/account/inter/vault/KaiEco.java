@@ -147,10 +147,12 @@ public class KaiEco implements Economy {
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, double v) {
         Payment payment =
-                new PaymentBuilder().setAmount(v)
+                new PaymentBuilder()
+                        .setAmount(v)
                         .setCurrency(this.currency.get())
-                        .build(VaultEmulationUtils.getReason());
-        PlayerAccount<?> account = AccountInterface.getManager().getPlayerAccount(offlinePlayer);
+                        .setPlugin(VaultEmulationUtils.getReason())
+                        .build();
+        PlayerAccount account = AccountInterface.getManager().getPlayerAccount(offlinePlayer);
         if (!(account instanceof AccountSynced syncedAccount)) {
             throw new RuntimeException("Currency plugin does not have support for vault. -> "
                     + account.getClass().getSimpleName()
@@ -180,10 +182,12 @@ public class KaiEco implements Economy {
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, double v) {
         Payment payment =
-                new PaymentBuilder().setAmount(v)
+                new PaymentBuilder()
+                        .setAmount(v)
                         .setCurrency(this.currency.get())
-                        .build(VaultEmulationUtils.getReason());
-        PlayerAccount<?> account = AccountInterface.getManager().getPlayerAccount(offlinePlayer);
+                        .setPlugin(VaultEmulationUtils.getReason())
+                        .build();
+        PlayerAccount account = AccountInterface.getManager().getPlayerAccount(offlinePlayer);
         if (!(account instanceof AccountSynced syncedAccount)) {
             throw new RuntimeException("Currency plugin does not have support for vault. -> "
                     + account.getClass().getSimpleName()

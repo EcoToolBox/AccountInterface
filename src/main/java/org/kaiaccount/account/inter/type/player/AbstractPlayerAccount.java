@@ -21,8 +21,8 @@ import java.util.concurrent.LinkedTransferQueue;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public abstract class AbstractPlayerAccount<Self extends AbstractPlayerAccount<Self>>
-        implements PlayerAccount<Self>, AccountType {
+public abstract class AbstractPlayerAccount
+        implements PlayerAccount, AccountType {
 
     private final @NotNull OfflinePlayer player;
 

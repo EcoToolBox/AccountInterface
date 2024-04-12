@@ -40,7 +40,7 @@ public class FakeGlobalManager implements AccountInterfaceManager {
 
     @NotNull
     @Override
-    public Collection<PlayerAccount<?>> getPlayerAccounts() {
+    public Collection<PlayerAccount> getPlayerAccounts() {
         throw new RuntimeException("Not implemented yet");
     }
 
@@ -62,12 +62,12 @@ public class FakeGlobalManager implements AccountInterfaceManager {
     }
 
     @Override
-    public @NotNull PlayerAccount<?> loadPlayerAccount(@NotNull OfflinePlayer player) {
+    public @NotNull PlayerAccount loadPlayerAccount(@NotNull OfflinePlayer player) {
         throw new RuntimeException("Not implemented yet");
     }
 
     @Override
-    public void registerPlayerAccount(@NotNull PlayerAccount<?> account) {
+    public void registerPlayerAccount(@NotNull PlayerAccount account) {
         throw new RuntimeException("Not implemented yet");
 
     }
@@ -79,7 +79,7 @@ public class FakeGlobalManager implements AccountInterfaceManager {
     }
 
     @Override
-    public void deregisterPlayerAccount(@NotNull PlayerAccount<?> account) {
+    public void deregisterPlayerAccount(@NotNull PlayerAccount account) {
         throw new RuntimeException("Not implemented yet");
     }
 

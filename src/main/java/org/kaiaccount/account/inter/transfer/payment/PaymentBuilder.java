@@ -6,21 +6,51 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.type.named.NamedAccountLike;
+import org.kaiaccount.utils.builder.Builder;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public class PaymentBuilder {
+public class PaymentBuilder implements Builder<Payment, PaymentBuilder> {
 
     private BigDecimal amount;
     private Currency<?> currency;
     private String resource;
     private NamedAccountLike from;
+    private NamedAccountLike to;
     private boolean priority;
+    private Plugin plugin;
 
     @CheckReturnValue
+    @Deprecated
     public Payment build(@NotNull Plugin plugin) {
         return new KaiPayment(this, plugin);
+    }
+
+    @Override
+    public Payment build() {
+        return new KaiPayment(this, this.plugin);
+    }
+
+    @Override
+    public PaymentBuilder from(PaymentBuilder builder) {
+        this.setTo(builder.getTo());
+        this.setPriority(builder.isPriority());
+        this.setFrom(builder.getFrom());
+        this.setPlugin(builder.getPlugin());
+        this.setReason(builder.getReason());
+        this.setCurrency(builder.getCurrency());
+        this.setAmount(builder.getAmount());
+        return this;
+    }
+
+    public Plugin getPlugin() {
+        return this.plugin;
+    }
+
+    public PaymentBuilder setPlugin(@NotNull Plugin plugin) {
+        this.plugin = plugin;
+        return this;
     }
 
     public boolean isPriority() {
@@ -38,6 +68,15 @@ public class PaymentBuilder {
 
     public PaymentBuilder setFrom(@Nullable NamedAccountLike from) {
         this.from = from;
+        return this;
+    }
+
+    public NamedAccountLike getTo() {
+        return this.to;
+    }
+
+    public PaymentBuilder setTo(@Nullable NamedAccountLike to) {
+        this.to = to;
         return this;
     }
 

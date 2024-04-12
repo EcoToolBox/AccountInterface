@@ -1,24 +1,33 @@
 package org.kaiaccount.account.inter.type.player;
 
-import org.jetbrains.annotations.CheckReturnValue;
 import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.AccountInterface;
 import org.kaiaccount.account.inter.currency.Currency;
+import org.kaiaccount.utils.builder.Builder;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class PlayerAccountBuilder {
+public class PlayerAccountBuilder implements Builder<PlayerAccount, PlayerAccountBuilder> {
 
     private final Map<Currency<?>, BigDecimal> initialBalance = new ConcurrentHashMap<>();
     private OfflinePlayer player;
 
     @CheckReturnValue
     @NotNull
-    public PlayerAccount<?> build() {
+    @Override
+    public PlayerAccount build() {
         return AccountInterface.getManager().toPlayerAccount(this);
+    }
+
+    @Override
+    public PlayerAccountBuilder from(PlayerAccountBuilder builder) {
+        this.setInitialBalance(builder.getInitialBalance());
+        this.setPlayer(builder.getPlayer());
+        return this;
     }
 
     public OfflinePlayer getPlayer() {

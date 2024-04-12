@@ -18,6 +18,7 @@ public class KaiPayment implements Payment {
     private final @NotNull Plugin plugin;
     private final @Nullable String reason;
     private final @Nullable NamedAccountLike from;
+    private final @Nullable NamedAccountLike to;
     private final boolean priority;
 
     public KaiPayment(@NotNull PaymentBuilder builder, @NotNull Plugin plugin) {
@@ -26,6 +27,7 @@ public class KaiPayment implements Payment {
         this.plugin = Objects.requireNonNull(plugin, "Plugin is missing");
         this.reason = builder.getReason();
         this.from = builder.getFrom();
+        this.to = builder.getTo();
         this.priority = builder.isPriority();
         if (this.bigDecimal.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Negative number can not be used in payments");
@@ -75,5 +77,10 @@ public class KaiPayment implements Payment {
     @CheckReturnValue
     public Optional<NamedAccountLike> getFrom() {
         return Optional.ofNullable(this.from);
+    }
+
+    @Override
+    public @NotNull Optional<NamedAccountLike> getTo() {
+        return Optional.ofNullable(this.to);
     }
 }

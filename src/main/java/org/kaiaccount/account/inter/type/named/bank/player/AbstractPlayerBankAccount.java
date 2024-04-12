@@ -12,7 +12,7 @@ public abstract class AbstractPlayerBankAccount
         extends AbstractNamedAccountLike
         implements PlayerBankAccount {
 
-    private final @NotNull PlayerAccount<?> account;
+    private final @NotNull PlayerAccount account;
     private final @NotNull Map<UUID, Collection<BankPermission>> bankPermissions = new ConcurrentHashMap<>();
 
     public AbstractPlayerBankAccount(@NotNull PlayerBankAccountBuilder builder) {
@@ -21,7 +21,7 @@ public abstract class AbstractPlayerBankAccount
     }
 
     @Override
-    public @NotNull PlayerAccount<?> getAccountHolder() {
+    public @NotNull PlayerAccount getAccountHolder() {
         return this.account;
     }
 

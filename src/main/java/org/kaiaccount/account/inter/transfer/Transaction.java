@@ -6,11 +6,12 @@ import org.jetbrains.annotations.Nullable;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.type.Account;
+import org.kaiaccount.utils.builder.Buildable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public interface Transaction {
+public interface Transaction extends Buildable<Transaction, TransactionBuilder> {
 
     @NotNull
     @CheckReturnValue
@@ -29,6 +30,16 @@ public interface Transaction {
     @NotNull
     @CheckReturnValue
     Account getTarget();
+
+    @Override
+    default TransactionBuilder toBuilder() {
+        return new TransactionBuilder()
+                .setType(this.getType())
+                .setTime(this.getTime())
+                .setPayment(this.getPayment())
+                .setAmount(this.getNewPaymentAmount())
+                .setAccount(this.getTarget());
+    }
 
     @NotNull
     @CheckReturnValue

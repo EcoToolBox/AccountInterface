@@ -7,5 +7,5 @@ public interface ToPlayerAccount {
 
     @NotNull
     @CheckReturnValue
-    PlayerAccount<?> toPlayerAccount(@NotNull PlayerAccountBuilder builder);
+    PlayerAccount toPlayerAccount(@NotNull PlayerAccountBuilder builder);
 }

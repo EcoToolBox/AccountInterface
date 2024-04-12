@@ -11,13 +11,14 @@ import org.kaiaccount.account.inter.transfer.result.TransactionResult;
 import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.type.named.NamedAccountLike;
 import org.kaiaccount.account.inter.type.named.bank.player.PlayerBankAccount;
+import org.kaiaccount.utils.builder.Buildable;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-public interface PlayerAccount<Self extends PlayerAccount<Self>> extends Account, NamedAccountLike {
+public interface PlayerAccount extends Account, NamedAccountLike, Buildable<PlayerAccount, PlayerAccountBuilder> {
 
     @NotNull
     @UnmodifiableView
@@ -63,5 +64,10 @@ public interface PlayerAccount<Self extends PlayerAccount<Self>> extends Account
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, BigDecimal::add));
         playerBalance.putAll(bankBalance);
         return Collections.unmodifiableMap(playerBalance);
+    }
+
+    @Override
+    default PlayerAccountBuilder toBuilder() {
+        return new PlayerAccountBuilder().setPlayer(this.getPlayer()).setInitialBalance(this.getBalances());
     }
 }

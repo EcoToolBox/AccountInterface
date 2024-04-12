@@ -14,74 +14,75 @@ import java.math.BigDecimal;
 
 public class PaymentBuilderTests {
 
-	private Plugin testPlugin;
-	private Currency<?> testCurrency;
+    private Plugin testPlugin;
+    private Currency<?> testCurrency;
 
-	@BeforeEach
-	public void setup() {
-		testPlugin = Mockito.mock(Plugin.class);
-		testCurrency = Mockito.mock(Currency.class);
-	}
+    @BeforeEach
+    public void setup() {
+        testPlugin = Mockito.mock(Plugin.class);
+        testCurrency = Mockito.mock(Currency.class);
+    }
 
-	@Test
-	public void testBuildValidPaymentFull() {
-		//setup
-		BigDecimal amount = BigDecimal.ONE;
-		PlayerAccount<?> from = Mockito.mock(PlayerAccount.class);
+    @Test
+    public void testBuildValidPaymentFull() {
+        //setup
+        BigDecimal amount = BigDecimal.ONE;
+        PlayerAccount from = Mockito.mock(PlayerAccount.class);
 
-		//run
-		Payment payment = new PaymentBuilder().setCurrency(testCurrency)
-				.setAmount(amount)
-				.setFrom(from)
-				.setReason("test")
-				.build(testPlugin);
+        //run
+        Payment payment = new PaymentBuilder().setCurrency(testCurrency)
+                .setAmount(amount)
+                .setFrom(from)
+                .setReason("test")
+                .setPlugin(testPlugin)
+                .build();
 
-		//test
-		Assertions.assertEquals(testPlugin, payment.getPlugin());
-		Assertions.assertTrue(payment.getFrom().isPresent(), "'From' is missing");
-		Assertions.assertEquals(from, payment.getFrom().orElse(null));
-		Assertions.assertEquals(BigDecimal.ONE, payment.getAmount());
-		Assertions.assertTrue(payment.getReason().isPresent(), "'reason' is missing");
-		Assertions.assertEquals("test", payment.getReason().orElse(null));
-	}
+        //test
+        Assertions.assertEquals(testPlugin, payment.getPlugin());
+        Assertions.assertTrue(payment.getFrom().isPresent(), "'From' is missing");
+        Assertions.assertEquals(from, payment.getFrom().orElse(null));
+        Assertions.assertEquals(BigDecimal.ONE, payment.getAmount());
+        Assertions.assertTrue(payment.getReason().isPresent(), "'reason' is missing");
+        Assertions.assertEquals("test", payment.getReason().orElse(null));
+    }
 
-	@Test
-	public void testBuildValidPaymentShort() {
-		//setup
-		BigDecimal amount = BigDecimal.ONE;
+    @Test
+    public void testBuildValidPaymentShort() {
+        //setup
+        BigDecimal amount = BigDecimal.ONE;
 
-		//run
-		Payment payment = new PaymentBuilder().setCurrency(testCurrency)
-				.setAmount(amount)
-				.build(testPlugin);
+        //run
+        Payment payment = new PaymentBuilder().setCurrency(testCurrency)
+                .setAmount(amount)
+                .build(testPlugin);
 
-		//test
-		Assertions.assertEquals(testPlugin, payment.getPlugin());
-		Assertions.assertFalse(payment.getFrom().isPresent(), "'From' isn't missing");
-		Assertions.assertEquals(BigDecimal.ONE, payment.getAmount());
-		Assertions.assertFalse(payment.getReason().isPresent(), "'reason' isn't missing");
-	}
+        //test
+        Assertions.assertEquals(testPlugin, payment.getPlugin());
+        Assertions.assertFalse(payment.getFrom().isPresent(), "'From' isn't missing");
+        Assertions.assertEquals(BigDecimal.ONE, payment.getAmount());
+        Assertions.assertFalse(payment.getReason().isPresent(), "'reason' isn't missing");
+    }
 
-	@Test
-	public void testBuildInvalidPaymentMissingCurrency() {
-		//setup
-		BigDecimal amount = BigDecimal.ONE;
+    @Test
+    public void testBuildInvalidPaymentMissingCurrency() {
+        //setup
+        BigDecimal amount = BigDecimal.ONE;
 
-		//run and test
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new PaymentBuilder()
-				.setAmount(amount)
-				.build(testPlugin));
-	}
+        //run and test
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new PaymentBuilder()
+                .setAmount(amount)
+                .build(testPlugin));
+    }
 
-	@Test
-	public void testBuildWithNegativeNumber() {
-		//setup
-		BigDecimal amount = BigDecimal.valueOf(-1);
+    @Test
+    public void testBuildWithNegativeNumber() {
+        //setup
+        BigDecimal amount = BigDecimal.valueOf(-1);
 
-		//run and test
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new PaymentBuilder().setCurrency(testCurrency)
-				.setAmount(amount)
-				.build(testPlugin));
+        //run and test
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new PaymentBuilder().setCurrency(testCurrency)
+                .setAmount(amount)
+                .build(testPlugin));
 
-	}
+    }
 }

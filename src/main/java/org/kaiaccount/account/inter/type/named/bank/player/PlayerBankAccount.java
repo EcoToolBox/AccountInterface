@@ -5,15 +5,16 @@ import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.account.inter.type.named.bank.BankAccount;
 import org.kaiaccount.account.inter.type.named.bank.BankPermission;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
+import org.kaiaccount.utils.builder.Buildable;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.UUID;
 
-public interface PlayerBankAccount extends BankAccount {
+public interface PlayerBankAccount extends BankAccount, Buildable<PlayerBankAccount, PlayerBankAccountBuilder> {
 
     @NotNull
-    PlayerAccount<?> getAccountHolder();
+    PlayerAccount getAccountHolder();
 
     @Deprecated
     default void addAccount(@NotNull AnimalTamer ignored) {
@@ -45,5 +46,12 @@ public interface PlayerBankAccount extends BankAccount {
 
     void removeAccount(@NotNull UUID uuid);
 
-
+    @Override
+    default PlayerBankAccountBuilder toBuilder() {
+        return new PlayerBankAccountBuilder()
+                .setAccount(this.getAccountHolder())
+                .setName(this.getAccountName())
+                .setAccountHolders(this.getAccounts())
+                .setInitialBalance(this.getBalances());
+    }
 }

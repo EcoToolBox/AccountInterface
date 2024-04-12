@@ -1,10 +1,12 @@
 package org.kaiaccount.account.inter.type.named.bank.player;
 
+import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.NotNull;
 import org.kaiaccount.AccountInterface;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.type.named.bank.BankPermission;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
+import org.kaiaccount.utils.builder.Builder;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -12,13 +14,24 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class PlayerBankAccountBuilder {
+public class PlayerBankAccountBuilder implements Builder<PlayerBankAccount, PlayerBankAccountBuilder> {
 
     private final Map<UUID, Collection<BankPermission>> bankPermissions = new ConcurrentHashMap<>();
     private final Map<Currency<?>, BigDecimal> initialBalance = new ConcurrentHashMap<>();
-    private PlayerAccount<?> account;
+    private PlayerAccount account;
     private String name;
 
+    @Override
+    public PlayerBankAccountBuilder from(PlayerBankAccountBuilder builder) {
+        this.setAccount(builder.getAccount());
+        this.setName(builder.getName());
+        this.setInitialBalance(builder.getInitialBalance());
+        this.setAccountHolders(builder.getAccountHolders());
+        return this;
+    }
+
+    @Override
+    @CheckReturnValue
     public PlayerBankAccount build() {
         return AccountInterface.getManager().toBankAccount(this);
     }
@@ -33,11 +46,11 @@ public class PlayerBankAccountBuilder {
         return this;
     }
 
-    public PlayerAccount<?> getAccount() {
+    public PlayerAccount getAccount() {
         return this.account;
     }
 
-    public PlayerBankAccountBuilder setAccount(PlayerAccount<?> account) {
+    public PlayerBankAccountBuilder setAccount(PlayerAccount account) {
         this.account = account;
         return this;
     }

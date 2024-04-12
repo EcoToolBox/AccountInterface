@@ -73,7 +73,7 @@ public interface AccountInterfaceManager {
     @NotNull
     @UnmodifiableView
     @CheckReturnValue
-    Collection<PlayerAccount<?>> getPlayerAccounts();
+    Collection<PlayerAccount> getPlayerAccounts();
 
     /**
      * Gets all registered named accounts
@@ -91,7 +91,7 @@ public interface AccountInterfaceManager {
      */
     default @NotNull Stream<Account> getAccounts() {
         Collection<NamedAccount> named = this.getNamedAccounts();
-        Collection<PlayerAccount<?>> players = this.getPlayerAccounts();
+        Collection<PlayerAccount> players = this.getPlayerAccounts();
         Stream<PlayerBankAccount> playerBanks = players.parallelStream().flatMap(account -> account.getBanks().parallelStream());
 
         Stream<Account> accounts = Stream.concat(playerBanks, players.parallelStream());
@@ -123,7 +123,7 @@ public interface AccountInterfaceManager {
      *
      * @param account The account to be registered
      */
-    void registerPlayerAccount(@NotNull PlayerAccount<?> account);
+    void registerPlayerAccount(@NotNull PlayerAccount account);
 
     /**
      * Registers a new Named Account
@@ -139,14 +139,14 @@ public interface AccountInterfaceManager {
      * @return A PlayerAccount of the provided player
      */
     @NotNull
-    PlayerAccount<?> loadPlayerAccount(@NotNull OfflinePlayer player);
+    PlayerAccount loadPlayerAccount(@NotNull OfflinePlayer player);
 
     /**
      * deloads the player. This does not delete the player
      *
      * @param account The player account to deload
      */
-    void deregisterPlayerAccount(@NotNull PlayerAccount<?> account);
+    void deregisterPlayerAccount(@NotNull PlayerAccount account);
 
     /**
      * deloads the named account. This does not delete the named account
@@ -226,7 +226,7 @@ public interface AccountInterfaceManager {
      * @return A built edition
      */
     @ApiStatus.Internal
-    default @NotNull PlayerAccount<?> toPlayerAccount(@NotNull PlayerAccountBuilder builder) {
+    default @NotNull PlayerAccount toPlayerAccount(@NotNull PlayerAccountBuilder builder) {
         try {
             return this.getToPlayerAccount()
                     .toPlayerAccount(builder);
@@ -288,7 +288,7 @@ public interface AccountInterfaceManager {
      * @param playerId the UUID of the player
      * @return A PlayerAccount of UUID
      */
-    default @NotNull PlayerAccount<?> getPlayerAccount(@NotNull UUID playerId) {
+    default @NotNull PlayerAccount getPlayerAccount(@NotNull UUID playerId) {
         return this.getPlayerAccount(Bukkit.getServer().getOfflinePlayer(playerId));
     }
 
@@ -298,8 +298,8 @@ public interface AccountInterfaceManager {
      * @param player The Players object
      * @return A PlayerAccount of OfflinePlayer
      */
-    default @NotNull PlayerAccount<?> getPlayerAccount(@NotNull OfflinePlayer player) {
-        Optional<PlayerAccount<?>> opAccount =
+    default @NotNull PlayerAccount getPlayerAccount(@NotNull OfflinePlayer player) {
+        Optional<PlayerAccount> opAccount =
                 this.getPlayerAccounts()
                         .parallelStream()
                         .filter(account -> account.getPlayer().getUniqueId().equals(player.getUniqueId()))

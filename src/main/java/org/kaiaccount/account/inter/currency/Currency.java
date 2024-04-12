@@ -4,12 +4,13 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kaiaccount.account.inter.io.Serializable;
+import org.kaiaccount.utils.builder.Buildable;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
 
-public interface Currency<Self extends Currency<Self>> extends Serializable<Self> {
+public interface Currency<Self extends Currency<Self>> extends Serializable<Self>, Buildable<Currency<?>, CurrencyBuilder> {
 
     @NotNull
     String getDisplayNameSingle();
@@ -69,4 +70,16 @@ public interface Currency<Self extends Currency<Self>> extends Serializable<Self
         return this.getSymbol() + display;
     }
 
+    @Override
+    default CurrencyBuilder toBuilder() {
+        return new CurrencyBuilder()
+                .setDefault(this.isDefault())
+                .setName(this.getKeyName())
+                .setDisplayNameMultiple(this.getDisplayNameMultiple())
+                .setDisplayNameShort(this.getDisplayNameShort())
+                .setDisplayNameSingle(this.getDisplayNameSingle())
+                .setPlugin(this.getPlugin())
+                .setSymbol(this.getSymbol())
+                .setWorth(this.getWorth().orElse(null));
+    }
 }

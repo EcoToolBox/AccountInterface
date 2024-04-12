@@ -3,11 +3,12 @@ package org.kaiaccount.account.inter.transfer;
 import org.jetbrains.annotations.CheckReturnValue;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.type.Account;
+import org.kaiaccount.utils.builder.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class TransactionBuilder {
+public class TransactionBuilder implements Builder<Transaction, TransactionBuilder> {
 
     private Payment payment;
     private TransactionType type;
@@ -24,7 +25,18 @@ public class TransactionBuilder {
         return this;
     }
 
+    @Override
+    public TransactionBuilder from(TransactionBuilder builder) {
+        this.setAccount(builder.getAccount());
+        this.setPayment(builder.getPayment());
+        this.setTime(builder.getTime());
+        this.setType(builder.getType());
+        this.setAmount(builder.getAmount());
+        return this;
+    }
+
     @CheckReturnValue
+    @Override
     public Transaction build() {
         return new KaiTransaction(this);
     }
