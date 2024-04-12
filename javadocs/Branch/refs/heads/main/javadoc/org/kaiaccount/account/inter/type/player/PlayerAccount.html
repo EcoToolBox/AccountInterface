@@ -69,20 +69,20 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.kaiaccount.account.inter.type.player</a></div>
-<h1 title="Interface PlayerAccount" class="title">Interface PlayerAccount&lt;Self extends PlayerAccount&lt;Self&gt;&gt;</h1>
+<h1 title="Interface PlayerAccount" class="title">Interface PlayerAccount</h1>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a></code>, <code><a href="../named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></code></dd>
+<dd><code><a href="../Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a></code>, <code><a href="../../../../utils/builder/Buildable.html" title="interface in org.kaiaccount.utils.builder">Buildable</a>&lt;<a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>,<wbr><a href="PlayerAccountBuilder.html" title="class in org.kaiaccount.account.inter.type.player">PlayerAccountBuilder</a>&gt;</code>, <code><a href="../named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
 <dd><code><a href="AbstractPlayerAccount.html" title="class in org.kaiaccount.account.inter.type.player">AbstractPlayerAccount</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">PlayerAccount&lt;Self extends PlayerAccount&lt;Self&gt;&gt;</span><span class="extends-implements">
-extends <a href="../Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a>, <a href="../named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></span></div>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">PlayerAccount</span><span class="extends-implements">
+extends <a href="../Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a>, <a href="../named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a>, <a href="../../../../utils/builder/Buildable.html" title="interface in org.kaiaccount.utils.builder">Buildable</a>&lt;<a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>,<wbr><a href="PlayerAccountBuilder.html" title="class in org.kaiaccount.account.inter.type.player">PlayerAccountBuilder</a>&gt;</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -118,9 +118,12 @@ extends <a href="../Account.html" title="interface in org.kaiaccount.account.int
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#registerBank(org.kaiaccount.account.inter.type.named.bank.player.PlayerBankAccount)" class="member-name-link">registerBank</a><wbr>(@NotNull <a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&nbsp;account)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../../transfer/result/TransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">TransactionResult</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#withdrawWithBanks(org.kaiaccount.account.inter.transfer.payment.Payment)" class="member-name-link">withdrawWithBanks</a><wbr>(@NotNull <a href="../../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="PlayerAccountBuilder.html" title="class in org.kaiaccount.account.inter.type.player">PlayerAccountBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#toBuilder()" class="member-name-link">toBuilder</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../../transfer/result/TransactionResult.html" title="interface in org.kaiaccount.account.inter.transfer.result">TransactionResult</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#withdrawWithBanks(org.kaiaccount.account.inter.transfer.payment.Payment)" class="member-name-link">withdrawWithBanks</a><wbr>(@NotNull <a href="../../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -205,6 +208,16 @@ extends <a href="../Account.html" title="interface in org.kaiaccount.account.int
 <div class="member-signature"><span class="annotations">@NotNull
 @CheckReturnValue
 </span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</span>&nbsp;<span class="element-name">getBalancesWithBanks</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="toBuilder()">
+<h3>toBuilder</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="PlayerAccountBuilder.html" title="class in org.kaiaccount.account.inter.type.player">PlayerAccountBuilder</a></span>&nbsp;<span class="element-name">toBuilder</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../../../utils/builder/Buildable.html#toBuilder()">toBuilder</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../utils/builder/Buildable.html" title="interface in org.kaiaccount.utils.builder">Buildable</a>&lt;<a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>,<wbr><a href="PlayerAccountBuilder.html" title="class in org.kaiaccount.account.inter.type.player">PlayerAccountBuilder</a>&gt;</code></dd>
+</dl>
 </section>
 </li>
 </ul>

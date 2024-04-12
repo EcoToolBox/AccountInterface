@@ -13,3 +13,4 @@ org.kaiaccount.account.inter.type.named.bank
 org.kaiaccount.account.inter.type.named.bank.player
 org.kaiaccount.account.inter.type.player
 org.kaiaccount.account.inter.vault
+org.kaiaccount.utils.builder

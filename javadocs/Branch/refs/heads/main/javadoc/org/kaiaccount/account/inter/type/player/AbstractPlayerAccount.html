@@ -69,20 +69,20 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.kaiaccount.account.inter.type.player</a></div>
-<h1 title="Class AbstractPlayerAccount" class="title">Class AbstractPlayerAccount&lt;Self extends AbstractPlayerAccount&lt;Self&gt;&gt;</h1>
+<h1 title="Class AbstractPlayerAccount" class="title">Class AbstractPlayerAccount</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">org.kaiaccount.account.inter.type.player.AbstractPlayerAccount&lt;Self&gt;</div>
+<div class="inheritance">org.kaiaccount.account.inter.type.player.AbstractPlayerAccount</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a></code>, <code><a href="../AccountSynced.html" title="interface in org.kaiaccount.account.inter.type">AccountSynced</a></code>, <code><a href="../AccountType.html" title="interface in org.kaiaccount.account.inter.type">AccountType</a></code>, <code><a href="../named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></code>, <code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>&lt;Self&gt;</code></dd>
+<dd><code><a href="../Account.html" title="interface in org.kaiaccount.account.inter.type">Account</a></code>, <code><a href="../AccountSynced.html" title="interface in org.kaiaccount.account.inter.type">AccountSynced</a></code>, <code><a href="../AccountType.html" title="interface in org.kaiaccount.account.inter.type">AccountType</a></code>, <code><a href="../named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></code>, <code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a></code>, <code><a href="../../../../utils/builder/Buildable.html" title="interface in org.kaiaccount.utils.builder">Buildable</a>&lt;<a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>,<wbr><a href="PlayerAccountBuilder.html" title="class in org.kaiaccount.account.inter.type.player">PlayerAccountBuilder</a>&gt;</code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractPlayerAccount&lt;Self extends AbstractPlayerAccount&lt;Self&gt;&gt;</span>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractPlayerAccount</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>&lt;Self&gt;, <a href="../AccountType.html" title="interface in org.kaiaccount.account.inter.type">AccountType</a></span></div>
+implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>, <a href="../AccountType.html" title="interface in org.kaiaccount.account.inter.type">AccountType</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -142,7 +142,7 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 <code><a href="../AccountType.html#deposit(org.kaiaccount.account.inter.transfer.payment.Payment)">deposit</a>, <a href="../AccountType.html#depositSynced(org.kaiaccount.account.inter.transfer.payment.Payment)">depositSynced</a>, <a href="../AccountType.html#forceSet(org.kaiaccount.account.inter.transfer.payment.Payment)">forceSet</a>, <a href="../AccountType.html#forceSetSynced(org.kaiaccount.account.inter.transfer.payment.Payment)">forceSetSynced</a>, <a href="../AccountType.html#getBalance(org.kaiaccount.account.inter.currency.Currency)">getBalance</a>, <a href="../AccountType.html#getBalances()">getBalances</a>, <a href="../AccountType.html#refund(org.kaiaccount.account.inter.transfer.Transaction)">refund</a>, <a href="../AccountType.html#refundSynced(org.kaiaccount.account.inter.transfer.Transaction)">refundSynced</a>, <a href="../AccountType.html#set(org.kaiaccount.account.inter.transfer.payment.Payment)">set</a>, <a href="../AccountType.html#setSynced(org.kaiaccount.account.inter.transfer.payment.Payment)">setSynced</a>, <a href="../AccountType.html#withdraw(org.kaiaccount.account.inter.transfer.payment.Payment)">withdraw</a>, <a href="../AccountType.html#withdrawSynced(org.kaiaccount.account.inter.transfer.payment.Payment)">withdrawSynced</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.kaiaccount.account.inter.type.player.PlayerAccount">Methods inherited from interface&nbsp;org.kaiaccount.account.inter.type.player.<a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a></h3>
-<code><a href="PlayerAccount.html#getAccountName()">getAccountName</a>, <a href="PlayerAccount.html#getBalancesWithBanks()">getBalancesWithBanks</a>, <a href="PlayerAccount.html#getBank(java.lang.String)">getBank</a></code></div>
+<code><a href="PlayerAccount.html#getAccountName()">getAccountName</a>, <a href="PlayerAccount.html#getBalancesWithBanks()">getBalancesWithBanks</a>, <a href="PlayerAccount.html#getBank(java.lang.String)">getBank</a>, <a href="PlayerAccount.html#toBuilder()">toBuilder</a></code></div>
 </section>
 </li>
 </ul>
@@ -191,7 +191,7 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
  @NotNull <a href="../../transfer/payment/Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>&nbsp;payment)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="PlayerAccount.html#withdrawWithBanks(org.kaiaccount.account.inter.transfer.payment.Payment)">withdrawWithBanks</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a> extends <a href="AbstractPlayerAccount.html" title="class in org.kaiaccount.account.inter.type.player">AbstractPlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a>&gt;&gt;</code></dd>
+<dd><code><a href="PlayerAccount.html#withdrawWithBanks(org.kaiaccount.account.inter.transfer.payment.Payment)">withdrawWithBanks</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a></code></dd>
 </dl>
 </section>
 </li>
@@ -203,7 +203,7 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">@UnmodifiableView @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&gt;</span>&nbsp;<span class="element-name">getBanks</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="PlayerAccount.html#getBanks()">getBanks</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a> extends <a href="AbstractPlayerAccount.html" title="class in org.kaiaccount.account.inter.type.player">AbstractPlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a>&gt;&gt;</code></dd>
+<dd><code><a href="PlayerAccount.html#getBanks()">getBanks</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a></code></dd>
 </dl>
 </section>
 </li>
@@ -215,7 +215,7 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="PlayerAccount.html#createBankAccount(java.lang.String)">createBankAccount</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a> extends <a href="AbstractPlayerAccount.html" title="class in org.kaiaccount.account.inter.type.player">AbstractPlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a>&gt;&gt;</code></dd>
+<dd><code><a href="PlayerAccount.html#createBankAccount(java.lang.String)">createBankAccount</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a></code></dd>
 </dl>
 </section>
 </li>
@@ -226,7 +226,7 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
  @NotNull <a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&nbsp;account)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="PlayerAccount.html#registerBank(org.kaiaccount.account.inter.type.named.bank.player.PlayerBankAccount)">registerBank</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a> extends <a href="AbstractPlayerAccount.html" title="class in org.kaiaccount.account.inter.type.player">AbstractPlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a>&gt;&gt;</code></dd>
+<dd><code><a href="PlayerAccount.html#registerBank(org.kaiaccount.account.inter.type.named.bank.player.PlayerBankAccount)">registerBank</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a></code></dd>
 </dl>
 </section>
 </li>
@@ -238,7 +238,7 @@ implements <a href="PlayerAccount.html" title="interface in org.kaiaccount.accou
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull org.bukkit.OfflinePlayer</span>&nbsp;<span class="element-name">getPlayer</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="PlayerAccount.html#getPlayer()">getPlayer</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a> extends <a href="AbstractPlayerAccount.html" title="class in org.kaiaccount.account.inter.type.player">AbstractPlayerAccount</a>&lt;<a href="AbstractPlayerAccount.html" title="type parameter in AbstractPlayerAccount">Self</a>&gt;&gt;</code></dd>
+<dd><code><a href="PlayerAccount.html#getPlayer()">getPlayer</a></code>&nbsp;in interface&nbsp;<code><a href="PlayerAccount.html" title="interface in org.kaiaccount.account.inter.type.player">PlayerAccount</a></code></dd>
 </dl>
 </section>
 </li>

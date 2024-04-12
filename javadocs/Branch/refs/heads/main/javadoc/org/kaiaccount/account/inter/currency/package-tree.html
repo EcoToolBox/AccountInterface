@@ -60,7 +60,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" class="type-name-link external-link" title="class or interface in java.lang">Object</a>
 <ul>
 <li class="circle">org.kaiaccount.account.inter.currency.<a href="AbstractCurrency.html" class="type-name-link" title="class in org.kaiaccount.account.inter.currency">AbstractCurrency</a>&lt;Self&gt; (implements org.kaiaccount.account.inter.currency.<a href="Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;Self&gt;)</li>
-<li class="circle">org.kaiaccount.account.inter.currency.<a href="CurrencyBuilder.html" class="type-name-link" title="class in org.kaiaccount.account.inter.currency">CurrencyBuilder</a></li>
+<li class="circle">org.kaiaccount.account.inter.currency.<a href="CurrencyBuilder.html" class="type-name-link" title="class in org.kaiaccount.account.inter.currency">CurrencyBuilder</a> (implements org.kaiaccount.utils.builder.<a href="../../../utils/builder/Builder.html" title="interface in org.kaiaccount.utils.builder">Builder</a>&lt;Build,<wbr>Self&gt;)</li>
 </ul>
 </li>
 </ul>
@@ -68,9 +68,14 @@ loadScripts(document, 'script');</script>
 <section class="hierarchy">
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
+<li class="circle">org.kaiaccount.utils.builder.<a href="../../../utils/builder/Buildable.html" class="type-name-link" title="interface in org.kaiaccount.utils.builder">Buildable</a>&lt;Self,<wbr>Build&gt;
+<ul>
+<li class="circle">org.kaiaccount.account.inter.currency.<a href="Currency.html" class="type-name-link" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;Self&gt; (also extends org.kaiaccount.account.inter.io.<a href="../io/Serializable.html" title="interface in org.kaiaccount.account.inter.io">Serializable</a>&lt;Self&gt;)</li>
+</ul>
+</li>
 <li class="circle">org.kaiaccount.account.inter.io.<a href="../io/Serializable.html" class="type-name-link" title="interface in org.kaiaccount.account.inter.io">Serializable</a>&lt;Self&gt;
 <ul>
-<li class="circle">org.kaiaccount.account.inter.currency.<a href="Currency.html" class="type-name-link" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;Self&gt;</li>
+<li class="circle">org.kaiaccount.account.inter.currency.<a href="Currency.html" class="type-name-link" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;Self&gt; (also extends org.kaiaccount.utils.builder.<a href="../../../utils/builder/Buildable.html" title="interface in org.kaiaccount.utils.builder">Buildable</a>&lt;Self,<wbr>Build&gt;)</li>
 </ul>
 </li>
 <li class="circle">org.kaiaccount.account.inter.currency.<a href="ToCurrency.html" class="type-name-link" title="interface in org.kaiaccount.account.inter.currency">ToCurrency</a></li>

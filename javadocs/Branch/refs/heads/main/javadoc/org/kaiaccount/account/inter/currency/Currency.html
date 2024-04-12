@@ -74,7 +74,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../io/Serializable.html" title="interface in org.kaiaccount.account.inter.io">Serializable</a>&lt;Self&gt;</code></dd>
+<dd><code><a href="../../../utils/builder/Buildable.html" title="interface in org.kaiaccount.utils.builder">Buildable</a>&lt;<a href="Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="CurrencyBuilder.html" title="class in org.kaiaccount.account.inter.currency">CurrencyBuilder</a>&gt;</code>, <code><a href="../io/Serializable.html" title="interface in org.kaiaccount.account.inter.io">Serializable</a>&lt;Self&gt;</code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Currency&lt;Self extends Currency&lt;Self&gt;&gt;</span><span class="extends-implements">
-extends <a href="../io/Serializable.html" title="interface in org.kaiaccount.account.inter.io">Serializable</a>&lt;Self&gt;</span></div>
+extends <a href="../io/Serializable.html" title="interface in org.kaiaccount.account.inter.io">Serializable</a>&lt;Self&gt;, <a href="../../../utils/builder/Buildable.html" title="interface in org.kaiaccount.utils.builder">Buildable</a>&lt;<a href="Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="CurrencyBuilder.html" title="class in org.kaiaccount.account.inter.currency">CurrencyBuilder</a>&gt;</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -144,6 +144,9 @@ extends <a href="../io/Serializable.html" title="interface in org.kaiaccount.acc
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setWorth(java.math.BigDecimal)" class="member-name-link">setWorth</a><wbr>(@Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;worth)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="CurrencyBuilder.html" title="class in org.kaiaccount.account.inter.currency">CurrencyBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#toBuilder()" class="member-name-link">toBuilder</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -265,6 +268,16 @@ extends <a href="../io/Serializable.html" title="interface in org.kaiaccount.acc
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;amount,
  @Nullable
  @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;toPoint)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="toBuilder()">
+<h3>toBuilder</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="CurrencyBuilder.html" title="class in org.kaiaccount.account.inter.currency">CurrencyBuilder</a></span>&nbsp;<span class="element-name">toBuilder</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../../utils/builder/Buildable.html#toBuilder()">toBuilder</a></code>&nbsp;in interface&nbsp;<code><a href="../../../utils/builder/Buildable.html" title="interface in org.kaiaccount.utils.builder">Buildable</a>&lt;<a href="Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="CurrencyBuilder.html" title="class in org.kaiaccount.account.inter.currency">CurrencyBuilder</a>&gt;</code></dd>
+</dl>
 </section>
 </li>
 </ul>

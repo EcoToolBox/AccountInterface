@@ -75,9 +75,14 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">org.kaiaccount.account.inter.transfer.payment.PaymentBuilder</div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>All Implemented Interfaces:</dt>
+<dd><code><a href="../../../../utils/builder/Builder.html" title="interface in org.kaiaccount.utils.builder">Builder</a>&lt;<a href="Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>,<wbr><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a>&gt;</code></dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PaymentBuilder</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
+implements <a href="../../../../utils/builder/Builder.html" title="interface in org.kaiaccount.utils.builder">Builder</a>&lt;<a href="Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>,<wbr><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a>&gt;</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -99,14 +104,22 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#build(org.bukkit.plugin.Plugin)" class="member-name-link">build</a><wbr>(@NotNull org.bukkit.plugin.Plugin&nbsp;plugin)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#build()" class="member-name-link">build</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#build(org.bukkit.plugin.Plugin)" class="member-name-link">build</a><wbr>(@NotNull org.bukkit.plugin.Plugin&nbsp;plugin)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#from(org.kaiaccount.account.inter.transfer.payment.PaymentBuilder)" class="member-name-link">from</a><wbr>(<a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a>&nbsp;builder)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAmount()" class="member-name-link">getAmount</a>()</code></div>
@@ -117,8 +130,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../type/named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFrom()" class="member-name-link">getFrom</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReason()" class="member-name-link">getReason</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.bukkit.plugin.Plugin</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlugin()" class="member-name-link">getPlugin</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReason()" class="member-name-link">getReason</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../type/named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTo()" class="member-name-link">getTo</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPriority()" class="member-name-link">isPriority</a>()</code></div>
@@ -139,10 +158,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFrom(org.kaiaccount.account.inter.type.named.NamedAccountLike)" class="member-name-link">setFrom</a><wbr>(@Nullable <a href="../../type/named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a>&nbsp;from)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPriority(boolean)" class="member-name-link">setPriority</a><wbr>(boolean&nbsp;priority)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlugin(org.bukkit.plugin.Plugin)" class="member-name-link">setPlugin</a><wbr>(@NotNull org.bukkit.plugin.Plugin&nbsp;plugin)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setReason(java.lang.String)" class="member-name-link">setReason</a><wbr>(@Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resource)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPriority(boolean)" class="member-name-link">setPriority</a><wbr>(boolean&nbsp;priority)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setReason(java.lang.String)" class="member-name-link">setReason</a><wbr>(@Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resource)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTo(org.kaiaccount.account.inter.type.named.NamedAccountLike)" class="member-name-link">setTo</a><wbr>(@Nullable <a href="../../type/named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a>&nbsp;to)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -150,6 +175,9 @@ loadScripts(document, 'script');</script>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.kaiaccount.utils.builder.Builder">Methods inherited from interface&nbsp;org.kaiaccount.utils.builder.<a href="../../../../utils/builder/Builder.html" title="interface in org.kaiaccount.utils.builder">Builder</a></h3>
+<code><a href="../../../../utils/builder/Builder.html#from(Build)">from</a></code></div>
 </section>
 </li>
 </ul>
@@ -179,7 +207,42 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="build(org.bukkit.plugin.Plugin)">
 <h3>build</h3>
 <div class="member-signature"><span class="annotations">@CheckReturnValue
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a></span>&nbsp;<span class="element-name">build</span><wbr><span class="parameters">(@NotNull
+ @NotNull org.bukkit.plugin.Plugin&nbsp;plugin)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="build()">
+<h3>build</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a></span>&nbsp;<span class="element-name">build</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../../../utils/builder/Builder.html#build()">build</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../utils/builder/Builder.html" title="interface in org.kaiaccount.utils.builder">Builder</a>&lt;<a href="Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>,<wbr><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a>&gt;</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="from(org.kaiaccount.account.inter.transfer.payment.PaymentBuilder)">
+<h3>from</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a></span>&nbsp;<span class="element-name">from</span><wbr><span class="parameters">(<a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a>&nbsp;builder)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../../../utils/builder/Builder.html#from(Self)">from</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../utils/builder/Builder.html" title="interface in org.kaiaccount.utils.builder">Builder</a>&lt;<a href="Payment.html" title="interface in org.kaiaccount.account.inter.transfer.payment">Payment</a>,<wbr><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a>&gt;</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPlugin()">
+<h3>getPlugin</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.bukkit.plugin.Plugin</span>&nbsp;<span class="element-name">getPlugin</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setPlugin(org.bukkit.plugin.Plugin)">
+<h3>setPlugin</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a></span>&nbsp;<span class="element-name">setPlugin</span><wbr><span class="parameters">(@NotNull
  @NotNull org.bukkit.plugin.Plugin&nbsp;plugin)</span></div>
 </section>
 </li>
@@ -206,6 +269,19 @@ loadScripts(document, 'script');</script>
 <h3>setFrom</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a></span>&nbsp;<span class="element-name">setFrom</span><wbr><span class="parameters">(@Nullable
  @Nullable <a href="../../type/named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a>&nbsp;from)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getTo()">
+<h3>getTo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../type/named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a></span>&nbsp;<span class="element-name">getTo</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setTo(org.kaiaccount.account.inter.type.named.NamedAccountLike)">
+<h3>setTo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PaymentBuilder.html" title="class in org.kaiaccount.account.inter.transfer.payment">PaymentBuilder</a></span>&nbsp;<span class="element-name">setTo</span><wbr><span class="parameters">(@Nullable
+ @Nullable <a href="../../type/named/NamedAccountLike.html" title="interface in org.kaiaccount.account.inter.type.named">NamedAccountLike</a>&nbsp;to)</span></div>
 </section>
 </li>
 <li>
