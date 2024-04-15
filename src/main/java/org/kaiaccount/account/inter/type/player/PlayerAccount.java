@@ -5,11 +5,13 @@ import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnmodifiableView;
+import org.kaiaccount.AccountInterface;
 import org.kaiaccount.account.inter.currency.Currency;
 import org.kaiaccount.account.inter.transfer.payment.Payment;
 import org.kaiaccount.account.inter.transfer.result.TransactionResult;
 import org.kaiaccount.account.inter.type.Account;
 import org.kaiaccount.account.inter.type.named.NamedAccountLike;
+import org.kaiaccount.account.inter.type.named.bank.BankPermission;
 import org.kaiaccount.account.inter.type.named.bank.player.PlayerBankAccount;
 import org.kaiaccount.utils.builder.Buildable;
 
@@ -24,6 +26,27 @@ public interface PlayerAccount extends Account, NamedAccountLike, Buildable<Play
     @UnmodifiableView
     @CheckReturnValue
     Collection<PlayerBankAccount> getBanks();
+
+    @NotNull
+    @UnmodifiableView
+    @CheckReturnValue
+    default Collection<PlayerBankAccount> getAttachedOwningBanks() {
+        return this.getAttachedBankByPermission(BankPermission.ACCOUNT_OWNER);
+    }
+
+    @NotNull
+    @UnmodifiableView
+    @CheckReturnValue
+    default Collection<PlayerBankAccount> getAttachedBankByPermission(BankPermission permission) {
+        return AccountInterface
+                .getManager()
+                .getPlayerAccounts()
+                .parallelStream()
+                .flatMap(account -> account.getBanks().parallelStream())
+                .filter(bank -> !bank.getAccountPermissions(this.getPlayer()).isEmpty())
+                .toList();
+    }
+
 
     @NotNull
     PlayerBankAccount createBankAccount(@NotNull String name);

@@ -1,6 +1,7 @@
 package org.kaiaccount.account.inter.type.named.bank.player;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnmodifiableView;
 import org.kaiaccount.account.inter.type.named.AbstractNamedAccountLike;
 import org.kaiaccount.account.inter.type.named.bank.BankPermission;
 import org.kaiaccount.account.inter.type.player.PlayerAccount;
@@ -41,6 +42,7 @@ public abstract class AbstractPlayerBankAccount
 
     @NotNull
     @Override
+    @UnmodifiableView
     public Map<UUID, Collection<BankPermission>> getAccounts() {
         Map<UUID, Collection<BankPermission>> map = new HashMap<>(this.bankPermissions);
         map.put(this.getAccountHolder().getPlayer().getUniqueId(), Arrays.asList(BankPermission.values()));
