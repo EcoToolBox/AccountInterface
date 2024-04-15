@@ -103,6 +103,12 @@ extends <a href="../Account.html" title="interface in org.kaiaccount.account.int
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @Nls @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAccountName()" class="member-name-link">getAccountName</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAttachedBankByPermission(org.kaiaccount.account.inter.type.named.bank.BankPermission)" class="member-name-link">getAttachedBankByPermission</a><wbr>(<a href="../named/bank/BankPermission.html" title="enum class in org.kaiaccount.account.inter.type.named.bank">BankPermission</a>&nbsp;permission)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAttachedOwningBanks()" class="member-name-link">getAttachedOwningBanks</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../currency/Currency.html" title="interface in org.kaiaccount.account.inter.currency">Currency</a>&lt;?&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getBalancesWithBanks()" class="member-name-link">getBalancesWithBanks</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
@@ -147,6 +153,22 @@ extends <a href="../Account.html" title="interface in org.kaiaccount.account.int
 <div class="member-signature"><span class="annotations">@NotNull
 @CheckReturnValue
 </span><span class="return-type">@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&gt;</span>&nbsp;<span class="element-name">getBanks</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getAttachedOwningBanks()">
+<h3>getAttachedOwningBanks</h3>
+<div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&gt;</span>&nbsp;<span class="element-name">getAttachedOwningBanks</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getAttachedBankByPermission(org.kaiaccount.account.inter.type.named.bank.BankPermission)">
+<h3>getAttachedBankByPermission</h3>
+<div class="member-signature"><span class="annotations">@NotNull
+@CheckReturnValue
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NotNull @UnmodifiableView <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../named/bank/player/PlayerBankAccount.html" title="interface in org.kaiaccount.account.inter.type.named.bank.player">PlayerBankAccount</a>&gt;</span>&nbsp;<span class="element-name">getAttachedBankByPermission</span><wbr><span class="parameters">(<a href="../named/bank/BankPermission.html" title="enum class in org.kaiaccount.account.inter.type.named.bank">BankPermission</a>&nbsp;permission)</span></div>
 </section>
 </li>
 <li>
