@@ -3,6 +3,7 @@ package org.kaiaccount.account.inter.type.named.bank;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnmodifiableView;
 import org.kaiaccount.account.inter.type.named.NamedAccountLike;
 
 import java.util.Collection;
@@ -20,7 +21,10 @@ public interface BankAccount extends NamedAccountLike {
     }
 
     @NotNull
+    @UnmodifiableView
     Map<UUID, Collection<BankPermission>> getAccounts();
+
+
 
     default Collection<BankPermission> getAccountPermissions(@NotNull OfflinePlayer player) {
         return this.getAccountPermissions(player.getUniqueId());

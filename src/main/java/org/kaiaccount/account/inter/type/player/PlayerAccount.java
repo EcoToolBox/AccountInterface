@@ -51,6 +51,8 @@ public interface PlayerAccount extends Account, NamedAccountLike, Buildable<Play
     @NotNull
     PlayerBankAccount createBankAccount(@NotNull String name);
 
+    boolean deleteBankAccount(@NotNull PlayerBankAccount account);
+
     void registerBank(@NotNull PlayerBankAccount account);
 
     @NotNull

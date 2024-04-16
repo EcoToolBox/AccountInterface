@@ -105,8 +105,8 @@ public abstract class AbstractPlayerAccount
         CompletableFuture<TransactionResult> ret = new CompletableFuture<>();
         new IsolatedTransaction(map -> {
             IsolatedAccount isolated = map.get(this);
-            Stream<CompletableFuture<? extends TransactionResult>> stream =
-                    Arrays.stream(transactions).parallel().map(f -> f.apply(isolated));
+            Stream<CompletableFuture<? extends TransactionResult>> stream = Arrays.stream(transactions).parallel()
+                    .map(f -> f.apply(isolated));
             return stream.toList();
         }, this).start().thenAccept(ret::complete);
         return ret;
@@ -124,7 +124,7 @@ public abstract class AbstractPlayerAccount
     @UnmodifiableView
     @CheckReturnValue
     public @NotNull Collection<PlayerBankAccount> getBanks() {
-        //load others
+        // load others
         return Collections.unmodifiableCollection(this.banks);
     }
 
@@ -133,6 +133,15 @@ public abstract class AbstractPlayerAccount
         PlayerBankAccount account = new PlayerBankAccountBuilder().setName(name).setAccount(this).build();
         this.banks.add(account);
         return account;
+    }
+
+    @Override
+    public @NotNull boolean deleteBankAccount(@NotNull PlayerBankAccount account) {
+        for (UUID accesser : account.getAccounts().keySet()) {
+            account.removeAccount(accesser);
+        }
+        this.banks.remove(account);
+        return true;
     }
 
     @Override
