@@ -18,14 +18,15 @@ import org.kaiaccount.account.inter.type.player.PlayerAccount;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class KaiEco implements Economy {
 
-    private final Supplier<Currency<?>> currency;
+    private final Supplier<Optional<Currency<?>>> currency;
     private final int toDecimal;
 
-    public KaiEco(Supplier<Currency<?>> currency, int toDecimal) {
+    public KaiEco(Supplier<Optional<Currency<?>>> currency, int toDecimal) {
         this.currency = currency;
         this.toDecimal = toDecimal;
     }
@@ -52,17 +53,17 @@ public class KaiEco implements Economy {
 
     @Override
     public String format(double v) {
-        return this.currency.get().formatName(BigDecimal.valueOf(v), this.toDecimal);
+        return this.currency.get().map(currency -> currency.formatName(BigDecimal.valueOf(v), this.toDecimal)).orElse(v + "");
     }
 
     @Override
     public String currencyNamePlural() {
-        return this.currency.get().getDisplayNameMultiple();
+        return this.currency.get().map(currency -> currency.getDisplayNameMultiple()).orElse("");
     }
 
     @Override
     public String currencyNameSingular() {
-        return this.currency.get().getDisplayNameSingle();
+        return this.currency.get().map(currency -> currency.getDisplayNameSingle()).orElse("");
     }
 
     @Override
@@ -95,9 +96,13 @@ public class KaiEco implements Economy {
 
     @Override
     public double getBalance(OfflinePlayer offlinePlayer) {
+        var opCurrency = this.currency.get();
+        if(opCurrency.isEmpty()){
+            return 0;
+        }
         return AccountInterface.getManager()
                 .getPlayerAccount(offlinePlayer)
-                .getBalance(this.currency.get())
+                .getBalance(opCurrency.get())
                 .doubleValue();
     }
 
@@ -121,10 +126,10 @@ public class KaiEco implements Economy {
 
     @Override
     public boolean has(OfflinePlayer offlinePlayer, double v) {
-        return AccountInterface.getManager()
-                .getPlayerAccount(offlinePlayer)
-                .getBalance(this.currency.get())
-                .compareTo(BigDecimal.valueOf(v)) > 0;
+        var opCurrency = this.currency.get();
+        return opCurrency
+                .filter(value -> AccountInterface.getManager().getPlayerAccount(offlinePlayer).getBalance(value).compareTo(BigDecimal.valueOf(v)) > 0)
+                .isPresent();
     }
 
     @Override
@@ -146,10 +151,14 @@ public class KaiEco implements Economy {
 
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, double v) {
+        var opCurrency = this.currency.get();
+        if(opCurrency.isEmpty()){
+            return new EconomyResponse(v, 0, EconomyResponse.ResponseType.FAILURE, "No currency set");
+        }
         Payment payment =
                 new PaymentBuilder()
                         .setAmount(v)
-                        .setCurrency(this.currency.get())
+                        .setCurrency(opCurrency.get())
                         .setPlugin(VaultEmulationUtils.getReason())
                         .build();
         PlayerAccount account = AccountInterface.getManager().getPlayerAccount(offlinePlayer);
@@ -181,10 +190,14 @@ public class KaiEco implements Economy {
 
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, double v) {
+        var opCurrency = this.currency.get();
+        if(opCurrency.isEmpty()){
+            return new EconomyResponse(v, 0, EconomyResponse.ResponseType.FAILURE, "No currency set");
+        }
         Payment payment =
                 new PaymentBuilder()
                         .setAmount(v)
-                        .setCurrency(this.currency.get())
+                        .setCurrency(opCurrency.get())
                         .setPlugin(VaultEmulationUtils.getReason())
                         .build();
         PlayerAccount account = AccountInterface.getManager().getPlayerAccount(offlinePlayer);

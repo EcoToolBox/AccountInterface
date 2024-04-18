@@ -30,59 +30,25 @@ import java.util.stream.Stream;
 public interface AccountInterfaceManager {
 
     /**
-     * @return The vault plugin
+     * Saves and deloads the currency. This does not delete the currency
+     *
+     * @param currency The currency to register
      */
-    @CheckReturnValue
-    default @NotNull Plugin getVaultPlugin() {
-        return Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Vault"));
-    }
+    void deregisterCurrency(@NotNull Currency<?> currency);
 
     /**
-     * Gets the mapper to map a {@link CurrencyBuilder} to the currency plugins {@link Currency}
-     * This should not be used unless you are making a currency plugin
+     * deloads the named account. This does not delete the named account
      *
-     * @return The mapper
+     * @param account The account to deload
      */
-    @CheckReturnValue
-    @NotNull ToCurrency getToCurrencies();
+    void deregisterNamedAccount(@NotNull NamedAccount account);
 
     /**
-     * gets the mapper to map a {@link PlayerBankAccountBuilder} to a {@link PlayerBankAccount}
-     * This should not be used unless you are making a currency plugin
+     * deloads the player. This does not delete the player
      *
-     * @return The mapper
+     * @param account The player account to deload
      */
-    @CheckReturnValue
-    @NotNull ToBankAccount getToBankAccount();
-
-    /**
-     * Gets all registered currencies
-     *
-     * @return A collection of all currencies
-     */
-    @NotNull
-    @UnmodifiableView
-    @CheckReturnValue
-    Collection<Currency<?>> getCurrencies();
-
-    /**
-     * Gets all registered player accounts
-     *
-     * @return A collection of all Player Accounts
-     */
-    @NotNull
-    @UnmodifiableView
-    @CheckReturnValue
-    Collection<PlayerAccount> getPlayerAccounts();
-
-    /**
-     * Gets all registered named accounts
-     *
-     * @return A collection of all named accounts
-     */
-    @NotNull
-    @UnmodifiableView
-    Collection<NamedAccount> getNamedAccounts();
+    void deregisterPlayerAccount(@NotNull PlayerAccount account);
 
     /**
      * Gets all accounts, no matter the type
@@ -101,6 +67,143 @@ public interface AccountInterfaceManager {
     }
 
     /**
+     * Gets all registered currencies
+     *
+     * @return A collection of all currencies
+     */
+    @NotNull @UnmodifiableView
+    @CheckReturnValue
+    Collection<Currency<?>> getCurrencies();
+
+    /**
+     * Gets a currency based upon the symbol
+     *
+     * @param symbol The symbol of the currency
+     * @return A potential of the currency
+     */
+    default @NotNull Optional<Currency<?>> getCurrency(@NotNull String symbol) {
+        return this.getCurrencies().parallelStream().filter(cur -> cur.getSymbol().equalsIgnoreCase(symbol)).findAny();
+    }
+
+    /**
+     * Gets a currency based upon the plugin and name
+     *
+     * @param plugin The plugin of the currency
+     * @param name   The key name of the currency
+     * @return A potential of the currency
+     */
+    default @NotNull Optional<Currency<?>> getCurrency(@NotNull Plugin plugin, @NotNull String name) {
+        return this
+                .getCurrencies()
+                .parallelStream()
+                .filter(cur -> cur.getPlugin().equals(plugin))
+                .filter(cur -> cur.getKeyName().equalsIgnoreCase(name))
+                .findAny();
+    }
+
+    /**
+     * gets the default currency of this server
+     *
+     * @return The default currency, empty if no currency has been added
+     */
+    default @NotNull Optional<Currency<?>> getDefaultCurrency() {
+        var opDefaultCurrency = this.getCurrencies().parallelStream().filter(Currency::isDefault).findAny();
+        if (opDefaultCurrency.isPresent()) {
+            return opDefaultCurrency;
+        }
+        if (this.getCurrencies().isEmpty()) {
+            return Optional.empty();
+        }
+
+        Currency<?> useAsDefault = this.getCurrencies().iterator().next();
+        useAsDefault = this.getCurrencies().stream().filter(currency -> currency.getWorth().isPresent()).findFirst().orElse(useAsDefault);
+
+        useAsDefault.setDefault(true);
+        AccountInterface.getInstance().getHostPlugin().getLogger().warning("Default currency not set: Setting it to " + useAsDefault.getKeyName());
+        return Optional.of(useAsDefault);
+    }
+
+    /**
+     * Gets a named account with the provided account name
+     *
+     * @param accountName The name on the account
+     * @return The account
+     */
+    default @NotNull Optional<NamedAccount> getNamedAccount(@NotNull String accountName) {
+        return this.getNamedAccounts().parallelStream().filter(account -> account.getAccountName().equals(accountName)).findAny();
+    }
+
+    /**
+     * Gets all registered named accounts
+     *
+     * @return A collection of all named accounts
+     */
+    @NotNull @UnmodifiableView Collection<NamedAccount> getNamedAccounts();
+
+    /**
+     * Gets the PlayerAccount based upon the players UUID
+     *
+     * @param playerId the UUID of the player
+     * @return A PlayerAccount of UUID
+     */
+    default @NotNull PlayerAccount getPlayerAccount(@NotNull UUID playerId) {
+        return this.getPlayerAccount(Bukkit.getServer().getOfflinePlayer(playerId));
+    }
+
+    /**
+     * gets the PlayerAccount based upon the players object
+     *
+     * @param player The Players object
+     * @return A PlayerAccount of OfflinePlayer
+     */
+    default @NotNull PlayerAccount getPlayerAccount(@NotNull OfflinePlayer player) {
+        Optional<PlayerAccount> opAccount = this
+                .getPlayerAccounts()
+                .parallelStream()
+                .filter(account -> account.getPlayer().getUniqueId().equals(player.getUniqueId()))
+                .findAny();
+        if (opAccount.isPresent()) {
+            return opAccount.get();
+        }
+        return this.loadPlayerAccount(player);
+    }
+
+    /**
+     * Gets all registered player accounts
+     *
+     * @return A collection of all Player Accounts
+     */
+    @NotNull @UnmodifiableView
+    @CheckReturnValue
+    Collection<PlayerAccount> getPlayerAccounts();
+
+    /**
+     * gets the mapper to map a {@link PlayerBankAccountBuilder} to a {@link PlayerBankAccount}
+     * This should not be used unless you are making a currency plugin
+     *
+     * @return The mapper
+     */
+    @CheckReturnValue
+    @NotNull ToBankAccount getToBankAccount();
+
+    /**
+     * Gets the mapper to map a {@link CurrencyBuilder} to the currency plugins {@link Currency}
+     * This should not be used unless you are making a currency plugin
+     *
+     * @return The mapper
+     */
+    @CheckReturnValue
+    @NotNull ToCurrency getToCurrencies();
+
+    /**
+     * Gets the mapper to map a {@link NamedAccountBuilder} to a {@link NamedAccount}
+     * This should not be used unless you are making a currency plugin
+     *
+     * @return The mapper
+     */
+    @NotNull ToNamedAccount getToNamedAccount();
+
+    /**
      * Get the mapper to map a {@link PlayerAccountBuilder} to a {@link PlayerAccount}
      * This should not be used unless you are making a currency plugin
      *
@@ -110,27 +213,12 @@ public interface AccountInterfaceManager {
     @NotNull ToPlayerAccount getToPlayerAccount();
 
     /**
-     * Gets the mapper to map a {@link NamedAccountBuilder} to a {@link NamedAccount}
-     * This should not be used unless you are making a currency plugin
-     *
-     * @return The mapper
+     * @return The vault plugin
      */
-    @NotNull
-    ToNamedAccount getToNamedAccount();
-
-    /**
-     * Registers a new Player Account. This is typically used for {@link #getPlayerAccount(UUID)}
-     *
-     * @param account The account to be registered
-     */
-    void registerPlayerAccount(@NotNull PlayerAccount account);
-
-    /**
-     * Registers a new Named Account
-     *
-     * @param account The account to be registered
-     */
-    void registerNamedAccount(@NotNull NamedAccount account);
+    @CheckReturnValue
+    default @NotNull Plugin getVaultPlugin() {
+        return Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Vault"));
+    }
 
     /**
      * Loads the player account data based upon the players {@link UUID}
@@ -138,22 +226,7 @@ public interface AccountInterfaceManager {
      * @param player The player to load data for
      * @return A PlayerAccount of the provided player
      */
-    @NotNull
-    PlayerAccount loadPlayerAccount(@NotNull OfflinePlayer player);
-
-    /**
-     * deloads the player. This does not delete the player
-     *
-     * @param account The player account to deload
-     */
-    void deregisterPlayerAccount(@NotNull PlayerAccount account);
-
-    /**
-     * deloads the named account. This does not delete the named account
-     *
-     * @param account The account to deload
-     */
-    void deregisterNamedAccount(@NotNull NamedAccount account);
+    @NotNull PlayerAccount loadPlayerAccount(@NotNull OfflinePlayer player);
 
     /**
      * Registers a new currency into the game
@@ -165,11 +238,18 @@ public interface AccountInterfaceManager {
     void registerCurrency(@NotNull Currency<?> currency);
 
     /**
-     * Saves and deloads the currency. This does not delete the currency
+     * Registers a new Named Account
      *
-     * @param currency The currency to register
+     * @param account The account to be registered
      */
-    void deregisterCurrency(@NotNull Currency<?> currency);
+    void registerNamedAccount(@NotNull NamedAccount account);
+
+    /**
+     * Registers a new Player Account. This is typically used for {@link #getPlayerAccount(UUID)}
+     *
+     * @param account The account to be registered
+     */
+    void registerPlayerAccount(@NotNull PlayerAccount account);
 
     /**
      * Ignore - This is for builder logic
@@ -181,8 +261,22 @@ public interface AccountInterfaceManager {
     @ApiStatus.Internal
     default PlayerBankAccount toBankAccount(@NotNull PlayerBankAccountBuilder builder) {
         try {
-            return this.getToBankAccount()
-                    .toBankAccount(builder);
+            return this.getToBankAccount().toBankAccount(builder);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Ignore - This is for builder logic
+     *
+     * @param builder The builder
+     * @return A built edition
+     */
+    @ApiStatus.Internal
+    default @NotNull Currency<?> toCurrency(@NotNull CurrencyBuilder builder) {
+        try {
+            return this.getToCurrencies().toCurrency(builder);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -210,104 +304,12 @@ public interface AccountInterfaceManager {
      * @return A built edition
      */
     @ApiStatus.Internal
-    default @NotNull Currency<?> toCurrency(@NotNull CurrencyBuilder builder) {
-        try {
-            return this.getToCurrencies()
-                    .toCurrency(builder);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Ignore - This is for builder logic
-     *
-     * @param builder The builder
-     * @return A built edition
-     */
-    @ApiStatus.Internal
     default @NotNull PlayerAccount toPlayerAccount(@NotNull PlayerAccountBuilder builder) {
         try {
-            return this.getToPlayerAccount()
-                    .toPlayerAccount(builder);
+            return this.getToPlayerAccount().toPlayerAccount(builder);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * gets the default currency of this server
-     *
-     * @return The default currency
-     */
-    default @NotNull Currency<?> getDefaultCurrency() {
-        return this.getCurrencies().parallelStream()
-                .filter(Currency::isDefault)
-                .findAny()
-                .orElseThrow(() -> new RuntimeException("No default currency"));
-    }
-
-    /**
-     * Gets a currency based upon the symbol
-     *
-     * @param symbol The symbol of the currency
-     * @return A potential of the currency
-     */
-    default @NotNull Optional<Currency<?>> getCurrency(@NotNull String symbol) {
-        return this.getCurrencies().parallelStream().filter(cur -> cur.getSymbol().equalsIgnoreCase(symbol)).findAny();
-    }
-
-    /**
-     * Gets a currency based upon the plugin and name
-     *
-     * @param plugin The plugin of the currency
-     * @param name   The key name of the currency
-     * @return A potential of the currency
-     */
-    default @NotNull Optional<Currency<?>> getCurrency(@NotNull Plugin plugin, @NotNull String name) {
-        return this.getCurrencies()
-                .parallelStream()
-                .filter(cur -> cur.getPlugin().equals(plugin))
-                .filter(cur -> cur.getKeyName().equalsIgnoreCase(name))
-                .findAny();
-    }
-
-    /**
-     * Gets a named account with the provided account name
-     *
-     * @param accountName The name on the account
-     * @return The account
-     */
-    default @NotNull Optional<NamedAccount> getNamedAccount(@NotNull String accountName) {
-        return this.getNamedAccounts().parallelStream().filter(account -> account.getAccountName().equals(accountName)).findAny();
-    }
-
-    /**
-     * Gets the PlayerAccount based upon the players UUID
-     *
-     * @param playerId the UUID of the player
-     * @return A PlayerAccount of UUID
-     */
-    default @NotNull PlayerAccount getPlayerAccount(@NotNull UUID playerId) {
-        return this.getPlayerAccount(Bukkit.getServer().getOfflinePlayer(playerId));
-    }
-
-    /**
-     * gets the PlayerAccount based upon the players object
-     *
-     * @param player The Players object
-     * @return A PlayerAccount of OfflinePlayer
-     */
-    default @NotNull PlayerAccount getPlayerAccount(@NotNull OfflinePlayer player) {
-        Optional<PlayerAccount> opAccount =
-                this.getPlayerAccounts()
-                        .parallelStream()
-                        .filter(account -> account.getPlayer().getUniqueId().equals(player.getUniqueId()))
-                        .findAny();
-        if (opAccount.isPresent()) {
-            return opAccount.get();
-        }
-        return this.loadPlayerAccount(player);
     }
 
 
